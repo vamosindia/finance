@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Complex Files</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    padding:40px;
+}
+
+li{
+    margin:10px 0;
+}
+
+a{
+    text-decoration:none;
+    color:#0066cc;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+</style>
+</head>
+<body>
+
+<h1>Complex Files</h1>
+
+<ul id="fileList"></ul>
+
+<script>
+const username = "你的GitHub用户名";
+const repo = "你的仓库名";
+const folder = "complex";
+
+fetch(`https://api.github.com/repos/${username}/${repo}/contents/${folder}`)
+    .then(res => res.json())
+    .then(data => {
+
+        const list = document.getElementById("fileList");
+
+        data.forEach(file => {
+
+            // 跳过 index.html 自己
+            if(file.name === "index.html") return;
+
+            const li = document.createElement("li");
+
+            const a = document.createElement("a");
+
+            a.href = file.name;
+            a.textContent = file.name;
+
+            li.appendChild(a);
+
+            list.appendChild(li);
+        });
+
+    })
+    .catch(err => {
+        console.error(err);
+    });
+</script>
+
+</body>
+</html>
