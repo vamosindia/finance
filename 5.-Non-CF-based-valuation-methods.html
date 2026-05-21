@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>非现金流估值方法 | Non-CF Based Valuation Methods</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.75;color:#2c3e50;background:#f5f7fa;padding:20px}
+  .container{max-width:1100px;margin:0 auto;background:#fff;padding:40px 50px;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,0.08)}
+  h1{color:#1a365d;border-bottom:3px solid #2b6cb0;padding-bottom:12px;margin-bottom:8px;font-size:28px}
+  h1 .en{display:block;font-size:18px;color:#4a5568;font-weight:normal;margin-top:4px}
+  h2{color:#2b6cb0;margin-top:35px;margin-bottom:15px;padding-left:12px;border-left:5px solid #2b6cb0;font-size:22px}
+  h2 .en{display:block;font-size:15px;color:#718096;font-weight:normal;margin-top:2px}
+  h3{color:#2c5282;margin-top:22px;margin-bottom:10px;font-size:17px}
+  h3 .en{color:#718096;font-weight:normal;font-size:14px}
+  p{margin:10px 0}
+  .bilingual{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:12px 0;padding:14px 18px;background:#f7fafc;border-radius:6px;border-left:4px solid #4299e1}
+  .bilingual .zh{color:#2d3748}
+  .bilingual .en{color:#4a5568;font-style:italic}
+  .formula{background:#fffaf0;border:1px solid #f6ad55;border-radius:6px;padding:12px 18px;margin:12px 0;font-family:"Cambria Math","Times New Roman",serif;font-size:16px;text-align:center;color:#744210}
+  .formula .label{font-weight:bold;color:#c05621;margin-bottom:6px;display:block;font-size:13px}
+  .key-point{background:linear-gradient(to right,#fff5f5,#fff);border-left:4px solid #e53e3e;padding:12px 18px;margin:14px 0;border-radius:4px}
+  .key-point::before{content:"★ 核心要点 / Key Point";display:block;font-weight:bold;color:#c53030;margin-bottom:6px;font-size:13px}
+  .definition{background:#ebf8ff;border:1px solid #90cdf4;border-radius:6px;padding:12px 18px;margin:12px 0}
+  .definition::before{content:"📖 定义 / Definition";display:block;font-weight:bold;color:#2c5282;margin-bottom:6px;font-size:13px}
+  .example{background:#f0fff4;border-left:4px solid #48bb78;padding:12px 18px;margin:12px 0;border-radius:4px}
+  .example::before{content:"💡 示例 / Example";display:block;font-weight:bold;color:#276749;margin-bottom:6px;font-size:13px}
+  .warning{background:#fffbea;border-left:4px solid #d69e2e;padding:12px 18px;margin:12px 0;border-radius:4px}
+  .warning::before{content:"⚠️ 注意 / Note";display:block;font-weight:bold;color:#975a16;margin-bottom:6px;font-size:13px}
+  table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px}
+  th,td{padding:10px 14px;text-align:left;border:1px solid #cbd5e0}
+  th{background:#2b6cb0;color:#fff;font-weight:600}
+  tr:nth-child(even) td{background:#f7fafc}
+  .toc{background:#edf2f7;padding:18px 25px;border-radius:8px;margin-bottom:30px}
+  .toc h2{margin-top:0;border-left:none;padding-left:0;color:#1a365d;font-size:18px}
+  .toc ol{padding-left:25px}
+  .toc li{margin:5px 0}
+  .toc a{color:#2b6cb0;text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .qa{background:#f7fafc;border-radius:8px;padding:16px 20px;margin:14px 0;border-left:4px solid #6b46c1}
+  .qa .question{font-weight:bold;color:#553c9a;margin-bottom:8px;font-size:15px}
+  .qa .answer{color:#2d3748}
+  .qa .answer-en{color:#4a5568;font-style:italic;margin-top:8px;padding-top:8px;border-top:1px dashed #cbd5e0}
+  .tag{display:inline-block;background:#6b46c1;color:#fff;padding:2px 8px;border-radius:12px;font-size:11px;margin-right:6px}
+  .tag.basic{background:#38a169}
+  .tag.advanced{background:#c05621}
+  .tag.tricky{background:#c53030}
+  ul,ol{padding-left:25px;margin:10px 0}
+  li{margin:5px 0}
+  strong{color:#1a365d}
+  .footer{margin-top:40px;padding-top:20px;border-top:2px dashed #cbd5e0;color:#718096;font-size:13px;text-align:center}
+  .compare-box{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  .compare-box>div{padding:14px;border-radius:6px}
+  .compare-box .left{background:#ebf8ff;border-left:4px solid #3182ce}
+  .compare-box .right{background:#fef5e7;border-left:4px solid #ed8936}
+  .three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0}
+  .three-col>div{padding:14px;border-radius:6px;background:#f7fafc;border-top:4px solid #4299e1}
+  .four-col{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin:14px 0}
+  .four-col>div{padding:12px;border-radius:6px;background:#f7fafc;border-top:4px solid #4299e1;font-size:14px}
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>非现金流估值方法
+  <span class="en">Non-CF Based Valuation Methods — Selecting Peers, Types of Multiples, Asset-Based Approaches</span>
+</h1>
+<p style="color:#718096;font-size:14px;">Applied Business Valuation 第 5 讲 ｜ 基于 Juhász 课件 + Valuation: Measuring and Managing the Value of Companies (Ch.18)</p>
+
+<div class="toc">
+  <h2>目录 / Table of Contents</h2>
+  <ol>
+    <li><a href="#sec1">非 DCF 方法概览 / Overview</a></li>
+    <li><a href="#sec2">两种 Multiple 方法 / Two Multiple Methods</a></li>
+    <li><a href="#sec3">估值流程 / Valuation Process</a></li>
+    <li><a href="#sec4">选择可比公司 / Selecting Peers</a></li>
+    <li><a href="#sec5">常见错误 / Common Mistakes</a></li>
+    <li><a href="#sec6">利润型 Multiples / Profit-Based</a></li>
+    <li><a href="#sec7">收入型 Multiples / Revenue-Based</a></li>
+    <li><a href="#sec8">资产型 Multiples / Asset-Based</a></li>
+    <li><a href="#sec9">行业特定 Multiples / Industry-Specific</a></li>
+    <li><a href="#sec10">非 DCF 法的终值 / Terminal Value</a></li>
+    <li><a href="#sec11">资产估值法 / Asset-Based Valuation</a></li>
+    <li><a href="#sec12">资产估值方法分类 / Asset Valuation Methods</a></li>
+    <li><a href="#sec13">三大方法对比 / Three Approaches Compared</a></li>
+    <li><a href="#qa">口试问题精选 / Likely Oral Exam Questions</a></li>
+  </ol>
+</div>
+
+<h2 id="sec1">1. 非 DCF 方法概览 <span class="en">Overview of Non-DCF Methods</span></h2>
+
+<div class="bilingual">
+  <div class="zh">作为 DCF 方法的<strong>替代或补充</strong>，非 DCF 方法主要包括两类：<strong>基于 Multiples（倍数）的估值</strong>和<strong>基于资产的估值 (ABV)</strong>。</div>
+  <div class="en">As alternatives or complements to DCF, non-DCF methods primarily include multiple-based valuation and asset-based valuation (ABV).</div>
+</div>
+
+<h2 id="sec2">2. 两种 Multiple 方法 <span class="en">Two Multiple-Based Methods</span></h2>
+
+<div class="compare-box">
+  <div class="left">
+    <strong>① 可比交易法 / Comparable Transactions</strong>
+    <p>查看<strong>历史 M&A 交易</strong>，了解类似公司（行业、规模、地理位置）的成交价。</p>
+    <p><em>Look at historical M&A transactions to figure out at what price similar companies were sold/bought.</em></p>
+    <p><strong>问题</strong>：5 年前的交易可能与当前情况无关；成交价可能含<strong>协同溢价</strong>，不反映纯价值。</p>
+    <p><em>Issue: 5-year-old deals may be irrelevant; price may include synergy premium.</em></p>
+  </div>
+  <div class="right">
+    <strong>② 市场倍数法 / Market Multiples</strong>
+    <p>查看<strong>同行业上市公司</strong>当前股价计算 multiples。</p>
+    <p><em>Look at current pricing of listed peers on the stock exchange.</em></p>
+    <p><strong>问题</strong>：市场效率存疑（可能错误定价）；当前股价反映少数股交易，含<strong>少数股折价</strong>。</p>
+    <p><em>Issue: market efficiency questionable; current price reflects minority discount.</em></p>
+  </div>
+</div>
+
+<h3>优劣势 / Pros & Cons</h3>
+<table>
+  <tr><th>优势 / Advantages</th><th>劣势 / Disadvantages</th></tr>
+  <tr>
+    <td>快速、简单、反映市场当前观点 / Quick, simple, reflects market opinion</td>
+    <td>隐含假设；数据质量存疑（尤其交易数据）；可比性需深度理解；泡沫风险；任何价值都可被"合理化" / Implicit assumptions, data quality questionable, comparability requires understanding, bubbles, any value justifiable</td>
+  </tr>
+</table>
+
+<h2 id="sec3">3. 估值流程 <span class="en">Valuation Process</span></h2>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh"><strong>从选择 multiple 开始</strong>，再据此选择可比公司！倒过来做（先选公司再凑 multiple）是常见错误。</div>
+    <div class="en">Start by choosing the multiple, then select peers based on it. Reversing this order is a common mistake.</div>
+  </div>
+</div>
+
+<h3>选择 Multiple 的标准 / Criteria for Choosing Multiples</h3>
+<ul>
+  <li><strong>简单</strong>（易懂）/ Simple (easy-to-understand)</li>
+  <li><strong>清晰、可获取</strong>（数据可得）/ Clear and accessible</li>
+  <li><strong>相关性</strong>：能描述行业总体特征 / Relevance — describes industry population</li>
+  <li><strong>口径一致</strong>：分子分母同维度（要么整体公司，要么权益）/ Consistent ratio (whole firm OR equity)</li>
+  <li><strong>统一性</strong>：所有同行用同样方式定义（同年、同币种、同方法）/ Uniformity across peers</li>
+</ul>
+
+<h3>四步流程 / Four Steps</h3>
+<ol>
+  <li><strong>选 Multiple</strong> 满足以上标准 / Choose multiple meeting criteria</li>
+  <li><strong>选 Peers</strong>：8-15 家类似公司，取均值 / Select 8-15 peers, take average</li>
+  <li><strong>差异修正</strong>：subjective 修正、modified multiples、折溢价 / Control for differences (subjective correction, modified multiples, discounts/premiums)</li>
+  <li><strong>检查结果是否现实</strong> / Check whether results are realistic</li>
+</ol>
+
+<h2 id="sec4">4. 选择可比公司 <span class="en">Selecting Peers</span></h2>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh">最大挑战是选对 peers。<strong>peers 选择基于已选定的 multiple</strong>。peers 应在风险、增长、利润生成等方面与目标公司类似。<strong>好的 peer group</strong>不仅同行业，还有相似的 ROIC 和增长前景。常见做法：选 8-15 家，取 multiples 平均值。</div>
+    <div class="en">The challenge is choosing right peers. Peers selected based on the chosen multiple. Peers should be similar in risk, growth, profit generation. Good peer group: same industry AND similar ROIC and growth prospects. Common practice: 8-15 peers, take average of their multiples.</div>
+  </div>
+</div>
+
+<div class="warning">
+  <div class="bilingual">
+    <div class="zh">即便 peers 平均值也可能与目标公司不同 → 必须<strong>修正差异</strong>（重新计算 multiples 或对原结果应用折/溢价）。</div>
+    <div class="en">Even peer averages may differ from your target → must control for differences (recalculate or apply discounts/premiums).</div>
+  </div>
+</div>
+
+<h2 id="sec5">5. 常见错误 <span class="en">Common Mistakes</span></h2>
+
+<table>
+  <tr><th>错误 / Mistake</th><th>解决方法 / Solution</th></tr>
+  <tr><td>未检查 multiples 的描述能力 / Description power not checked</td><td>选行业内通用的 ratios / Choose industry-applied ratios</td></tr>
+  <tr><td>计算口径不统一 / Calculation not standardized</td><td><strong>下载原始数据自己算</strong> / Download raw data and recalculate</td></tr>
+  <tr><td>把竞争对手当 peers / Peers are competitors rather than similar firms</td><td>竞争 ≠ 相似 / Competition ≠ similarity</td></tr>
+  <tr><td>未应用必要折/溢价 / Discounts not applied</td><td>peers 平均通常与目标不同 / Peer average typically differs</td></tr>
+</table>
+
+<h3>Multiples 四大分类 / Four Groups of Multiples</h3>
+<div class="four-col">
+  <div><strong>利润型 / Profit</strong><br>P/E, EV/EBIT</div>
+  <div><strong>收入型 / Revenue</strong><br>EV/Sales</div>
+  <div><strong>资产型 / Asset</strong><br>P/BV, Tobin's Q</div>
+  <div><strong>行业特定 / Industry-Specific</strong><br>用户数、客房数等</div>
+</div>
+
+<h2 id="sec6">6. 利润型 Multiples <span class="en">Profit-Based Multiples</span></h2>
+
+<div class="definition">
+  <div class="bilingual">
+    <div class="zh">权益价值 / 企业价值与某种利润对比。<strong>三个共同假设</strong>（适用所有 Multiple 组）：(1) 相似 CF 生成；(2) 相似 CF 生成风险；(3) 相似稳定长期增长率 g。</div>
+    <div class="en">Equity/firm value contrasted to some profit. Three common assumptions (apply to all groups): (1) similar CF generation; (2) similar CF generation risk; (3) similar stable long-term growth rate g.</div>
+  </div>
+</div>
+
+<div class="formula">
+<span class="label">常见利润型倍数 / Common Profit-Based Multiples</span>
+P/E = 股价 / 每股盈利<br>
+EV/EBIT = 企业价值 / 息税前利润
+</div>
+
+<div class="warning">
+  <div class="bilingual">
+    <div class="zh">利润型倍数的<strong>缺陷</strong>：利润可能为负 → 不得不剔除部分公司，最终只对比"最盈利公司"，导致 peer group 偏向健康企业，目标公司被"高基准"参照。</div>
+    <div class="en">Drawback: profits may be negative → must drop firms, ending up comparing only the most profitable, biasing peer group toward healthy firms.</div>
+  </div>
+</div>
+
+<h2 id="sec7">7. 收入型 Multiples <span class="en">Revenue-Based Multiples</span></h2>
+
+<div class="bilingual">
+  <div class="zh">收入<strong>很少为负</strong>，无需剔除潜在公司，得到的 peer group 更全面（不只是最赚钱的）。<br>
+  <strong>额外假设</strong>：单位销售额产生的 CF 相似（即<strong>毛利率相近</strong>）。<br>
+  <strong>易用</strong>：销售数据易获取；<strong>会计扭曲少</strong>（不同会计准则下收入差异小）。</div>
+  <div class="en">Revenue rarely negative — no firms dropped, fuller peer group (not just most profitable). Extra assumption: similar CF per unit sales (similar margins). Easy to use, sales data accessible, accounting distortions low.</div>
+</div>
+
+<div class="formula">
+<span class="label">收入型倍数 / Revenue Multiples</span>
+EV/S = 企业价值 / 销售收入<br>
+EV/Sales (Enterprise Value to Sales)
+</div>
+
+<h2 id="sec8">8. 资产型 Multiples <span class="en">Asset-Based Multiples</span></h2>
+
+<div class="bilingual">
+  <div class="zh">权益账面价值 / IC 账面价值与权益市值 / 企业市值对比。<br>
+  <strong>第四个假设</strong>：资本效率（ROI(c)/ROE）与 peers 相似。<br>
+  <strong>长期稳定、易对比</strong>，但<strong>会计政策差异（如折旧方法）会扭曲 BV</strong> → 避免对比会计背景差异巨大的公司。</div>
+  <div class="en">BV equity/IC contrasted to MV equity/firm. Fourth assumption: capital efficiency (ROI(c)/ROE) similar to peers. Stable long-term, easy to compare, but accounting policy differences (e.g., depreciation methods) distort BV → avoid contrasting firms with very different accounting backgrounds.</div>
+</div>
+
+<div class="formula">
+<span class="label">资产型倍数 / Asset-Based Multiples</span>
+P/BV = 股价 / 每股账面价值<br>
+Tobin's Q = MV of Assets / Replacement Value of Assets
+</div>
+
+<div class="warning">
+  <div class="bilingual">
+    <div class="zh">Tobin's Q 的问题：分子（资产 MV）和分母（资产重置价值）都<strong>难以从股市观察到</strong>。</div>
+    <div class="en">Problem with Tobin's Q: neither numerator nor denominator can be observed on the stock market.</div>
+  </div>
+</div>
+
+<h2 id="sec9">9. 行业特定 Multiples <span class="en">Industry-Specific Multiples</span></h2>
+
+<div class="bilingual">
+  <div class="zh">用于估<strong>整个企业</strong>（非权益）。需找到与企业价值有<strong>强关联的物理量</strong>（通常不在财报中）。<br>
+  <strong>要求</strong>：所有 peers 同行业、用同技术、效率相似。<br>
+  <strong>优势</strong>：无会计问题；无需额外信息。</div>
+  <div class="en">Value the whole firm, not equity. Need a physical quantity (usually not in FS) strongly linked to firm value. Requires same industry, same technology, similar efficiency. Advantages: no accounting issues, no extra info needed.</div>
+</div>
+
+<div class="example">
+<p>电信行业：用户数 / Number of subscribers<br>
+互联网公司：点击数 / Number of clicks<br>
+酒店：客房数 / Number of rooms<br>
+航空：座位数 × 航线英里 / ASMs (Available Seat Miles)</p>
+</div>
+
+<h2 id="sec10">10. 非 CF 法的终值 <span class="en">Terminal Value for Non-CF Methods</span></h2>
+
+<div class="three-col">
+  <div>
+    <strong>① 清算法 / Liquidation</strong>
+    <p>显性期后清算企业。<strong>最坏情况</strong>。假设终值期 ROIC = WACC，新老项目都不创造 CF，企业价值 = IC（资产价值）。</p>
+    <p><em>Worst case scenario — sell all assets. Assumes no projects generate positive NPV, firm value = IC.</em></p>
+  </div>
+  <div>
+    <strong>② 重置法 / Replacement</strong>
+    <p>知道 10 年后企业表现良好但不知具体多好 → 检查届时拥有的资产，企业至少值这些资产的钱。</p>
+    <p><em>Know firm will perform well but not how well — check assets owned in 10 years; firm worth at least that.</em></p>
+  </div>
+  <div>
+    <strong>③ Multiple 法 / Multiple-Based</strong>
+    <p>从理论角度<strong>最难辩护</strong>。看 10 年后企业模样，假设市场条件不变，应用今天该类公司的 multiples。</p>
+    <p><em>Hardest to defend theoretically — assumes market conditions unchanged over 10 years.</em></p>
+  </div>
+</div>
+
+<h2 id="sec11">11. 资产估值法 (ABV) <span class="en">Asset-Based Valuation</span></h2>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh">ABV 关注企业<strong>拥有的资产</strong>，<strong>不评估业务本身</strong>。但能高亮"是停止运营清算 vs 继续运营"哪个更优。</div>
+    <div class="en">ABV focuses on assets owned, does NOT value the business. But highlights whether to liquidate or continue operations.</div>
+  </div>
+</div>
+
+<div class="formula">
+<span class="label">ABV 总价值 / ABV Total Value</span>
+V = 运营价值（当前主要活动）+ 不需要的额外资产价值<br>
+V = Value of operation + Value of additional non-needed assets
+</div>
+
+<h3>资产识别的挑战 / The Challenge of Identifying Assets</h3>
+
+<div class="compare-box">
+  <div class="left">
+    <strong>会计视角 / Accounting</strong>
+    <ul>
+      <li>企业拥有（如使用，则有三项权利：使用、修改、出售）</li>
+      <li>预期收入超过预期成本</li>
+      <li>可在可接受不确定性下预测（绝对担保）</li>
+    </ul>
+    <p><em>Owned by firm (3 rights if used: use, modify, sell); expected income exceeds costs; predictable with acceptable uncertainty.</em></p>
+  </div>
+  <div class="right">
+    <strong>金融视角 / Finance</strong>
+    <ul>
+      <li>能产生未来 CF</li>
+      <li>若不能，可保护免于产生负 CF</li>
+      <li>类期权资产：有机会落入前两类</li>
+      <li><strong>准资产</strong>：可管理但不拥有（如供应商关系）</li>
+    </ul>
+    <p><em>Generates future CF; or protects against negative CF; option-like assets; "quasi assets" — manageable but not owned (e.g., supplier relationships).</em></p>
+  </div>
+</div>
+
+<h2 id="sec12">12. 资产估值方法分类 <span class="en">Asset Valuation Methods</span></h2>
+
+<table>
+  <tr><th>时间维度 / Time</th><th>方法 / Method</th><th>说明 / Description</th></tr>
+  <tr>
+    <td rowspan="1"><strong>过去 / Past</strong></td>
+    <td>修正购置成本 / Modified purchasing cost</td>
+    <td>会计中的账面价值 / Book value in accounting</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><strong>现在（购入）/ Present (Buy)</strong></td>
+    <td>替代价值 / Substitution value</td>
+    <td>获得相同功能 / Get same functionality the asset provides now</td>
+  </tr>
+  <tr>
+    <td>重置价值 / Replacement value</td>
+    <td>购买相同资产 / Buy the same asset (assumes continued similar operations)</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><strong>现在（出售）/ Present (Sell)</strong></td>
+    <td>净变现价值 / Net realizable value</td>
+    <td>正常出售价格（减交易成本和税）/ Sale price minus transaction costs and tax</td>
+  </tr>
+  <tr>
+    <td>清算价值 / Liquidation value</td>
+    <td>快速变卖（更高交易成本或更低售价）/ Rapid sale, higher costs / lower price; ongoing operations in danger</td>
+  </tr>
+  <tr>
+    <td rowspan="2"><strong>未来 / Future</strong></td>
+    <td>DCF</td>
+    <td>预测资产 CF 并折现 / Predict asset CFs and discount</td>
+  </tr>
+  <tr>
+    <td>Capitalization 资本化</td>
+    <td>资产层面的 multiple 估值（典型如写字楼）/ Multiple-based valuation for assets (typically office buildings)</td>
+  </tr>
+</table>
+
+<h2 id="sec13">13. 三大估值方法对比 <span class="en">Three Major Valuation Approaches</span></h2>
+
+<table>
+  <tr><th>方法 / Method</th><th>关注点 / Focus</th></tr>
+  <tr>
+    <td><strong>DCF</strong></td>
+    <td>预测的<strong>未来运营</strong>价值 / Value of predicted future operations</td>
+  </tr>
+  <tr>
+    <td><strong>Multiples</strong></td>
+    <td>市场上<strong>典型平均买家</strong>会出的价格 / Price a typical average buyer from market would pay</td>
+  </tr>
+  <tr>
+    <td><strong>ABV</strong></td>
+    <td>停止运营、清算资产、偿还所有负债后<strong>能取出多少钱</strong> / How much can be withdrawn if operations stop, assets liquidated, liabilities repaid</td>
+  </tr>
+</table>
+
+<h2 id="qa">14. 口试可能问题精选 / Likely Oral Exam Questions</h2>
+
+<div class="qa">
+  <div class="question">Q1. <span class="tag basic">基础</span> 列举非 DCF 估值方法的两大类，并简述各自原理。<br>
+  <em>List the two main non-DCF valuation methods and explain.</em></div>
+  <div class="answer">
+    <strong>(1) 基于 Multiples 的估值</strong>：通过同行业可比公司的财务比率（如 P/E、EV/EBIT）来估算目标公司价值。又分两种：<br>
+    • <strong>可比交易法</strong>：参考历史 M&A 交易价格；<br>
+    • <strong>市场倍数法</strong>：参考上市同行的当前股价。<br>
+    <strong>(2) 基于资产的估值 (ABV)</strong>：评估企业拥有的资产价值，不评估业务本身。重点在"清算 vs 继续经营"的判断。<br>
+    总价值 = 运营价值 + 不需要的额外资产价值。
+  </div>
+  <div class="answer-en">
+    (1) Multiple-based valuation: uses financial ratios from comparable peers (P/E, EV/EBIT). Two subtypes: comparable transactions (historical M&A) and market multiples (listed peers). (2) ABV: values assets owned (not the business). Value = operating value + excess asset value. Useful for liquidation vs continuation decision.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q2. <span class="tag tricky">易混</span> 区分可比交易法与市场倍数法的扭曲来源。<br>
+  <em>Distinguish distortion sources between comparable transactions and market multiples.</em></div>
+  <div class="answer">
+    <strong>可比交易法的扭曲</strong>：<br>
+    • <strong>时效性差</strong>：5 年前的交易与当前市场情况无关；<br>
+    • <strong>含协同溢价</strong>：成交价反映买方愿付的协同效应价值，不是纯运营价值；<br>
+    • <strong>含控制权溢价</strong>：M&A 多数为控股交易，价格高于少数股交易。<br>
+    <strong>市场倍数法的扭曲</strong>：<br>
+    • <strong>市场效率存疑</strong>：股价可能错误定价（泡沫、恐慌）；<br>
+    • <strong>含少数股折价</strong>：股价反映的是少数股交易，不含控制权溢价；<br>
+    • <strong>当下情绪</strong>：反映短期市场情绪，未必是长期价值。
+  </div>
+  <div class="answer-en">
+    Comparable transactions: outdated data (5-year-old deals irrelevant), price contains synergy premium (not pure value), contains control premium (mostly controlling deals). Market multiples: market efficiency questionable (potential mispricing), reflects minority discount (small trades don't include control), reflects short-term sentiment.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q3. <span class="tag basic">基础</span> 描述 multiple 估值的四步流程及关键原则。<br>
+  <em>Describe the four-step multiple valuation process and key principles.</em></div>
+  <div class="answer">
+    <strong>四步流程</strong>：<br>
+    (1) <strong>选 Multiple</strong>：满足简单、清晰、相关、口径一致、统一性五个标准；<br>
+    (2) <strong>选 Peers</strong>：8-15 家在风险、增长、利润生成等方面类似的公司，取均值；<br>
+    (3) <strong>差异修正</strong>：subjective 修正、modified multiples、应用折/溢价；<br>
+    (4) <strong>检查现实性</strong>。<br>
+    <strong>关键原则</strong>：<strong>先选 multiple 后选 peers</strong>！peers 的选择基于 multiple，而非反之。倒过来做会使结果失真（先选公司再凑 multiple 容易选择性偏差）。
+  </div>
+  <div class="answer-en">
+    Four steps: (1) choose multiple (simple, clear, relevant, consistent ratio, uniform); (2) select 8-15 peers similar in risk/growth/profit, take average; (3) control for differences (subjective correction, modified multiples, discounts/premiums); (4) check realism. Key principle: choose multiple FIRST, then peers — never reverse, as that introduces selection bias.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q4. <span class="tag advanced">进阶</span> Multiples 的四大分类及各自的假设。<br>
+  <em>Four groups of multiples and their assumptions.</em></div>
+  <div class="answer">
+    <strong>三个共同假设</strong>（适用所有组）：(1) 相似 CF 生成；(2) 相似 CF 生成风险；(3) 相似稳定长期 g。<br><br>
+    <strong>(1) 利润型</strong>（P/E, EV/EBIT）：将权益/企业价值与利润对比。缺陷：利润可能为负，剔除后 peer group 偏向健康企业。<br>
+    <strong>(2) 收入型</strong>（EV/Sales）：收入很少为负，peer group 更全面。<strong>额外假设</strong>：单位销售产生 CF 相似（毛利率相近）。会计扭曲低，数据易获。<br>
+    <strong>(3) 资产型</strong>（P/BV, Tobin's Q）：BV 与 MV 对比。<strong>第四个假设</strong>：资本效率（ROIC/ROE）相似。但折旧方法等会计政策会扭曲 BV，需避免对比不同会计背景的公司。<br>
+    <strong>(4) 行业特定</strong>（用户数、客房数、ASM）：估整个企业（非权益）。要求 peers 同行业、同技术、同效率。无会计问题。
+  </div>
+  <div class="answer-en">
+    Three common assumptions: similar CF generation, risk, stable g. (1) Profit-based (P/E, EV/EBIT): may drop firms with negative profit, biasing peers. (2) Revenue-based (EV/S): revenues rarely negative; extra assumption — similar margin. Low accounting distortion. (3) Asset-based (P/BV, Tobin's Q): fourth assumption — similar capital efficiency. Distortion from depreciation methods. (4) Industry-specific (subscribers, rooms, ASM): values whole firm; requires same industry, technology, efficiency. No accounting issues.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q5. <span class="tag tricky">易混</span> 收入型 multiples 相比利润型 multiples 有何优势？<br>
+  <em>What advantages do revenue multiples have over profit multiples?</em></div>
+  <div class="answer">
+    <strong>(1) 数据范围更广</strong>：收入很少为负，无需剔除亏损公司。利润型必须剔除负利润公司，剩下的都是"最盈利"的，导致<strong>peer group 偏向健康企业</strong>，目标公司被高基准参照。<br>
+    <strong>(2) 数据易获</strong>：销售数据普遍可得（即使私人公司也有）。<br>
+    <strong>(3) 会计扭曲少</strong>：不同会计准则对收入定义差异小，远小于对净利润的影响（折旧、税收、非经营项等）。<br>
+    <strong>(4) 适合周期性企业、亏损企业、初创公司</strong>：这些企业利润不稳定但收入可见。<br>
+    <strong>代价</strong>：增加一个假设——单位销售 CF 相似（毛利率相近）。
+  </div>
+  <div class="answer-en">
+    (1) Wider data: revenues rarely negative — no firms dropped (profit-based methods drop negative firms, biasing peers toward healthy ones). (2) Data accessible (even for private firms). (3) Lower accounting distortion (revenues less affected by depreciation, tax, non-operating items than net income). (4) Suitable for cyclical, loss-making, startup firms. Cost: extra assumption — similar margin (CF per unit sales).
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q6. <span class="tag advanced">进阶</span> 选择 peers 的关键挑战和原则是什么？<br>
+  <em>Key challenges and principles in selecting peers.</em></div>
+  <div class="answer">
+    <strong>挑战</strong>：peers 应在<strong>风险、增长、利润生成、ROIC 前景</strong>等方面与目标公司类似，但实务中找到完美匹配的同行很难。<br>
+    <strong>关键原则</strong>：<br>
+    (1) <strong>peers 选择基于已选定的 multiple</strong>（不是反过来）；<br>
+    (2) <strong>同行业不等于同 peer</strong>：好的 peer group 不仅同行业，还有相似的 ROIC 和增长前景；<br>
+    (3) <strong>竞争对手 ≠ peers</strong>：竞争对手可能因业务模式差异不可比；<br>
+    (4) <strong>选 8-15 家</strong>取均值（数量过少代表性不足，过多稀释关键特征）；<br>
+    (5) <strong>必须修正差异</strong>：peers 平均通常与目标不同，需用 subjective 修正、modified multiples 或折/溢价调整。
+  </div>
+  <div class="answer-en">
+    Challenge: find peers truly similar in risk, growth, profit generation, ROIC prospects. Principles: (1) peers based on chosen multiple, not reverse; (2) same industry ≠ peer (need similar ROIC and growth); (3) competitors ≠ peers; (4) 8-15 peers for balanced average; (5) must control for differences via subjective correction, modified multiples, or discounts/premiums.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q7. <span class="tag basic">基础</span> 解释非 CF 法的三种终值计算方式。<br>
+  <em>Three terminal value methods for non-CF approaches.</em></div>
+  <div class="answer">
+    <strong>(1) 清算法 (Liquidation)</strong>：显性期后清算企业，是<strong>最坏情况</strong>。假设终值期 ROIC = WACC（无 NPV 项目），企业价值 = IC（资产值）。<br>
+    <strong>(2) 重置法 (Replacement)</strong>：知道 10 年后企业表现良好但不知具体多好 → 检查届时拥有的资产，企业至少值这些资产的钱。<br>
+    <strong>(3) Multiple 法</strong>：<strong>理论上最难辩护</strong>。预测 10 年后企业模样，假设市场条件不变，应用今天同类公司的 multiples。<br>
+    <strong>选用建议</strong>：清算法保守可靠；重置法适合稳定行业；Multiple 法假设强但常用。三者可作为价值区间的下界、中值和上界。
+  </div>
+  <div class="answer-en">
+    (1) Liquidation: worst case, sell all assets, value = IC, assumes ROIC = WACC. (2) Replacement: know firm performs well but not how well — value = at least the assets it will own in 10 years. (3) Multiple-based: hardest to defend theoretically — assumes market conditions unchanged. Suggested use: liquidation as lower bound, replacement as middle, multiples as upper.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q8. <span class="tag advanced">进阶</span> 资产估值法 (ABV) 的核心思想及总价值公式。<br>
+  <em>Core idea and total value formula of ABV.</em></div>
+  <div class="answer">
+    <strong>核心思想</strong>：ABV 关注企业<strong>拥有的资产</strong>，<strong>不评估业务本身</strong>。但能高亮"清算 vs 继续经营"哪个更优——若 ABV > DCF 估值，应清算。<br>
+    <strong>公式</strong>：<br>
+    <strong>V = 运营价值（当前主要活动）+ 不需要的额外资产价值</strong><br>
+    <strong>挑战</strong>：识别"什么是资产"。会计视角要求企业拥有（三项权利）、预期收入>成本、可预测；金融视角更宽松，包括能产生 CF 或保护免于负 CF 的资产、类期权资产，甚至<strong>准资产</strong>（可管理但不拥有，如供应商关系）。
+  </div>
+  <div class="answer-en">
+    Core: focuses on assets owned, not the business itself. Highlights liquidation vs continuation choice. Formula: V = value of current operation + value of non-needed additional assets. Challenge: identifying assets. Accounting view: owned (3 rights), income > cost, predictable. Finance view: generates future CF or protects from negative CF; option-like; quasi-assets (manageable but not owned, e.g., supplier relationships).
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q9. <span class="tag tricky">易混</span> 区分重置价值、替代价值、净变现价值和清算价值。<br>
+  <em>Distinguish replacement, substitution, net realizable, and liquidation values.</em></div>
+  <div class="answer">
+    <strong>购入维度（多少钱可买到）</strong>：<br>
+    • <strong>替代价值 (Substitution)</strong>：购入<strong>不同资产但能提供相同功能</strong>所需的钱（功能等价）；<br>
+    • <strong>重置价值 (Replacement)</strong>：购入<strong>完全相同资产</strong>所需的钱（实物等价）。<br>
+    <strong>出售维度（多少钱可卖出）</strong>：<br>
+    • <strong>净变现价值 (Net Realizable)</strong>：<strong>正常市场出售</strong>的价格减去交易成本和税；<br>
+    • <strong>清算价值 (Liquidation)</strong>：<strong>快速变卖</strong>，交易成本更高或售价更低（假设运营处于危险中）。<br>
+    <strong>关系</strong>：通常 重置 ≥ 替代；净变现 ≥ 清算。前两个偏向"持续经营"假设，后两个偏向"停止经营"假设。
+  </div>
+  <div class="answer-en">
+    Buy side: substitution (different asset, same functionality); replacement (same asset). Sell side: net realizable (normal market sale minus costs/tax); liquidation (rapid sale, higher costs / lower price, operations in danger). Order: replacement ≥ substitution; net realizable ≥ liquidation. First two assume continued operations; last two assume cessation.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q10. <span class="tag basic">基础</span> 比较 DCF、Multiples 和 ABV 三种估值方法的本质差异。<br>
+  <em>Compare DCF, Multiples, and ABV approaches.</em></div>
+  <div class="answer">
+    <strong>(1) DCF</strong>：聚焦<strong>预测的未来运营</strong>价值。基于详细财务计划，理论严谨但依赖假设。回答"如果我们继续经营，企业值多少？"<br>
+    <strong>(2) Multiples</strong>：聚焦<strong>市场上典型平均买家</strong>会出的价格。快速但隐含市场假设。回答"如果今天卖给一个普通买家，能卖多少？"<br>
+    <strong>(3) ABV</strong>：聚焦<strong>停止运营、清算资产、偿还负债后能取出多少钱</strong>。回答"如果我们今天关门，能拿回多少？"<br>
+    <strong>实务中三者结合使用</strong>：DCF 给运营价值的中枢估计；Multiples 提供市场视角的合理性检验；ABV 提供下界（清算底）。三者差异往往揭示"清算 vs 继续经营"的最优选择。
+  </div>
+  <div class="answer-en">
+    DCF: value of predicted future operations ("if we continue, what is firm worth?"). Multiples: price typical average market buyer would pay ("if sold today to ordinary buyer, what price?"). ABV: how much can be withdrawn after stopping operations, liquidating assets, paying liabilities ("if we close today, what do we recover?"). In practice, combined: DCF as central estimate, multiples for market sanity check, ABV as lower bound. Differences reveal liquidation vs continuation choice.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q11. <span class="tag advanced">进阶</span> Multiple 估值法的常见错误有哪些，如何避免？<br>
+  <em>Common mistakes in multiples valuation and how to avoid them.</em></div>
+  <div class="answer">
+    <strong>(1) 描述能力未检验</strong>：所选 multiple 未必是行业内通用指标 → <strong>选行业内广泛使用的 ratios</strong>。<br>
+    <strong>(2) 计算口径不统一</strong>：不同数据源对同一 multiple 的计算可能不同 → <strong>下载原始数据自己算</strong>，确保所有 peers 同口径（同年、同币种、同方法）。<br>
+    <strong>(3) 把竞争对手当 peers</strong>：竞争 ≠ 相似（业务模式可能完全不同）→ <strong>关注风险、增长、ROIC 等</strong>实质性相似度。<br>
+    <strong>(4) 未应用必要的折/溢价</strong>：peers 平均常与目标不同 → <strong>必须做差异修正</strong>（subjective、modified multiples、折/溢价）。<br>
+    <strong>(5) 顺序错误</strong>：先选公司再凑 multiple → <strong>先选 multiple 再选 peers</strong>。<br>
+    <strong>(6) 用单一倍数</strong> → 用多个倍数交叉验证（profit、revenue、industry-specific 综合）。
+  </div>
+  <div class="answer-en">
+    (1) Description power not checked → use industry-standard ratios. (2) Calculation not standardized → download raw data and recalculate uniformly. (3) Peers are competitors not similar firms → focus on risk, growth, ROIC similarity. (4) Discounts/premiums not applied → control for differences. (5) Wrong order → choose multiple first, then peers. (6) Single multiple → cross-validate with multiple types.
+  </div>
+</div>
+
+<h2>📋 备考速记卡 / Quick Reference Card</h2>
+<table>
+  <tr><th>Multiple 类型</th><th>典型例子</th><th>共同假设之外的额外假设</th></tr>
+  <tr><td>利润型 / Profit</td><td>P/E, EV/EBIT</td><td>无（仅三个共同假设）</td></tr>
+  <tr><td>收入型 / Revenue</td><td>EV/Sales</td><td>+ 单位销售 CF 相似（margin 相近）</td></tr>
+  <tr><td>资产型 / Asset</td><td>P/BV, Tobin's Q</td><td>+ 资本效率 (ROIC/ROE) 相似</td></tr>
+  <tr><td>行业特定 / Industry</td><td>用户数、客房数</td><td>+ 同技术、同效率</td></tr>
+</table>
+
+<h2>📊 Multiples 估值原则速查</h2>
+<table>
+  <tr><th>原则 / Principle</th><th>说明</th></tr>
+  <tr><td>口径一致 / Consistent ratio</td><td>分子分母同维度（whole firm OR equity）</td></tr>
+  <tr><td>统一性 / Uniformity</td><td>所有 peers 同年、同币种、同方法</td></tr>
+  <tr><td>顺序 / Order</td><td>先选 multiple，再选 peers</td></tr>
+  <tr><td>peer 数量</td><td>8-15 家，取均值</td></tr>
+  <tr><td>差异修正</td><td>subjective、modified multiples、折/溢价</td></tr>
+</table>
+
+<h2>🎯 口试应答策略 / Oral Exam Strategy</h2>
+<ol>
+  <li><strong>必背 Multiples 四大分类</strong>：profit / revenue / asset / industry-specific 各自的例子和假设。</li>
+  <li><strong>三个共同假设</strong>：相似 CF 生成、相似风险、相似 g（适用所有 multiples）。</li>
+  <li><strong>资产型多一个假设</strong>：相似资本效率（ROIC/ROE）。</li>
+  <li><strong>peer 选择原则</strong>：先选 multiple 后选 peers；同行业不等于同 peer；要看 ROIC 和增长前景。</li>
+  <li><strong>非 CF 法终值三种</strong>：清算、重置、Multiple；按理论严谨度排序：清算 > 重置 > Multiple。</li>
+  <li><strong>ABV 公式</strong>：V = 运营价值 + 不需要的额外资产价值。</li>
+  <li><strong>资产价值方法（按时间维度）</strong>：过去（BV/修正购置）、现在购入（替代/重置）、现在出售（净变现/清算）、未来（DCF/资本化）。</li>
+  <li><strong>三大方法的本质差异</strong>：DCF（预测未来运营）vs Multiples（市场买家会出多少）vs ABV（清算能取出多少）。</li>
+  <li><strong>关键英文术语</strong>：comparable transactions, market multiples, peers, P/E, EV/EBIT, EV/Sales, P/BV, Tobin's Q, replacement value, substitution value, liquidation value, net realizable value, ABV, quasi assets, capitalization。</li>
+</ol>
+
+<div class="footer">
+  📚 非现金流估值方法双语备考指南 | Non-CF Based Valuation Methods Bilingual Study Guide<br>
+  基于 Juhász 课件 + Valuation (Ch.18 Using Multiples) | 与第 4、6 讲配套使用
+</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>营运资本管理与短期融资 | Working Capital Management & Short-Term Financing - Bilingual Exam Guide</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    line-height: 1.75;
+    color: #2c3e50;
+    background: #f5f7fa;
+    padding: 20px;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  h1 {
+    color: #1a365d;
+    border-bottom: 3px solid #2b6cb0;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+    font-size: 28px;
+  }
+  h1 .en { display: block; font-size: 18px; color: #4a5568; font-weight: normal; margin-top: 4px;}
+  h2 {
+    color: #2b6cb0;
+    margin-top: 35px;
+    margin-bottom: 15px;
+    padding-left: 12px;
+    border-left: 5px solid #2b6cb0;
+    font-size: 22px;
+  }
+  h2 .en { display: block; font-size: 15px; color: #718096; font-weight: normal; margin-top: 2px;}
+  h3 {
+    color: #2c5282;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    font-size: 17px;
+  }
+  h3 .en { color: #718096; font-weight: normal; font-size: 14px; }
+  p { margin: 10px 0; }
+  .bilingual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 12px 0;
+    padding: 14px 18px;
+    background: #f7fafc;
+    border-radius: 6px;
+    border-left: 4px solid #4299e1;
+  }
+  .bilingual .zh { color: #2d3748; }
+  .bilingual .en { color: #4a5568; font-style: italic; }
+  .formula {
+    background: #fffaf0;
+    border: 1px solid #f6ad55;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 12px 0;
+    font-family: "Cambria Math", "Times New Roman", serif;
+    font-size: 16px;
+    text-align: center;
+    color: #744210;
+  }
+  .formula .label {
+    font-weight: bold;
+    color: #c05621;
+    margin-bottom: 6px;
+    display: block;
+    font-size: 13px;
+  }
+  .key-point {
+    background: linear-gradient(to right, #fff5f5, #fff);
+    border-left: 4px solid #e53e3e;
+    padding: 12px 18px;
+    margin: 14px 0;
+    border-radius: 4px;
+  }
+  .key-point::before {
+    content: "★ 核心要点 / Key Point";
+    display: block;
+    font-weight: bold;
+    color: #c53030;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .definition {
+    background: #ebf8ff;
+    border: 1px solid #90cdf4;
+    border-radius: 6px;
+    padding: 12px 18px;
+    margin: 12px 0;
+  }
+  .definition::before {
+    content: "📖 定义 / Definition";
+    display: block;
+    font-weight: bold;
+    color: #2c5282;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .example {
+    background: #f0fff4;
+    border-left: 4px solid #48bb78;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .example::before {
+    content: "💡 示例 / Example";
+    display: block;
+    font-weight: bold;
+    color: #276749;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .warning {
+    background: #fffbea;
+    border-left: 4px solid #d69e2e;
+    padding: 12px 18px;
+    margin: 12px 0;
+    border-radius: 4px;
+  }
+  .warning::before {
+    content: "⚠️ 注意 / Note";
+    display: block;
+    font-weight: bold;
+    color: #975a16;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border: 1px solid #cbd5e0;
+  }
+  th {
+    background: #2b6cb0;
+    color: #fff;
+    font-weight: 600;
+  }
+  tr:nth-child(even) td { background: #f7fafc; }
+  .toc {
+    background: #edf2f7;
+    padding: 18px 25px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  .toc h2 { margin-top: 0; border-left: none; padding-left: 0; color: #1a365d; font-size: 18px;}
+  .toc ol { padding-left: 25px; }
+  .toc li { margin: 5px 0; }
+  .toc a { color: #2b6cb0; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .qa {
+    background: #f7fafc;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 14px 0;
+    border-left: 4px solid #6b46c1;
+  }
+  .qa .question {
+    font-weight: bold;
+    color: #553c9a;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+  .qa .answer { color: #2d3748; }
+  .qa .answer-en { color: #4a5568; font-style: italic; margin-top: 8px; padding-top: 8px; border-top: 1px dashed #cbd5e0;}
+  .tag {
+    display: inline-block;
+    background: #6b46c1;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    margin-right: 6px;
+  }
+  .tag.basic { background: #38a169; }
+  .tag.advanced { background: #c05621; }
+  .tag.tricky { background: #c53030; }
+  ul, ol { padding-left: 25px; margin: 10px 0; }
+  li { margin: 5px 0; }
+  strong { color: #1a365d; }
+  .footer {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 2px dashed #cbd5e0;
+    color: #718096;
+    font-size: 13px;
+    text-align: center;
+  }
+  .compare-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 14px 0;
+  }
+  .compare-box > div {
+    padding: 14px;
+    border-radius: 6px;
+  }
+  .compare-box .left {
+    background: #ebf8ff;
+    border-left: 4px solid #3182ce;
+  }
+  .compare-box .right {
+    background: #fef5e7;
+    border-left: 4px solid #ed8936;
+  }
+  .risk-table th { background: #2c5282; }
+  .risk-table .high { background: #fed7d7; }
+  .risk-table .medium { background: #feebc8; }
+  .risk-table .low { background: #c6f6d5; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>营运资本管理与短期融资
+  <span class="en">Working Capital Management & Short-Term Financing — A Bilingual Exam Guide</span>
+</h1>
+<p style="color:#718096; font-size:14px;">基于 Madura-Fox《国际财务管理》Part 5 ｜ OTP 短期融资 PPT ｜ Juhász 视频讲座</p>
+
+<div class="toc">
+  <h2>目录 / Table of Contents</h2>
+  <ol>
+    <li><a href="#sec1">营运资本管理基础 / Working Capital Management Basics</a></li>
+    <li><a href="#sec2">现金管理权衡 / Cash Management Trade-off</a></li>
+    <li><a href="#sec3">现金循环 / Cash Conversion Cycle</a></li>
+    <li><a href="#sec4">商业信用 / Trade Credit</a></li>
+    <li><a href="#sec5">集中化现金管理 / Centralized Cash Management</a></li>
+    <li><a href="#sec6">优化现金流 / Optimizing Cash Flows</a></li>
+    <li><a href="#sec7">投资多余现金与有效收益率 / Investing Excess Cash & Effective Yield</a></li>
+    <li><a href="#sec8">国际贸易五种支付方式 / Five Methods of International Payment</a></li>
+    <li><a href="#sec9">国际贸易融资工具 / International Trade Financing</a></li>
+    <li><a href="#sec10">短期融资来源 / Sources of Short-Term Financing</a></li>
+    <li><a href="#sec11">应收账款与存货抵押 / AR & Inventory as Collateral</a></li>
+    <li><a href="#sec12">存货管理 / Inventory Management</a></li>
+    <li><a href="#sec13">外币融资 / Foreign Currency Financing</a></li>
+    <li><a href="#sec14">利率平价与购买力平价 / IRP & PPP</a></li>
+    <li><a href="#qa">口试可能问题精选 / Likely Oral Exam Questions</a></li>
+  </ol>
+</div>
+
+<!-- ============= SECTION 1 ============= -->
+<h2 id="sec1">1. 营运资本管理基础
+  <span class="en">Working Capital Management Basics</span>
+</h2>
+
+<div class="definition">
+  <div class="bilingual">
+    <div class="zh"><strong>净营运资本 (NWC)</strong> = 流动资产 − 流动负债 = 长期负债 + 权益 − 流动负债。营运资本管理通过影响 FCF 直接影响企业价值。</div>
+    <div class="en">Net Working Capital = Current Assets − Current Liabilities = Long-term Liab. + Equity − Current Liab. WCM impacts firm value by affecting FCF.</div>
+  </div>
+</div>
+
+<div class="compare-box">
+  <div class="left">
+    <strong>流动资产 / Current Assets</strong>
+    <ul>
+      <li>应收账款 / Accounts receivable</li>
+      <li>存货 / Inventory</li>
+      <li>现金及等价物 / Cash & equivalents</li>
+      <li>有价证券 / Marketable securities</li>
+    </ul>
+  </div>
+  <div class="right">
+    <strong>流动负债 / Current Liabilities</strong>
+    <ul>
+      <li>应付账款 / Accounts payable</li>
+      <li>短期借款 / Short-term borrowing</li>
+      <li>应付工资 / Wages</li>
+      <li>应付税款 / Tax liabilities</li>
+      <li>应付利息 / Interest payable</li>
+    </ul>
+  </div>
+</div>
+
+<div class="bilingual">
+  <div class="zh">NWC 的主要组成：现金、存货、应收账款、应付账款。营运资本仅包括<strong>日常经营所需的现金</strong>。</div>
+  <div class="en">Main NWC components: cash, inventory, receivables, payables. Working capital includes only cash needed to run the firm day-to-day.</div>
+</div>
+
+<!-- ============= SECTION 2 ============= -->
+<h2 id="sec2">2. 现金管理权衡
+  <span class="en">Cash Management Trade-off</span>
+</h2>
+
+<div class="compare-box">
+  <div class="left">
+    <strong>持有现金过少 / Too Little Cash</strong>
+    <p><strong>短缺成本 (Shortage Cost)</strong>：</p>
+    <ul>
+      <li>延期支付供应商 → 关系恶化</li>
+      <li>避免破产成本</li>
+      <li>失去商业信用折扣</li>
+    </ul>
+    <p><em>Late payments damage supplier relations; bankruptcy avoidance costs.</em></p>
+  </div>
+  <div class="right">
+    <strong>持有现金过多 / Too Much Cash</strong>
+    <p><strong>持有成本 (Carrying Cost)</strong>：</p>
+    <ul>
+      <li>无法获得长期投资回报</li>
+      <li>银行账户管理费</li>
+      <li>机会成本</li>
+    </ul>
+    <p><em>Foregone returns on long-term investments; storage and account fees.</em></p>
+  </div>
+</div>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh">企业应在短缺成本与持有成本之间寻找<strong>最优现金水平</strong>。</div>
+    <div class="en">Firms seek the optimal cash level balancing shortage and carrying costs.</div>
+  </div>
+</div>
+
+<h3>持有现金的动机 / Motives for Holding Cash</h3>
+<table>
+  <tr><th>动机 / Motive</th><th>说明 / Description</th></tr>
+  <tr><td>交易性余额 / Transaction balance</td><td>满足日常运营需求 / Day-to-day operational needs</td></tr>
+  <tr><td>预防性余额 / Precautionary balance</td><td>应对现金流不确定性、突发支出 / Buffer for unexpected expenses</td></tr>
+  <tr><td>补偿性余额 / Compensating balance</td><td>满足银行服务要求 / Required by banks for services</td></tr>
+  <tr><td>投机性余额 / Speculative balance</td><td>等待更好的投资机会 / Waiting for better investments</td></tr>
+</table>
+
+<!-- ============= SECTION 3 ============= -->
+<h2 id="sec3">3. 现金循环
+  <span class="en">Cash Conversion Cycle (CCC)</span>
+</h2>
+
+<div class="definition">
+  <div class="bilingual">
+    <div class="zh"><strong>经营周期</strong>：从购买原材料（不含付款）到收到销售现金的时长 = 应收账款周期 + 存货周期。<br>
+    <strong>现金循环</strong>：从支付存货现金到收到销售现金的时长（经营周期的一部分）。</div>
+    <div class="en">Operating cycle: from purchase of materials to cash collection (= AR period + Inventory period). Cash cycle: from cash payment for inventory to cash receipt from sales (a subset of operating cycle).</div>
+  </div>
+</div>
+
+<div class="formula">
+<span class="label">现金转换周期 / Cash Conversion Cycle</span>
+CCC = 应收账款天数 + 存货天数 − 应付账款天数<br>
+CCC = AR Days + Inventory Days − AP Days
+</div>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh">CCC 越长，企业需要越多营运资本，日常运营所需现金也越多。<strong>缩短 CCC 可产生正向自由现金流</strong>。</div>
+    <div class="en">Longer CCC → more working capital needed → more daily cash. Reducing CCC generates positive FCF.</div>
+  </div>
+</div>
+
+<div class="bilingual">
+  <div class="zh">缩短 CCC 的方式：(1) 加快应收账款回收；(2) 减少存货持有时间；(3) 延长应付账款支付（不损害供应商关系）。</div>
+  <div class="en">Reduce CCC by: (1) faster AR collection, (2) lower inventory holding period, (3) longer AP payment (without damaging supplier relations).</div>
+</div>
+
+<!-- ============= SECTION 4 ============= -->
+<h2 id="sec4">4. 商业信用 / Trade Credit</h2>
+
+<div class="definition">
+  <div class="bilingual">
+    <div class="zh"><strong>商业信用 (Trade Credit)</strong>：企业从其他公司赊购原材料/商品，作为应付账款记录；这相当于销售方给买方的贷款，允许买方延迟付款。</div>
+    <div class="en">Trade credit: a firm purchases supplies/materials on credit from another firm, recorded as accounts payable. It is effectively a loan from seller to buyer, allowing later payment.</div>
+  </div>
+</div>
+
+<h3>典型条款示例 / Typical Terms</h3>
+<div class="example">
+<p><strong>"2/10, Net 30"</strong>：30 天内付款，若 10 天内付款则享 2% 折扣。</p>
+<p><em>Payment due in 30 days; 2% discount if paid within 10 days.</em></p>
+</div>
+
+<div class="formula">
+<span class="label">放弃折扣的隐含年化利率 / Implicit Annual Rate of Forgoing Discount</span>
+r = (折扣% / (1 − 折扣%)) × (365 / (信用期 − 折扣期))<br>
+For 2/10 net 30: (0.02 / 0.98) × (365 / 20) ≈ 37.2%
+</div>
+
+<div class="warning">
+  <div class="bilingual">
+    <div class="zh">放弃 2% 折扣相当于支付约 37% 的隐含年利率，远高于一般银行贷款，因此通常应当享受折扣。</div>
+    <div class="en">Forgoing the 2% discount implies ~37% annualized rate, far higher than typical bank loans — usually take the discount.</div>
+  </div>
+</div>
+
+<h3>商业信用的优势 / Advantages</h3>
+<ul>
+  <li>简单、便利 / Simple and convenient</li>
+  <li>交易成本低于标准银行贷款 / Lower transaction costs than bank loans</li>
+  <li>"纯现金"政策可能因竞争而失去客户 / "Cash-only" may lose customers</li>
+</ul>
+
+<!-- ============= SECTION 5 ============= -->
+<h2 id="sec5">5. 集中化现金管理
+  <span class="en">Centralized Cash Management</span>
+</h2>
+
+<div class="definition">
+  <div class="bilingual">
+    <div class="zh"><strong>集中化现金管理</strong>：通过中央现金管理小组同时监控和管理所有子公司的现金头寸。剩余现金被汇集到一起 (cash pooling) 直至某子公司需要使用。</div>
+    <div class="en">Centralized cash management means all subsidiary cash positions are monitored and managed simultaneously by a central group. Excess cash from each subsidiary is pooled (cash pooling) until needed.</div>
+  </div>
+</div>
+
+<h3>两大任务 / Two Main Tasks</h3>
+<ol>
+  <li><strong>优化现金流</strong> / Optimizing cash flow movements</li>
+  <li><strong>投资多余现金</strong> / Investing excess cash</li>
+</ol>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh">优势：更高效的资金使用、更低成本、更高回报。特别适用于跨国公司管理母公司-子公司及子公司之间的现金流。</div>
+    <div class="en">Benefits: more efficient fund usage, lower costs, higher returns. Especially valuable for MNCs managing parent-subsidiary and intersubsidiary flows.</div>
+  </div>
+</div>
+
+<!-- ============= SECTION 6 ============= -->
+<h2 id="sec6">6. 优化现金流的四种方式
+  <span class="en">Four Ways to Optimize Cash Flows</span>
+</h2>
+
+<h3>① 加快现金流入 / Accelerating Cash Inflows</h3>
+<div class="bilingual">
+  <div class="zh">在全球设立邮政信箱，缩短邮寄时间；使用<strong>预授权付款 (preauthorized payments)</strong>，允许公司在限额内直接从客户银行账户扣款。</div>
+  <div class="en">Set up post office boxes globally to reduce mailing time; use preauthorized payments to charge customer accounts up to a limit directly.</div>
+</div>
+
+<h3>② 最小化货币转换成本 / Minimizing Currency Conversion Costs</h3>
+<div class="bilingual">
+  <div class="zh"><strong>多边轧差系统 (Multilateral Netting System)</strong>：减少子公司之间和与母公司之间货币转换的管理和交易成本。各方仅结算净额。</div>
+  <div class="en">Multilateral netting system reduces administrative and transaction costs from currency conversion between subsidiaries/parent. Only net amounts are settled.</div>
+</div>
+
+<div class="example">
+<p>子公司 A 欠 B $1M，B 欠 A $800K。无轧差需结算两次共 $1.8M；轧差后仅 A→B $200K，节省约 89%。</p>
+<p><em>Without netting: two transfers totaling $1.8M. With netting: A→B $200K only, saving ~89%.</em></p>
+</div>
+
+<h3>③ 管理被冻结资金 / Managing Blocked Funds</h3>
+<div class="bilingual">
+  <div class="zh">东道国政府可能为创造就业、降低失业率而冻结资金。应对方法：</div>
+  <div class="en">Host governments may block funds to create jobs and reduce unemployment. Solutions:</div>
+</div>
+<ul>
+  <li>母公司指示子公司设立 R&D 部门 / Parent instructs subsidiary to set up R&D division</li>
+  <li>使用<strong>转让定价 (Transfer Pricing)</strong> / Use transfer pricing</li>
+  <li>子公司从当地银行融资而非母公司 / Subsidiary obtains local financing</li>
+</ul>
+
+<h3>④ 管理子公司间现金转移 / Managing Intersubsidiary Cash Transfers</h3>
+<div class="bilingual">
+  <div class="zh">资金不足的子公司可向其他子公司购买物资并提前付款；或反之，资金充裕子公司延期付款给资金不足子公司。</div>
+  <div class="en">Cash-short subsidiary buys supplies from sister and pays early; or sells to it and allows late payment.</div>
+</div>
+
+<h3>优化 CF 的复杂性 / Complications</h3>
+<table>
+  <tr><th>因素 / Factor</th><th>影响 / Impact</th></tr>
+  <tr><td>公司特征 / Company-related</td><td>子公司间延期付款迫使其他子公司借款 / Delayed payments force borrowing</td></tr>
+  <tr><td>政府限制 / Government restrictions</td><td>资金冻结、禁止轧差系统 / Blocking funds, prohibiting netting</td></tr>
+  <tr><td>银行系统特征 / Banking systems</td><td>某些服务（如 lockbox）非全球可用 / Some services not available everywhere</td></tr>
+</table>
+
+<!-- ============= SECTION 7 ============= -->
+<h2 id="sec7">7. 投资多余现金与有效收益率
+  <span class="en">Investing Excess Cash & Effective Yield</span>
+</h2>
+
+<h3>常用投资工具 / Common Instruments</h3>
+<ul>
+  <li><strong>欧洲货币存款 (Eurocurrency Deposits)</strong>：最常用的国际货币市场工具，欧洲美元存款最为流行。</li>
+  <li>外国国库券 / Foreign Treasury bills</li>
+  <li>商业票据 / Commercial paper</li>
+</ul>
+
+<div class="bilingual">
+  <div class="zh">如果两个子公司使用相同货币，将各自的余额（如 £50,000 + £50,000 = £100,000）汇集到一个大额存款，往往可获得比单独存款更高的利率。</div>
+  <div class="en">If two subsidiaries hold the same currency (e.g., £50,000 each), pooling into £100,000 single deposit often yields a higher rate than separate deposits.</div>
+</div>
+
+<h3>有效收益率 / Effective Yield</h3>
+<div class="formula">
+<span class="label">外币存款的有效收益率 / Effective Yield on Foreign Deposit</span>
+r = (1 + i<sub>f</sub>) × (1 + e<sub>f</sub>) − 1
+</div>
+
+<table>
+  <tr><th>符号</th><th>含义 / Meaning</th></tr>
+  <tr><td>i<sub>f</sub></td><td>外币存款利率 / Foreign deposit interest rate</td></tr>
+  <tr><td>e<sub>f</sub></td><td>从存入到提取期间外币的升/贬值率 / % change in currency value</td></tr>
+  <tr><td>r</td><td>有效收益率 / Effective yield (in home currency)</td></tr>
+</table>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh">现金管理者关心的是<strong>有效收益率而非票面利率</strong>。汇率变动可能放大或抵消利率收益。</div>
+    <div class="en">Cash managers care about effective yield, not the quoted rate. Currency movements can amplify or offset interest gains.</div>
+  </div>
+</div>
+
+<div class="example">
+<p>美国公司将 $100,000 转换成英镑存款 6 个月。i<sub>f</sub> = 3%（半年），存款期间 GBP 升值 2%。<br>
+r = (1 + 0.03)(1 + 0.02) − 1 = 5.06%（半年期）。</p>
+<p><em>If GBP depreciates by 2% instead, r = (1.03)(0.98) − 1 = 0.94% — interest gain mostly wiped out.</em></p>
+</div>
+
+<!-- ============= SECTION 8 ============= -->
+<h2 id="sec8">8. 国际贸易五种支付方式
+  <span class="en">Five Methods of International Payment</span>
+</h2>
+
+<table class="risk-table">
+  <tr><th>方式 / Method</th><th>出口商风险 / Exporter Risk</th><th>进口商风险 / Importer Risk</th><th>说明</th></tr>
+  <tr><td><strong>预付款 / Prepayment</strong></td><td class="low">无 / None</td><td class="high">高 / High</td><td>买方先付款再发货 / Buyer pays first</td></tr>
+  <tr><td><strong>信用证 L/C</strong></td><td class="low">很低 / Very Low</td><td class="medium">中 / Medium</td><td>银行担保支付 / Bank guarantees payment</td></tr>
+  <tr><td><strong>汇票 Draft</strong></td><td class="medium">中 / Medium</td><td class="medium">中 / Medium</td><td>无条件付款承诺 / Unconditional promise</td></tr>
+  <tr><td><strong>寄售 Consignment</strong></td><td class="high">高 / High</td><td class="low">无 / None</td><td>售出后付款 / Pay after sale</td></tr>
+  <tr><td><strong>赊销 Open Account</strong></td><td class="high">高 / High</td><td class="low">无 / None</td><td>基于信用 / Based on credit</td></tr>
+</table>
+
+<h3>① 预付款 / Prepayment</h3>
+<div class="bilingual">
+  <div class="zh">出口商在收到货款后才发货，<strong>对出口商保护程度最高</strong>，进口商完全依赖出口商发货。</div>
+  <div class="en">Exporter ships only after payment. Highest protection for exporter; importer relies entirely on exporter to deliver.</div>
+</div>
+
+<h3>② 信用证 / Letters of Credit (L/C)</h3>
+<div class="bilingual">
+  <div class="zh">银行代表进口商出具，承诺凭装运单据向出口商付款。进口商支付银行 L/C 金额加费用。出口商确保从开证行收款。<strong>L/C 不保证</strong>所购货物即为发票/装运的货物。通常涉及两家银行（出口商方和进口商方）。</div>
+  <div class="en">Issued by a bank on behalf of the importer, promising to pay the exporter upon presentation of shipping documents. L/C does NOT guarantee the goods purchased are those invoiced and shipped. Usually involves two banks.</div>
+</div>
+
+<h3>③ 汇票 / Drafts (Bill of Exchange)</h3>
+<div class="bilingual">
+  <div class="zh">出口商出具的<strong>无条件付款承诺</strong>，要求买方在出示时支付。如出口商需要提前用钱，可折价出售给银行 → 成为<strong>银行承兑汇票 (Banker's Acceptance, BA)</strong>。</div>
+  <div class="en">An unconditional promise drawn by the exporter requiring payment upon presentation. If the drawer needs early cash, can sell to bank at discount → becomes a Banker's Acceptance (BA).</div>
+</div>
+
+<h3>④ 寄售 / Consignment</h3>
+<div class="bilingual">
+  <div class="zh">出口商发货但保留货物所有权，进口商售出后才付款。<strong>出口商风险高</strong>，仅限于关联或子公司之间使用。</div>
+  <div class="en">Exporter ships but retains title; importer pays only after selling. High risk to exporter; limited to affiliates and subsidiaries.</div>
+</div>
+
+<h3>⑤ 赊销 / Open Account</h3>
+<div class="bilingual">
+  <div class="zh">出口商发货，买方按约定条件后付款。依赖买方信誉，常见于发达国家间贸易（美国、欧洲）。</div>
+  <div class="en">Exporter ships; buyer pays later per agreed terms. Relies on buyer's creditworthiness; common among industrialized countries (US, Europe).</div>
+</div>
+
+<!-- ============= SECTION 9 ============= -->
+<h2 id="sec9">9. 国际贸易融资工具
+  <span class="en">International Trade Financing Tools</span>
+</h2>
+
+<h3>① 应收账款融资 / Accounts Receivable Financing</h3>
+<div class="bilingual">
+  <div class="zh">出口商以应收账款作抵押从银行获得短期贷款。<strong>出口商仍承担收款风险与责任</strong>。</div>
+  <div class="en">Exporter obtains short-term loans using AR as collateral. Exporter still bears the risk and responsibility of collection.</div>
+</div>
+
+<h3>② 保理 / Factoring</h3>
+<div class="bilingual">
+  <div class="zh">出口商以折扣价将应收账款<strong>出售</strong>给第三方（保理商）以获得即时现金。保理商承担收款风险。保理商<strong>评估的是进口商（而非出口商）的信用</strong>。</div>
+  <div class="en">Exporter sells AR to a third-party factor at a discount for immediate cash. Factor takes on collection risk. Factor assesses the importer's (not exporter's) creditworthiness.</div>
+</div>
+
+<div class="compare-box">
+  <div class="left">
+    <strong>AR 融资 (Pledging) / AR Financing</strong>
+    <ul>
+      <li>AR 作抵押 / AR as collateral</li>
+      <li>风险仍在出口商 / Risk stays with exporter</li>
+    </ul>
+  </div>
+  <div class="right">
+    <strong>保理 / Factoring</strong>
+    <ul>
+      <li>AR 出售 / AR is sold</li>
+      <li>风险转移给保理商 / Risk transferred to factor</li>
+    </ul>
+  </div>
+</div>
+
+<h3>③ 银行承兑汇票 / Banker's Acceptance (BA)</h3>
+<div class="bilingual">
+  <div class="zh">由进口商方银行承兑的远期汇票。是银行对到期向出口商支付的<strong>短期担保</strong>。BA 是可流通工具，有活跃二级市场。</div>
+  <div class="en">A time draft drawn on and accepted by the importer's bank. Short-term guarantee by a bank to pay the exporter at maturity. Marketable with active secondary market.</div>
+</div>
+
+<h3>④ 营运资本融资 / Working Capital Financing</h3>
+<div class="bilingual">
+  <div class="zh">银行提供短期贷款。对进口商：从购买存货 → 销售 → 形成应收账款 → 转化为现金的整个营运资本周期提供资金。对出口商：可获得售前成本（如生产成本）和销售-收款间隙的短期贷款。</div>
+  <div class="en">Banks provide short-term loans financing the entire working capital cycle for importers (inventory → sale → AR → cash). For exporters: short-term loans for pre-export costs or the gap between sale and payment.</div>
+</div>
+
+<h3>⑤ 福费廷 / Forfaiting</h3>
+<div class="bilingual">
+  <div class="zh">为<strong>昂贵机器或资本货物</strong>融资，用于进口商无法短期付款时。出口商以折扣价将进口商的债权（票据或本票）出售给福费廷商，福费廷商承担风险。<strong>类似保理但用于中长期债务，常涉及银行担保</strong>。</div>
+  <div class="en">Finances expensive machinery or capital goods. Exporter sells importer's debt (bills or promissory notes) at discount to a forfaiter, who bears the risk. Similar to factoring but for medium-term debt, often with bank guarantee.</div>
+</div>
+
+<h3>⑥ 反向贸易 / Countertrade</h3>
+<div class="bilingual">
+  <div class="zh">将一国销售与从同一国购买/交换货物挂钩的所有外贸交易。类型：<strong>易货 (barter)</strong>（无货币直接交换）、<strong>对销贸易 (counterpurchase)</strong>（独立但关联合同）、<strong>补偿贸易 (compensation/buyback)</strong>。多用于政府和大型企业，操作复杂。</div>
+  <div class="en">Foreign trade where sales to one country are linked to purchases/exchanges from same country. Types: barter (direct swap, no currency), counterpurchase (separate but linked contracts), compensation (buyback). Used by governments and large firms; complex.</div>
+</div>
+
+<!-- ============= SECTION 10 ============= -->
+<h2 id="sec10">10. 短期融资来源
+  <span class="en">Sources of Short-Term Financing</span>
+</h2>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh"><strong>匹配原则 (Matching Principle)</strong>：短期需求应用短期债务融资，长期需求应用长期资金来源。短期融资决策一般涉及短期资产和负债，且容易逆转。</div>
+    <div class="en">Matching Principle: short-term needs financed by short-term debt; long-term needs by long-term sources. Short-term decisions involve short-lived assets/liabilities and are usually easily reversed.</div>
+  </div>
+</div>
+
+<table>
+  <tr><th>方式 / Source</th><th>特征 / Features</th></tr>
+  <tr>
+    <td><strong>银团贷款</strong> / Syndicated Lending</td>
+    <td>多家银行联合放贷以分散风险，期限灵活、可无罚金提前还款，常用于大额融资 / Multiple banks pool to diversify risk; flexible maturities; can repay without penalty; for larger borrowers</td>
+  </tr>
+  <tr>
+    <td><strong>商业银行贷款</strong> / Commercial Bank Loans</td>
+    <td>固定/浮动利率；末期一次性偿付本金 / Fixed/variable rate; bullet repayment</td>
+  </tr>
+  <tr>
+    <td><strong>信用额度</strong> / Line of Credit</td>
+    <td>银行同意贷款最高限额 / Bank agrees to lend up to a stated maximum</td>
+  </tr>
+  <tr>
+    <td><strong>过桥贷款</strong> / Bridge Loan</td>
+    <td>在长期融资到位前的短期融资 / Short-term financing until long-term arranged</td>
+  </tr>
+  <tr>
+    <td><strong>商业票据</strong> / Commercial Paper</td>
+    <td>大公司发行的<strong>无担保债务</strong>，通常比银行贷款更便宜。可分为直接票据(发行人直接卖给投资者)和交易商票据(经销商代销) / Unsecured debt issued by large firms; cheaper than bank loans. Direct paper or dealer paper. Common in US.</td>
+  </tr>
+</table>
+
+<!-- ============= SECTION 11 ============= -->
+<h2 id="sec11">11. 应收账款与存货抵押
+  <span class="en">AR & Inventory as Collateral</span>
+</h2>
+
+<h3>应收账款抵押方式 / AR Collateral Methods</h3>
+<div class="compare-box">
+  <div class="left">
+    <strong>应收账款质押 / Pledging AR</strong>
+    <p>贷方接受部分信用账户作抵押，按发票面值的某个百分比放贷。</p>
+    <p><em>Lender accepts credit accounts as collateral; lends a % of accepted invoices.</em></p>
+  </div>
+  <div class="right">
+    <strong>应收账款保理 / Factoring AR</strong>
+    <p>企业将应收账款<strong>卖给</strong>贷方（保理商），保理商承担收款责任。</p>
+    <p><em>Firm sells AR to lender (factor); factor collects from customers.</em></p>
+  </div>
+</div>
+
+<h3>存货抵押方式 / Inventory Collateral Methods</h3>
+<table>
+  <tr><th>方式 / Method</th><th>特征 / Features</th><th>风险 / Risk</th></tr>
+  <tr>
+    <td><strong>浮动留置权</strong> / Floating Lien (General/Blanket Lien)</td>
+    <td>所有存货作担保 / All inventory used as collateral</td>
+    <td class="high">最高（库存随使用/销售变化）/ Highest (inventory value changes)</td>
+  </tr>
+  <tr>
+    <td><strong>信托收据贷款</strong> / Trust Receipts Loan (Floor Planning)</td>
+    <td>存货以信托形式作担保；售出后用收益偿还贷款 / Inventory held in trust; proceeds repay loan when sold</td>
+    <td class="medium">中 / Medium</td>
+  </tr>
+  <tr>
+    <td><strong>仓库安排</strong> / Warehouse Arrangement</td>
+    <td>存货存于仓库作抵押 / Inventory stored in warehouse as collateral</td>
+    <td class="low">最低（贷方控制）/ Lowest (lender controls)</td>
+  </tr>
+</table>
+
+<!-- ============= SECTION 12 ============= -->
+<h2 id="sec12">12. 存货管理
+  <span class="en">Inventory Management</span>
+</h2>
+
+<h3>存货成本三类 / Three Types of Inventory Costs</h3>
+<table>
+  <tr><th>成本 / Cost</th><th>说明 / Description</th></tr>
+  <tr><td>购置成本 / Acquisition Costs</td><td>存货本身的成本 / Cost of the inventory itself</td></tr>
+  <tr><td>订购成本 / Order Costs</td><td>处理订单的成本 / Cost of processing orders</td></tr>
+  <tr><td>持有成本 / Carrying Costs</td><td>存储、保险、税收等 / Storage, insurance, taxes</td></tr>
+</table>
+
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh"><strong>最优存货水平</strong>是持有成本与订购成本之间的权衡。每日采购成本高且有延迟风险；过少存货导致缺货且无法应对突发需求。</div>
+    <div class="en">Optimal inventory level trades off carrying costs and order costs. Daily ordering increases unit prices and risks delays; too little inventory risks shortages and inability to meet unexpected demand.</div>
+  </div>
+</div>
+
+<h3>JIT (Just-In-Time) 策略</h3>
+<div class="bilingual">
+  <div class="zh">在 JIT 策略下，零部件和半成品的存货<strong>接近零</strong>。仅当生产流稳定且可预测时有效。</div>
+  <div class="en">Under JIT, inventories of parts and subassemblies are nearly zero. Works only when production flow is steady and predictable.</div>
+</div>
+
+<!-- ============= SECTION 13 ============= -->
+<h2 id="sec13">13. 外币融资
+  <span class="en">Foreign Currency Financing</span>
+</h2>
+
+<div class="bilingual">
+  <div class="zh">许多跨国公司在母国进行<strong>权益融资</strong>，在外国进行<strong>债务融资</strong>。当融资银行/市场不在该货币所属国时，使用<strong>"欧"(euro-)</strong> 前缀。例如欧洲美元账户位于伦敦但以美元计价。<strong>欧洲银行 (eurobank)</strong> 是以外币放贷和接受存款的银行。</div>
+  <div class="en">Many MNCs raise equity at home and debt abroad. When the bank/market is not in the currency's country, the prefix "euro-" is used. A eurodollar account, situated in London, is denominated in dollars. A eurobank makes loans and accepts deposits in foreign currencies.</div>
+</div>
+
+<h3>外币融资工具 / Foreign Financing Instruments</h3>
+<table>
+  <tr><th>工具 / Instrument</th><th>说明 / Description</th></tr>
+  <tr><td><strong>Euronotes</strong></td><td>跨国公司发行的短期债务证券，1-6 月期限，可滚动，由商业银行承销 / Short-term debt by MNCs, 1-6 month maturity, can be rolled over, underwritten by commercial banks</td></tr>
+  <tr><td><strong>Euro-commercial paper</strong></td><td>由经销商代为跨国公司发行，<strong>无承销团支持</strong>，期限可自定 / Issued by dealers for MNCs without underwriting syndicate, chosen maturity</td></tr>
+  <tr><td><strong>Eurobank loans</strong></td><td>欧洲银行直接贷款 / Direct loans from eurobanks</td></tr>
+  <tr><td><strong>内部融资</strong> / Internal financing</td><td>母公司或子公司之间融资，可能受政府限制 / From parent or subsidiaries; may be restricted by governments</td></tr>
+</table>
+
+<h3>外币融资的动机 / Reasons for Foreign Financing</h3>
+<ol>
+  <li><strong>对冲外币应收账款</strong>：以外币借款抵消外币应收头寸。<br>
+    <em>Example</em>: 匈牙利公司有 EUR 应收账款，需 HUF 流动性。可借 EUR → 转换为 HUF → 用 EUR 应收偿还贷款，<strong>规避汇率风险</strong>。</li>
+  <li><strong>降低成本</strong>：当外币利率较低且汇率稳定时，外币借款更便宜。</li>
+</ol>
+
+<h3>有效融资率 / Effective Financing Rate</h3>
+<div class="formula">
+<span class="label">有效融资率（与外币存款公式相同）/ Effective Financing Rate</span>
+r<sub>f</sub><sup>eff</sup> = (1 + i<sub>f</sub>) × (1 + e<sub>f</sub>) − 1
+</div>
+
+<div class="warning">
+  <div class="bilingual">
+    <div class="zh">如果借款货币<strong>升值</strong>，有效融资率<strong>上升</strong>（还款更贵）；如果<strong>贬值</strong>，有效融资率<strong>下降</strong>。注意符号方向与存款相反！</div>
+    <div class="en">If borrowed currency appreciates, effective rate rises (repayment more expensive); if depreciates, effective rate falls. Direction is opposite to deposits!</div>
+  </div>
+</div>
+
+<!-- ============= SECTION 14 ============= -->
+<h2 id="sec14">14. 利率平价与购买力平价
+  <span class="en">Interest Rate Parity & Purchasing Power Parity</span>
+</h2>
+
+<h3>抛补利率套利 / Covered Interest Arbitrage</h3>
+<div class="definition">
+  <div class="bilingual">
+    <div class="zh"><strong>抛补利率套利</strong>：利用两国利率差并通过远期合约对冲汇率风险的过程。资金在投资期内被锁定。如果套利收益超过国内存款收益，则套利可行。</div>
+    <div class="en">Covered interest arbitrage capitalizes on interest rate differences while covering exchange rate risk via forward contracts. Funds are tied up for a period. Feasible if proceeds exceed domestic deposit returns.</div>
+  </div>
+</div>
+
+<div class="example">
+<p><strong>步骤示例</strong>：(1) 即期买入外币；(2) 投资外币存款获利息；(3) 同时签订远期合约锁定到期汇率；(4) 到期时按远期价转回本币。</p>
+<p><em>Steps: (1) Buy foreign currency at spot; (2) invest at foreign rate; (3) lock in forward exchange rate; (4) convert back at maturity.</em></p>
+</div>
+
+<h3>利率平价 (IRP) / Interest Rate Parity</h3>
+<div class="key-point">
+  <div class="bilingual">
+    <div class="zh"><strong>利率平价</strong>：当市场力量调整使抛补利率套利不再可行时，达到均衡。在均衡中，<strong>远期汇率相对即期汇率的偏差恰好抵消两种货币的利率差</strong>。</div>
+    <div class="en">When market forces adjust interest rates and exchange rates so covered interest arbitrage is no longer feasible, equilibrium is reached. In equilibrium, the forward rate differs from spot by exactly the interest rate differential.</div>
+  </div>
+</div>
+
+<div class="formula">
+<span class="label">利率平价公式 / IRP Formula</span>
+F / S = (1 + i<sub>h</sub>) / (1 + i<sub>f</sub>)<br>
+or premium p ≈ i<sub>h</sub> − i<sub>f</sub>
+</div>
+
+<table>
+  <tr><th>符号</th><th>含义 / Meaning</th></tr>
+  <tr><td>F, S</td><td>远期、即期汇率（外币/本币）/ Forward and spot rates</td></tr>
+  <tr><td>i<sub>h</sub>, i<sub>f</sub></td><td>本币、外币利率 / Home and foreign rates</td></tr>
+  <tr><td>p</td><td>远期溢价 / Forward premium</td></tr>
+</table>
+
+<h3>购买力平价 (PPP) / Purchasing Power Parity</h3>
+<div class="bilingual">
+  <div class="zh">基于<strong>不同国家通胀差异导致的贸易模式变化</strong>预测汇率走势。当 A 国通胀上升，其出口变贵 → 需求下降；同时进口增加 → 本币供给增加。两者共同压低 A 国货币。</div>
+  <div class="en">PPP predicts exchange rate movements based on changing trade patterns due to different inflation rates. When A's inflation rises, its exports become expensive (demand falls), imports increase (supply rises) — both depress A's currency.</div>
+</div>
+
+<div class="compare-box">
+  <div class="left">
+    <strong>绝对 PPP / Absolute PPP</strong>
+    <p>无贸易壁垒和运输成本时，相同商品篮子在两国以共同货币衡量价格应相等。</p>
+    <p><em>Without trade barriers/transport costs, prices of the same basket should be equal across countries when measured in a common currency.</em></p>
+  </div>
+  <div class="right">
+    <strong>相对 PPP / Relative PPP</strong>
+    <p>考虑市场不完美性（运输成本、关税、配额）。商品篮子<strong>价格变动率</strong>在共同货币下应相似。</p>
+    <p><em>Accounts for market imperfections. The rate of change in basket prices should be similar in a common currency.</em></p>
+  </div>
+</div>
+
+<div class="formula">
+<span class="label">相对 PPP / Relative PPP</span>
+e<sub>f</sub> ≈ (1 + π<sub>h</sub>) / (1 + π<sub>f</sub>) − 1 ≈ π<sub>h</sub> − π<sub>f</sub>
+</div>
+<p style="text-align:center; font-size:13px; color:#666;">e<sub>f</sub> = 外币变动率 ｜ π<sub>h</sub>, π<sub>f</sub> = 本国与外国通胀率</p>
+
+<!-- ============= Q&A SECTION ============= -->
+<h2 id="qa">15. 口试可能问题精选 / Likely Oral Exam Questions</h2>
+
+<div class="qa">
+  <div class="question">Q1. <span class="tag basic">基础</span> 什么是营运资本管理？为何重要？<br>
+  <em>What is working capital management and why is it important?</em></div>
+  <div class="answer">
+    营运资本管理涉及流动资产（现金、存货、应收账款、有价证券）和流动负债（应付账款、短期借款、工资、税金）的日常管理。NWC = 流动资产 − 流动负债 = 长期负债+权益 − 流动负债。<br>
+    <strong>重要性</strong>：(1) 直接影响 FCF 与企业价值；(2) 影响日常运营能力；(3) 短期决策可逆，但累积影响企业流动性和盈利能力；(4) WC 投资过多则资金占用、回报低；过少则面临短缺成本。
+  </div>
+  <div class="answer-en">
+    WCM manages day-to-day current assets (cash, inventory, AR, marketable securities) and current liabilities (AP, short-term debt, wages, taxes). NWC = CA − CL. Importance: directly affects FCF and firm value; affects operational capability; though decisions are reversible, cumulative impact is significant. Too much WC ties up capital with low returns; too little risks shortages.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q2. <span class="tag basic">基础</span> 解释现金管理中的权衡。<br>
+  <em>Explain the cash management trade-off.</em></div>
+  <div class="answer">
+    持有现金过少 → <strong>短缺成本</strong>：拖欠供应商、损害关系；可能面临破产成本；失去商业信用折扣。<br>
+    持有现金过多 → <strong>持有成本</strong>：失去长期投资回报；银行账户管理费；机会成本。<br>
+    最优现金水平在两者间平衡。持有现金的动机：交易性、预防性、补偿性（满足银行要求）、投机性（等待机会）。
+  </div>
+  <div class="answer-en">
+    Too little cash → shortage costs: late payments, damaged supplier relations, bankruptcy avoidance, lost discounts. Too much cash → carrying costs: foregone returns, account fees, opportunity cost. Optimal cash level balances both. Motives: transaction, precautionary, compensating (bank requirements), speculative (waiting for opportunities).
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q3. <span class="tag basic">基础</span> 推导现金转换周期 (CCC) 的公式并解释其意义。<br>
+  <em>Derive the Cash Conversion Cycle and explain its meaning.</em></div>
+  <div class="answer">
+    <strong>经营周期</strong> = 应收账款天数 + 存货天数（从购买原料到收到现金）。<br>
+    <strong>现金循环 (CCC)</strong> = 经营周期 − 应付账款天数 = AR Days + Inv Days − AP Days。<br>
+    <strong>意义</strong>：从企业实际支付现金购买存货到收到销售现金的时间。CCC 越长，企业需要越多营运资本，日常运营所需现金越多。<strong>缩短 CCC → 释放现金 → 产生正向 FCF</strong>。<br>
+    缩短策略：加快 AR 回收（折扣激励、发票自动化）、减少存货（JIT）、合理延长 AP（不损害供应商关系）。
+  </div>
+  <div class="answer-en">
+    Operating cycle = AR Days + Inventory Days. Cash cycle = Operating cycle − AP Days = AR Days + Inv Days − AP Days. CCC measures time from cash payment to cash receipt. Longer CCC needs more WC. Shortening CCC releases cash and creates positive FCF. Strategies: faster AR collection, lower inventory (JIT), prudent AP extension.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q4. <span class="tag tricky">易混</span> 商业信用条款"2/10, Net 30"是什么意思？放弃折扣的隐含成本如何？<br>
+  <em>What does "2/10, Net 30" mean? What is the implicit cost of forgoing the discount?</em></div>
+  <div class="answer">
+    "2/10, Net 30"：30 天内付清，10 天内付款享 2% 折扣。<br>
+    <strong>隐含年利率计算</strong>：放弃 2% 折扣 = 在第 30 天而非第 10 天付款，多 20 天。等价于借款 20 天的利率为 2%/(100%−2%) = 2.04%。<br>
+    年化：(2.04%) × (365/20) ≈ <strong>37.2%</strong>。<br>
+    <strong>结论</strong>：远高于一般银行短期贷款利率（通常 5-10%），所以应当享受折扣，除非企业无现金可用。
+  </div>
+  <div class="answer-en">
+    "2/10, Net 30": pay within 30 days; 2% discount if paid within 10 days. Implicit annual rate of forgoing discount: (0.02/0.98) × (365/20) ≈ 37.2%, far higher than typical bank rates. Take the discount unless no cash is available.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q5. <span class="tag advanced">进阶</span> 集中化现金管理对跨国公司有何优势？面临哪些复杂性？<br>
+  <em>Benefits and complications of centralized cash management for MNCs?</em></div>
+  <div class="answer">
+    <strong>优势</strong>：(1) 现金池化提高资金使用效率；(2) 多边轧差降低货币转换成本；(3) 大额存款获更高利率；(4) 统一监控降低对冲风险；(5) 协调子公司间资金转移。<br>
+    <strong>复杂性</strong>：<br>
+    (1) 公司特征：子公司间延迟付款迫使其他子公司借款；<br>
+    (2) 政府限制：东道国可能冻结资金或禁止轧差系统；<br>
+    (3) 银行系统差异：lockbox 等服务并非全球可用；<br>
+    (4) 税收差异：转让定价需符合各国法规。
+  </div>
+  <div class="answer-en">
+    Benefits: cash pooling improves efficiency; multilateral netting reduces conversion costs; larger deposits earn higher rates; unified hedging; coordinated intersubsidiary transfers. Complications: company-related (delayed inter-subsidiary payments force borrowing); government restrictions (blocking funds, prohibiting netting); banking system differences (e.g., lockbox not universally available); tax considerations on transfer pricing.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q6. <span class="tag basic">基础</span> 什么是多边轧差系统？举例说明其节约。<br>
+  <em>What is multilateral netting? Illustrate its savings.</em></div>
+  <div class="answer">
+    多边轧差系统通过<strong>仅结算各方净额</strong>而非全部交易，减少货币转换的管理和交易成本。<br>
+    <strong>例</strong>：A 子公司欠 B $1M，B 欠 A $800K。<br>
+    无轧差：两笔转账 $1M + $800K = $1.8M 总流量，两次货币转换。<br>
+    轧差后：仅 A → B $200K，节省 ~89% 流量和相应转换成本。<br>
+    特别在多个子公司多种货币时效果显著。某些国家政府禁止此系统。
+  </div>
+  <div class="answer-en">
+    Multilateral netting settles only net amounts among parties, reducing administrative and transaction costs. Example: A owes B $1M; B owes A $800K. Without: $1.8M total flow, two conversions. With: A→B $200K only, ~89% saving. Especially effective with multiple subsidiaries and currencies. Some governments prohibit it.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q7. <span class="tag advanced">进阶</span> 比较国际贸易中的五种支付方式及其风险分布。<br>
+  <em>Compare the five international payment methods and risk allocations.</em></div>
+  <div class="answer">
+    <strong>预付款 (Prepayment)</strong>：买方先付，对<strong>出口商保护最好</strong>，进口商风险最高。<br>
+    <strong>信用证 (L/C)</strong>：银行担保付款，双方平衡保护，但 L/C 不保证货物质量。涉及两家银行。<br>
+    <strong>汇票 (Draft)</strong>：出口商出具的无条件付款命令，可贴现成银行承兑汇票 (BA)。<br>
+    <strong>寄售 (Consignment)</strong>：出口商保留所有权直至售出，<strong>出口商风险最高</strong>，仅限关联方。<br>
+    <strong>赊销 (Open Account)</strong>：依靠买方信誉，进口商风险最低，常见于发达国家间。<br>
+    <strong>选择依据</strong>：双方信任度、贸易历史、政治风险、行业惯例。
+  </div>
+  <div class="answer-en">
+    Prepayment: best protects exporter, importer bears risk. L/C: bank guarantee balances both; doesn't guarantee goods quality; involves two banks. Draft: unconditional order; can be discounted to BA. Consignment: exporter retains title; highest exporter risk; for affiliates only. Open Account: relies on creditworthiness; lowest importer risk; common in industrialized countries. Choice depends on trust, trade history, political risk, industry norms.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q8. <span class="tag tricky">易混</span> 区分应收账款融资 (Pledging)、保理 (Factoring) 和福费廷 (Forfaiting)。<br>
+  <em>Distinguish AR financing, factoring, and forfaiting.</em></div>
+  <div class="answer">
+    <strong>应收账款质押 (Pledging)</strong>：AR 作贷款<strong>抵押</strong>，企业仍承担收款风险；银行只在违约时才动用 AR。<br>
+    <strong>保理 (Factoring)</strong>：AR <strong>出售</strong>给保理商，风险转移；保理商评估<strong>买方</strong>信用；用于<strong>短期贸易</strong>应收。<br>
+    <strong>福费廷 (Forfaiting)</strong>：类似保理，但用于<strong>中期资本货物</strong>（昂贵机器）；常涉及银行担保的本票或汇票；福费廷商承担风险，期限可达数年。<br>
+    <strong>共同点</strong>：都为出口商提供即时现金。<br>
+    <strong>关键区别</strong>：质押=抵押，保理/福费廷=出售；保理短期，福费廷中期。
+  </div>
+  <div class="answer-en">
+    Pledging AR: AR as collateral; firm retains collection risk. Factoring: AR sold to factor; risk transferred; factor assesses buyer's credit; for short-term trade AR. Forfaiting: similar to factoring but for medium-term capital goods; often with bank-guaranteed promissory notes; forfaiter bears risk over years. Common: provide immediate cash. Differences: pledging vs sale; factoring (short-term) vs forfaiting (medium-term).
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q9. <span class="tag advanced">进阶</span> 解释信用证 (L/C) 的运作机制及其作用。<br>
+  <em>Explain how an L/C works and its role.</em></div>
+  <div class="answer">
+    <strong>运作流程</strong>：<br>
+    1. 进口商向其银行（开证行）申请开立 L/C，支付金额 + 费用。<br>
+    2. 开证行向出口商方银行发送 L/C，承诺凭装运单据付款。<br>
+    3. 出口商发货并向银行提交单据（提单、发票、保险等）。<br>
+    4. 银行审核单据无误后向出口商付款。<br>
+    5. 进口商收到单据后凭以提货。<br>
+    <strong>作用</strong>：用<strong>银行信用</strong>替代双方信用，降低交易双方风险；<strong>但 L/C 不保证</strong>货物本身（即货物可能与发票不符）。
+  </div>
+  <div class="answer-en">
+    L/C process: (1) Importer applies to issuing bank, pays amount + fees; (2) Issuing bank sends L/C to exporter's bank, promising payment upon documents; (3) Exporter ships and submits documents (B/L, invoice, insurance); (4) Bank verifies and pays exporter; (5) Importer receives documents to claim goods. Role: bank credit substitutes for trade-party credit, reducing risk for both. Limitation: L/C does not guarantee the goods themselves match the invoice.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q10. <span class="tag basic">基础</span> 什么是匹配原则 (Matching Principle)？<br>
+  <em>What is the matching principle?</em></div>
+  <div class="answer">
+    短期需求应用<strong>短期债务</strong>融资，长期需求应用<strong>长期资金</strong>来源。<br>
+    <strong>原因</strong>：(1) 期限错配带来再融资风险（如用短期债务融资长期资产，每期需续借）；(2) 期限错配带来利率风险；(3) 短期融资通常更便宜但更不稳定；(4) 长期资产应有稳定融资支持。<br>
+    <strong>例外</strong>：永久性流动资产（基础库存）实际是长期需求，应用长期融资。
+  </div>
+  <div class="answer-en">
+    Short-term needs financed by short-term debt; long-term needs by long-term sources. Reasons: maturity mismatch creates refinancing risk and interest rate risk; short-term financing is cheaper but less stable; long-term assets need stable funding. Exception: permanent current assets (baseline inventory) are effectively long-term and warrant long-term financing.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q11. <span class="tag advanced">进阶</span> 比较存货抵押的三种方式及其风险等级。<br>
+  <em>Compare three methods of inventory collateral and their risk levels.</em></div>
+  <div class="answer">
+    <strong>① 浮动留置权 (Floating Lien)</strong>：所有存货作总体担保。对贷方<strong>风险最高</strong>，因企业可自由处置存货，库存价值随使用/销售随时变化。<br>
+    <strong>② 信托收据贷款 (Trust Receipts Loan)</strong>：存货以信托形式持有；售出后所得须用于偿还贷款。常用于汽车经销商 (floor planning)。中等风险。<br>
+    <strong>③ 仓库安排 (Warehouse Arrangement)</strong>：存货存于（独立或现场）仓库，贷方控制释放。<strong>风险最低</strong>，但企业灵活性最低，仓储成本高。<br>
+    <strong>选择依据</strong>：信用质量、存货流动性、监控成本。
+  </div>
+  <div class="answer-en">
+    Floating Lien: all inventory as blanket collateral. Highest lender risk — firm freely disposes of inventory, value changes daily. Trust Receipts (Floor Planning): inventory held in trust; sale proceeds repay loan; common for auto dealers; medium risk. Warehouse Arrangement: inventory in warehouse, lender controls release; lowest risk but lowest firm flexibility, high storage cost. Choice depends on creditworthiness, inventory liquidity, monitoring costs.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q12. <span class="tag tricky">易混</span> 推导外币融资的有效融资率公式。如何使用？<br>
+  <em>Derive the effective financing rate for foreign currency loans. How is it used?</em></div>
+  <div class="answer">
+    <strong>推导</strong>：借入外币 1 单位，以即期汇率 S 转换为本币 = S 单位。利率 i<sub>f</sub>，到期需还 (1+i<sub>f</sub>) 外币。若到期汇率为 S(1+e<sub>f</sub>)，本币偿还额 = (1+i<sub>f</sub>)×S(1+e<sub>f</sub>)。<br>
+    <strong>有效融资率</strong> r = [本币偿还/本币借入] − 1 = (1+i<sub>f</sub>)(1+e<sub>f</sub>) − 1 ≈ i<sub>f</sub> + e<sub>f</sub><br>
+    <strong>使用</strong>：(1) 比较多种外币借款的真实成本；(2) 对冲决策（外币贬值则借款便宜）；(3) 与本币利率比较判断是否值得外币融资。<br>
+    <strong>注意</strong>：货币<strong>升值</strong>使融资率<strong>上升</strong>（与存款方向相反）。
+  </div>
+  <div class="answer-en">
+    Derivation: borrow 1 unit foreign at spot S → S home; owe (1+i<sub>f</sub>) foreign at maturity; if rate becomes S(1+e<sub>f</sub>), pay back (1+i<sub>f</sub>)S(1+e<sub>f</sub>) home. Effective rate r = (1+i<sub>f</sub>)(1+e<sub>f</sub>) − 1 ≈ i<sub>f</sub> + e<sub>f</sub>. Uses: comparing foreign borrowing costs; hedging decisions; comparing to home rates. Note: currency appreciation raises effective rate (opposite of deposits).
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q13. <span class="tag advanced">进阶</span> 解释抛补利率套利及其与利率平价 (IRP) 的关系。<br>
+  <em>Explain covered interest arbitrage and its relation to IRP.</em></div>
+  <div class="answer">
+    <strong>抛补利率套利</strong>步骤：(1) 即期买入外币；(2) 投资外币存款赚利息；(3) 同时签订远期合约锁定到期汇率（"抛补"汇率风险）；(4) 到期按远期价转回本币。<br>
+    若收益 &gt; 国内存款收益，套利可行。<br>
+    <strong>IRP 均衡</strong>：套利活动使汇率和利率调整，最终远期溢价 ≈ 利率差：F/S = (1+i<sub>h</sub>)/(1+i<sub>f</sub>)。此时套利无利可图。<br>
+    <strong>含义</strong>：高利率货币应在远期市场上贬值（折价），低利率货币应升值（溢价），完美抵消利率差。<br>
+    <strong>实证</strong>：IRP 通常成立（除资本管制和高交易成本外），是少数实证支持的国际金融平价。
+  </div>
+  <div class="answer-en">
+    Covered interest arbitrage: (1) buy foreign currency at spot; (2) invest at foreign rate; (3) lock forward rate to cover exchange risk; (4) convert back at maturity. Feasible if returns exceed domestic deposit. IRP equilibrium: arbitrage forces F/S = (1+i<sub>h</sub>)/(1+i<sub>f</sub>); high-rate currencies trade at forward discount, low-rate at premium, exactly offsetting. Implication: arbitrage is no longer profitable. Empirically: IRP holds well except under capital controls or high transaction costs.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q14. <span class="tag tricky">易混</span> 区分绝对 PPP 和相对 PPP，并说明 PPP 与 IRP 的关系。<br>
+  <em>Distinguish absolute PPP and relative PPP. How are PPP and IRP related?</em></div>
+  <div class="answer">
+    <strong>绝对 PPP</strong>：无贸易壁垒/运输成本时，相同篮子在两国按共同货币应等价（"一价定律"扩展）。实际很少成立。<br>
+    <strong>相对 PPP</strong>：考虑市场不完美性，<strong>价格变动率</strong>应相似：e<sub>f</sub> ≈ π<sub>h</sub> − π<sub>f</sub>，即高通胀国货币应贬值。中长期较好成立。<br>
+    <strong>与 IRP 关系</strong>：<br>
+    • IRP 涉及<strong>名义利率</strong>差与远期溢价；<br>
+    • PPP 涉及<strong>通胀</strong>差与汇率变动；<br>
+    • 通过<strong>费雪效应</strong>（名义利率 = 实际利率 + 通胀）连接：若各国实际利率相等，则名义利率差 = 通胀差，IRP 与 PPP 一致 → <strong>国际费雪效应 (IFE)</strong>。<br>
+    实务中 IRP 较 PPP 更稳定。
+  </div>
+  <div class="answer-en">
+    Absolute PPP: same basket equates in common currency (extension of LOOP); rarely holds. Relative PPP: accounts for market imperfections; rates of price change should be similar — e<sub>f</sub> ≈ π<sub>h</sub> − π<sub>f</sub>. Holds reasonably in medium-long run. Relation to IRP: IRP — nominal interest differential and forward premium; PPP — inflation differential and rate change. Linked via Fisher effect (nominal = real + inflation). If real rates equal across countries, nominal differentials equal inflation differentials → International Fisher Effect (IFE). IRP holds more reliably empirically.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q15. <span class="tag advanced">进阶</span> 跨国公司为何选择外币融资？<br>
+  <em>Why do MNCs choose foreign currency financing?</em></div>
+  <div class="answer">
+    <strong>主要动机</strong>：<br>
+    (1) <strong>对冲外币应收账款</strong>：以同币种借款抵消外币应收头寸（自然对冲）。例：匈牙利公司有 EUR 应收账款，借 EUR → 转 HUF 满足现金需求 → 用 EUR 应收偿还，<strong>规避汇率风险</strong>。<br>
+    (2) <strong>降低成本</strong>：当外币利率较低且汇率稳定时，借外币更便宜（须警惕外币升值反而增加成本）。<br>
+    (3) <strong>多样化融资渠道</strong>：减少对单一市场依赖。<br>
+    (4) <strong>政治考虑</strong>：满足当地融资要求，减少政治风险。<br>
+    (5) <strong>税收套利</strong>：利用各国税收待遇差异。<br>
+    <strong>关键判断</strong>：使用有效融资率 r = (1+i<sub>f</sub>)(1+e<sub>f</sub>) − 1 比较各方案。
+  </div>
+  <div class="answer-en">
+    Reasons: (1) Hedge foreign receivables (natural hedge): borrow same currency to offset AR, eliminating exchange risk. (2) Lower cost: when foreign rates are low and currency stable, but beware appreciation. (3) Diversify funding sources. (4) Political considerations: local financing reduces political risk. (5) Tax arbitrage across jurisdictions. Key tool: effective financing rate r = (1+i<sub>f</sub>)(1+e<sub>f</sub>) − 1 to compare alternatives.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q16. <span class="tag tricky">易混</span> 区分 Eurodollar、Eurobank、Euronotes、Euro-commercial paper。<br>
+  <em>Distinguish Eurodollar, Eurobank, Euronotes, Euro-commercial paper.</em></div>
+  <div class="answer">
+    所有"Euro-"前缀表示银行/市场<strong>不在该货币所属国</strong>。<br>
+    <strong>Eurodollar</strong>：美国境外（如伦敦）以美元计价的存款或贷款。最重要的 eurocurrency 形式。<br>
+    <strong>Eurobank</strong>：以外币（非本国货币）放贷和接受存款的银行。例：伦敦银行做美元业务即为 eurobank。<br>
+    <strong>Euronotes</strong>：跨国公司发行的<strong>短期债务证券</strong>，1-6 月期限，可<strong>滚动</strong>，由商业银行<strong>承销</strong>。<br>
+    <strong>Euro-commercial paper</strong>：由经销商代为跨国公司发行的商业票据，<strong>无承销团</strong>，期限可自定，比 Euronotes 灵活。<br>
+    <strong>共同特征</strong>：在母国监管之外，通常成本较低。
+  </div>
+  <div class="answer-en">
+    All "Euro-" prefixes mean the bank/market is outside the currency's home country. Eurodollar: USD-denominated deposits/loans outside the US. Eurobank: bank lending and accepting deposits in foreign currencies. Euronotes: MNC-issued short-term debt, 1-6 month maturity, can roll over, underwritten by commercial banks. Euro-commercial paper: dealer-issued for MNCs, no underwriting syndicate, chosen maturity, more flexible. Common: outside home regulation, generally lower cost.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q17. <span class="tag advanced">进阶</span> 什么是 JIT (Just-In-Time)？其前提条件和优劣？<br>
+  <em>What is Just-In-Time (JIT)? Its prerequisites and pros/cons?</em></div>
+  <div class="answer">
+    <strong>JIT</strong>：制造业策略，使零部件和半成品库存<strong>接近零</strong>。物料到达即用于生产，成品到达即售出。<br>
+    <strong>前提条件</strong>：(1) 生产流稳定且可预测；(2) 供应商可靠且地理临近；(3) 高质量物料（无返工时间缓冲）；(4) 紧密的供应商-生产-客户协调；(5) 良好物流。<br>
+    <strong>优势</strong>：<br>
+    • 几乎消除持有成本（仓储、保险、过时）；<br>
+    • 释放资金；<br>
+    • 强制提高质量（无库存缓冲掩盖问题）；<br>
+    • 缩短 CCC。<br>
+    <strong>劣势</strong>：<br>
+    • 对供应链中断<strong>极度脆弱</strong>（如 COVID-19 暴露此问题）；<br>
+    • 订购成本可能上升（频繁小额订单）；<br>
+    • 失去批量折扣；<br>
+    • 需大量协调投入。
+  </div>
+  <div class="answer-en">
+    JIT: manufacturing strategy with near-zero inventory; materials arrive when needed. Prerequisites: stable predictable production; reliable nearby suppliers; high quality (no rework buffer); tight coordination; strong logistics. Pros: minimal carrying costs; frees capital; forces quality improvement; shortens CCC. Cons: extremely vulnerable to supply chain disruption (revealed by COVID-19); higher order costs (frequent small orders); loss of bulk discounts; coordination burden.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q18. <span class="tag basic">基础</span> 什么是银团贷款？为何使用？<br>
+  <em>What is syndicated lending? Why use it?</em></div>
+  <div class="answer">
+    <strong>银团贷款</strong>：多家银行联合向同一借款人放贷，由一家牵头行（agent bank）协调。<br>
+    <strong>银行使用动机</strong>：分散单一借款人的<strong>集中风险</strong>，遵守监管的单一借款人限额。<br>
+    <strong>借款人优势</strong>：<br>
+    (1) 可获得<strong>大额</strong>融资（单一银行无法满足）；<br>
+    (2) 期限灵活；<br>
+    (3) 可<strong>无罚金提前还款</strong>（与债券不同）；<br>
+    (4) 单一文件、统一条款，简化流程；<br>
+    (5) 关系延伸：通过加入贷款建立未来业务的银行关系。<br>
+    适用对象：大型企业、跨国公司、并购融资、项目融资。
+  </div>
+  <div class="answer-en">
+    Syndicated lending: multiple banks lend to one borrower, coordinated by an agent bank. Bank motivation: diversify single-borrower concentration, comply with single-borrower limits. Borrower benefits: large amounts unavailable from single bank; flexible maturities; can repay without penalty (unlike bonds); single documentation; relationship extension. Used for large corporations, MNCs, M&A, project finance.
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q19. <span class="tag advanced">进阶</span> 商业票据 (Commercial Paper) 有何特点？为何比银行贷款便宜？<br>
+  <em>What are the features of commercial paper? Why is it cheaper than bank loans?</em></div>
+  <div class="answer">
+    <strong>特点</strong>：<br>
+    • <strong>无担保</strong>债务（仅由发行人信用支持）；<br>
+    • 大公司发行（通常需高信用评级）；<br>
+    • 短期（通常 ≤ 270 天，美国法规限制）；<br>
+    • 直接票据（卖给投资者）或交易商票据（经销商代销）；<br>
+    • 美国市场特别活跃。<br>
+    <strong>为何便宜</strong>：<br>
+    (1) <strong>规避银行中介</strong>：直接从货币市场基金、企业财务部门借款；<br>
+    (2) <strong>无银行资本要求加价</strong>；<br>
+    (3) 低发行成本（标准化流程）；<br>
+    (4) 仅高信用质量发行人参与（自选效应）；<br>
+    (5) 高流动性二级市场。<br>
+    <strong>风险</strong>：发行人无法滚动到期票据时面临流动性危机（2008 雷曼事件）。
+  </div>
+  <div class="answer-en">
+    Features: unsecured debt; issued by large highly-rated firms; short-term (≤ 270 days in US); direct paper (to investors) or dealer paper. Especially active in US. Why cheaper: bypasses bank intermediation, no bank capital requirement markup; low issuance costs (standardized); self-selection of high-quality issuers; liquid secondary market. Risk: rollover/liquidity risk if cannot refinance maturing paper (Lehman 2008).
+  </div>
+</div>
+
+<div class="qa">
+  <div class="question">Q20. <span class="tag tricky">易混</span> 现金管理与营运资本管理有何区别？短期与长期财务决策的边界在哪？<br>
+  <em>How does cash management differ from working capital management? Where is the boundary between short-term and long-term decisions?</em></div>
+  <div class="answer">
+    <strong>关系</strong>：现金管理是<strong>营运资本管理的子集</strong>，专注于现金及现金等价物的最优持有水平、流入流出、投资。WCM 还包括存货、应收账款、应付账款管理。<br>
+    <strong>现金管理</strong>关注：日常流动性、收付款效率、多余现金投资、跨国现金池。<br>
+    <strong>WCM 关注</strong>：CCC 缩短、AR/AP/Inv 政策、流动比率、营运资本融资。<br>
+    <strong>短期 vs 长期边界</strong>：<br>
+    • <strong>时间</strong>：通常 1 年（一个会计年度）；<br>
+    • <strong>可逆性</strong>：短期决策易逆转；长期决策（资本支出、长期债务）改变难；<br>
+    • <strong>融资匹配</strong>：永久性流动资产（基础库存、最低 AR）实际是长期需求；<br>
+    • <strong>战略层面</strong>：短期=运营效率；长期=资本结构、投资政策。<br>
+    实务中两者紧密相关：短期流动性危机可演变为长期清偿性问题。
+  </div>
+  <div class="answer-en">
+    Relationship: cash management is a subset of WCM, focused on optimal cash holdings, flows, and investments. WCM also covers inventory, AR, AP. Cash management: daily liquidity, payment/collection efficiency, excess cash investment, MNC cash pooling. WCM: CCC, AR/AP/Inv policies, current ratio, WC financing. Short-term vs long-term boundary: time (~1 year); reversibility (short-term easily reversed; long-term capex/debt hard); financing matching (permanent current assets = long-term need); strategic level (short-term = operations; long-term = capital structure, investment policy). Tightly connected: short-term liquidity crises can become long-term solvency problems.
+  </div>
+</div>
+
+<!-- ============= QUICK REFERENCE ============= -->
+<h2>📋 备考速记卡 / Quick Reference Card</h2>
+<table>
+  <tr><th>关键公式 / Key Formula</th><th>用途 / Use</th></tr>
+  <tr><td>NWC = CA − CL</td><td>净营运资本 / Net Working Capital</td></tr>
+  <tr><td>CCC = AR Days + Inv Days − AP Days</td><td>现金转换周期 / Cash Conversion Cycle</td></tr>
+  <tr><td>放弃折扣年化率 ≈ (d/(1−d)) × (365/(N−n))</td><td>商业信用机会成本 / Cost of forgoing trade credit</td></tr>
+  <tr><td>r = (1+i<sub>f</sub>)(1+e<sub>f</sub>) − 1</td><td>外币存款/借款有效收益率/融资率</td></tr>
+  <tr><td>F/S = (1+i<sub>h</sub>)/(1+i<sub>f</sub>)</td><td>利率平价 / IRP</td></tr>
+  <tr><td>e<sub>f</sub> ≈ π<sub>h</sub> − π<sub>f</sub></td><td>相对购买力平价 / Relative PPP</td></tr>
+  <tr><td>名义利率 = 实际利率 + 通胀</td><td>费雪效应 / Fisher Effect</td></tr>
+</table>
+
+<h2>📊 概念分类速查 / Concept Categorization</h2>
+<table>
+  <tr><th>类别 / Category</th><th>工具/概念 / Tools</th></tr>
+  <tr><td>支付方式 (按出口商风险升序)</td><td>Prepayment → L/C → Draft → Open Account → Consignment</td></tr>
+  <tr><td>贸易融资</td><td>AR Financing, Factoring, BA, Working Capital Financing, Forfaiting, Countertrade</td></tr>
+  <tr><td>短期融资</td><td>Syndicated Lending, Bank Loans, Line of Credit, Bridge Loan, Commercial Paper</td></tr>
+  <tr><td>抵押融资</td><td>AR Pledging, AR Factoring, Floating Lien, Trust Receipts, Warehouse</td></tr>
+  <tr><td>外币融资</td><td>Euronotes, Euro-CP, Eurobank Loans, 内部融资</td></tr>
+  <tr><td>国际平价</td><td>IRP, PPP (绝对/相对), Fisher Effect, IFE</td></tr>
+</table>
+
+<!-- ============= STRATEGY ============= -->
+<h2>🎯 口试应答策略 / Oral Exam Strategy</h2>
+<ol>
+  <li><strong>结构化记忆</strong>：本章工具繁多，按"国内 vs 国际"、"贸易 vs 非贸易"、"短期 vs 中期"、"有抵押 vs 无抵押"分类。</li>
+  <li><strong>优先掌握 CCC 公式与缩短策略</strong>：核心知识点，几乎必考。</li>
+  <li><strong>支付方式的风险光谱</strong>：从 Prepayment（出口商最安全）到 Consignment（出口商最危险）能背出顺序。</li>
+  <li><strong>区分相似工具</strong>：Pledging vs Factoring vs Forfaiting；Floating Lien vs Trust Receipts vs Warehouse；Euronotes vs Euro-CP。</li>
+  <li><strong>有效收益率/融资率</strong>：r = (1+i<sub>f</sub>)(1+e<sub>f</sub>) − 1 必背。注意存款时升值有利，借款时升值不利。</li>
+  <li><strong>IRP 与 PPP 的概念区分</strong>：IRP 用利率，PPP 用通胀，通过费雪效应连接。</li>
+  <li><strong>实际案例</strong>：JIT 在 COVID-19 中的脆弱性、苹果的 CCC 管理（负 CCC）、Lehman 的商业票据危机等可作为论据。</li>
+  <li><strong>关键术语英文</strong>：working capital, cash conversion cycle, trade credit, multilateral netting, blocked funds, letter of credit (L/C), draft, banker's acceptance, factoring, forfaiting, countertrade, matching principle, syndicated lending, commercial paper, floating lien, JIT, eurocurrency, covered interest arbitrage, interest rate parity, purchasing power parity。</li>
+</ol>
+
+<div class="footer">
+  📚 营运资本管理与短期融资双语备考指南 | Working Capital Management & Short-Term Financing Bilingual Study Guide<br>
+  基于 Madura-Fox Part 5, OTP PPT, Juhász 视频整理 | 与"资本结构 MM 定理"和"资本成本"指南配套使用 / Companion to Capital Structure (MM) and Cost of Capital guides
+</div>
+
+</div>
+</body>
+</html>
