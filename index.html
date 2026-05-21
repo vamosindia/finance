@@ -11,43 +11,22 @@ body{
     max-width:1000px;
     margin:auto;
 }
-
-h1{
-    margin-bottom:30px;
+h1{ margin-bottom:30px; }
+ul{ list-style:none; padding-left:20px; }
+ul.root{ padding-left:0; }
+li{ margin:6px 0; line-height:1.5; }
+a{ text-decoration:none; color:#0066cc; word-break:break-all; }
+a:hover{ text-decoration:underline; }
+.icon{ margin-right:6px; }
+.folder-toggle{
+    cursor:pointer;
+    user-select:none;
+    color:#333;
 }
-
-ul{
-    list-style:none;
-    padding:0;
-}
-
-li{
-    margin:8px 0;
-    line-height:1.5;
-}
-
-a{
-    text-decoration:none;
-    color:#0066cc;
-    word-break:break-all;
-}
-
-a:hover{
-    text-decoration:underline;
-}
-
-.folder{
-    color:#666;
-    margin-right:6px;
-}
-
-.loading{
-    color:#888;
-}
-
-.error{
-    color:red;
-}
+.folder-toggle:hover{ color:#0066cc; }
+.hidden{ display:none; }
+.loading{ color:#888; }
+.error{ color:red; }
 </style>
 </head>
 <body>
@@ -56,108 +35,132 @@ a:hover{
 
 <p class="loading" id="status">Loading files...</p>
 
-<ul id="fileList"></ul>
+<ul id="fileList" class="root"></ul>
 
 <script>
-
 // ==========================
 // CHANGE THESE
 // ==========================
-
 const username = "vamosindia";
-
-const repo = "finance";
-
-const branch = "main"; // 如果是 master 就改 master
-
+const repo     = "finance";
+const branch   = "main";
 // ==========================
 
 async function loadRepoTree(){
-
     const status = document.getElementById("status");
-
-    const list = document.getElementById("fileList");
+    const list   = document.getElementById("fileList");
 
     try{
-
         const url =
-`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
+            `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
 
         const response = await fetch(url);
-
-        if(!response.ok){
-            throw new Error("GitHub API request failed");
-        }
+        if(!response.ok) throw new Error("GitHub API request failed");
 
         const data = await response.json();
-
         status.remove();
 
-        data.tree
+        // 1) 过滤
+        const items = data.tree.filter(item =>
+            item.path !== "index.html" &&
+            !item.path.split("/").some(seg => seg.startsWith(".")) &&
+            !item.path.toLowerCase().split("/").pop().includes("readme")
+        );
 
-            // 只保留文件
-            .filter(item => item.type === "blob")
-
-            // 跳过根 index.html
-            .filter(item => item.path !== "index.html")
-
-            // 跳过隐藏文件
-            .filter(item => !item.path.startsWith("."))
-
-            // 可选：跳过 README
-            .filter(item => !item.path.toLowerCase().includes("readme"))
-
-            // 排序（自然排序）
-            .sort((a, b) =>
-                a.path.localeCompare(
-                    b.path,
-                    undefined,
-                    {
-                        numeric: true,
-                        sensitivity: "base"
-                    }
-                )
-            )
-
-            .forEach(item => {
-
-                const li = document.createElement("li");
-
-                const a = document.createElement("a");
-
-                a.href = item.path;
-
-                a.textContent = item.path;
-
-                // 文件夹显示
-                const folder = document.createElement("span");
-
-                folder.className = "folder";
-
-                folder.textContent = "📄";
-
-                li.appendChild(folder);
-
-                li.appendChild(a);
-
-                list.appendChild(li);
-
+        // 2) 构建树
+        const root = { name: "", type: "tree", children: {} };
+        for(const item of items){
+            const parts = item.path.split("/");
+            let node = root;
+            parts.forEach((part, i) => {
+                const isLast = i === parts.length - 1;
+                if(!node.children[part]){
+                    node.children[part] = {
+                        name: part,
+                        path: parts.slice(0, i + 1).join("/"),
+                        type: isLast ? item.type : "tree",
+                        children: {}
+                    };
+                }
+                node = node.children[part];
             });
+        }
 
+        // 3) 渲染（只渲染第一层，文件夹点击展开）
+        renderLevel(root, list);
     }
     catch(err){
-
         status.className = "error";
-
-        status.textContent =
-            "Failed to load repository files.";
-
+        status.textContent = "Failed to load repository files.";
         console.error(err);
     }
 }
 
-loadRepoTree();
+function sortChildren(node){
+    return Object.values(node.children).sort((a, b) => {
+        // 文件夹优先
+        if(a.type !== b.type){
+            return a.type === "tree" ? -1 : 1;
+        }
+        // 自然排序
+        return a.name.localeCompare(b.name, undefined, {
+            numeric: true,
+            sensitivity: "base"
+        });
+    });
+}
 
+function renderLevel(node, ulEl){
+    const children = sortChildren(node);
+
+    for(const child of children){
+        const li = document.createElement("li");
+
+        if(child.type === "tree"){
+            // 文件夹：可点击展开
+            const toggle = document.createElement("span");
+            toggle.className = "folder-toggle";
+            toggle.innerHTML =
+                `<span class="icon">📁</span>${child.name}/`;
+
+            const subUl = document.createElement("ul");
+            subUl.className = "hidden";
+
+            let loaded = false;
+            toggle.addEventListener("click", () => {
+                if(!loaded){
+                    renderLevel(child, subUl);
+                    loaded = true;
+                }
+                subUl.classList.toggle("hidden");
+                // 简单切换图标
+                const icon = toggle.querySelector(".icon");
+                icon.textContent = subUl.classList.contains("hidden")
+                    ? "📁" : "📂";
+            });
+
+            li.appendChild(toggle);
+            li.appendChild(subUl);
+        }
+        else{
+            // 文件
+            const icon = document.createElement("span");
+            icon.className = "icon";
+            icon.textContent = "📄";
+
+            const a = document.createElement("a");
+            a.href = child.path;
+            a.textContent = child.name;
+
+            li.appendChild(icon);
+            li.appendChild(a);
+        }
+
+        ulEl.appendChild(li);
+    }
+}
+
+loadRepoTree();
 </script>
 
 </body>
