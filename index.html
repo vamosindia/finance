@@ -3,14 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Index</title>
+
 <style>
 body{
     font-family: Arial, sans-serif;
     padding:40px;
 }
 
+h1{
+    margin-bottom:20px;
+}
+
+ul{
+    list-style:none;
+    padding:0;
+}
+
+li{
+    margin:8px 0;
+}
+
 a{
-    font-size:20px;
     text-decoration:none;
     color:#0066cc;
 }
@@ -22,12 +35,55 @@ a:hover{
 </head>
 <body>
 
-<h1>Index</h1>
+<h1>Repository Index</h1>
 
-<p>
-    <a href="./complex/">Open Complex Folder</a>
-</p>
+<ul id="fileList"></ul>
+
+<script>
+
+const username = "vamosindia";
+const repo = "finance";
+const branch = "main"; // 如果是 master 就改 master
+
+async function loadRepoTree(){
+
+    const url =
+`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
+
+    const response = await fetch(url);
+
+    const data = await response.json();
+
+    const list = document.getElementById("fileList");
+
+    data.tree.forEach(item => {
+
+        // 只显示文件
+        if(item.type !== "blob") return;
+
+        // 跳过根 index.html
+        if(item.path === "index.html") return;
+
+        // 跳过隐藏文件
+        if(item.path.startsWith(".")) return;
+
+        const li = document.createElement("li");
+
+        const a = document.createElement("a");
+
+        a.href = item.path;
+
+        a.textContent = item.path;
+
+        li.appendChild(a);
+
+        list.appendChild(li);
+    });
+}
+
+loadRepoTree();
+
+</script>
 
 </body>
 </html>
-
