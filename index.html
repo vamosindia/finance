@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Index</title>
+<title>Repository Index</title>
 
 <style>
 body{
     font-family: Arial, sans-serif;
     padding:40px;
+    max-width:1000px;
+    margin:auto;
 }
 
 h1{
-    margin-bottom:20px;
+    margin-bottom:30px;
 }
 
 ul{
@@ -21,15 +23,30 @@ ul{
 
 li{
     margin:8px 0;
+    line-height:1.5;
 }
 
 a{
     text-decoration:none;
     color:#0066cc;
+    word-break:break-all;
 }
 
 a:hover{
     text-decoration:underline;
+}
+
+.folder{
+    color:#666;
+    margin-right:6px;
+}
+
+.loading{
+    color:#888;
+}
+
+.error{
+    color:red;
 }
 </style>
 </head>
@@ -37,48 +54,106 @@ a:hover{
 
 <h1>Repository Index</h1>
 
+<p class="loading" id="status">Loading files...</p>
+
 <ul id="fileList"></ul>
 
 <script>
 
+// ==========================
+// CHANGE THESE
+// ==========================
+
 const username = "vamosindia";
+
 const repo = "finance";
+
 const branch = "main"; // 如果是 master 就改 master
+
+// ==========================
 
 async function loadRepoTree(){
 
-    const url =
-`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
-
-    const response = await fetch(url);
-
-    const data = await response.json();
+    const status = document.getElementById("status");
 
     const list = document.getElementById("fileList");
 
-    data.tree.forEach(item => {
+    try{
 
-        // 只显示文件
-        if(item.type !== "blob") return;
+        const url =
+`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
 
-        // 跳过根 index.html
-        if(item.path === "index.html") return;
+        const response = await fetch(url);
 
-        // 跳过隐藏文件
-        if(item.path.startsWith(".")) return;
+        if(!response.ok){
+            throw new Error("GitHub API request failed");
+        }
 
-        const li = document.createElement("li");
+        const data = await response.json();
 
-        const a = document.createElement("a");
+        status.remove();
 
-        a.href = item.path;
+        data.tree
 
-        a.textContent = item.path;
+            // 只保留文件
+            .filter(item => item.type === "blob")
 
-        li.appendChild(a);
+            // 跳过根 index.html
+            .filter(item => item.path !== "index.html")
 
-        list.appendChild(li);
-    });
+            // 跳过隐藏文件
+            .filter(item => !item.path.startsWith("."))
+
+            // 可选：跳过 README
+            .filter(item => !item.path.toLowerCase().includes("readme"))
+
+            // 排序（自然排序）
+            .sort((a, b) =>
+                a.path.localeCompare(
+                    b.path,
+                    undefined,
+                    {
+                        numeric: true,
+                        sensitivity: "base"
+                    }
+                )
+            )
+
+            .forEach(item => {
+
+                const li = document.createElement("li");
+
+                const a = document.createElement("a");
+
+                a.href = item.path;
+
+                a.textContent = item.path;
+
+                // 文件夹显示
+                const folder = document.createElement("span");
+
+                folder.className = "folder";
+
+                folder.textContent = "📄";
+
+                li.appendChild(folder);
+
+                li.appendChild(a);
+
+                list.appendChild(li);
+
+            });
+
+    }
+    catch(err){
+
+        status.className = "error";
+
+        status.textContent =
+            "Failed to load repository files.";
+
+        console.error(err);
+    }
 }
 
 loadRepoTree();
