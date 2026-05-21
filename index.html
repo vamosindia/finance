@@ -1,127 +1,83 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Finance Study Notes</title>
-
-  <style>
-    body{
-      font-family: Arial, sans-serif;
-      background:#f4f6f9;
-      margin:0;
-      padding:40px;
-    }
-
-    .container{
-      max-width:1000px;
-      margin:auto;
-      background:white;
-      padding:30px;
-      border-radius:15px;
-      box-shadow:0 2px 12px rgba(0,0,0,0.1);
-    }
-
-    h1{
-      text-align:center;
-      color:#222;
-      margin-bottom:30px;
-    }
-
-    .list{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-      gap:20px;
-    }
-
-    .item{
-      border:1px solid #ddd;
-      border-radius:10px;
-      padding:20px;
-      transition:0.3s;
-      background:#fafafa;
-    }
-
-    .item:hover{
-      background:#eef5ff;
-      transform:translateY(-4px);
-    }
-
-    .item a{
-      text-decoration:none;
-      color:#0066cc;
-      font-size:17px;
-      font-weight:bold;
-      display:block;
-      line-height:1.5;
-    }
-
-    footer{
-      margin-top:40px;
-      text-align:center;
-      color:#888;
-      font-size:14px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro Study Hub</title>
+<style>
+body{
+background:#000;
+color:#00ff99;
+font-family:"Courier New", monospace;
+margin:0;
+padding:30px;
+background-image:radial-gradient(#111 1px, transparent 1px);
+background-size:20px 20px;
+}
+.container{
+max-width:1100px;
+margin:auto;
+border:4px double #00ff99;
+padding:30px;
+background:#050505;
+box-shadow:0 0 25px #00ff99;
+}
+h1{
+text-align:center;
+font-size:42px;
+color:#00ffff;
+text-shadow:0 0 10px #00ffff;
+}
+.subtitle{
+text-align:center;
+color:#ff66cc;
+margin-bottom:35px;
+}
+.list{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+.item{
+border:2px solid #00ff99;
+padding:20px;
+background:#111;
+transition:0.25s;
+}
+.item:hover{
+transform:translateY(-5px);
+box-shadow:0 0 20px #00ffff;
+}
+.item a{
+text-decoration:none;
+color:#ffff66;
+font-size:18px;
+font-weight:bold;
+}
+footer{
+margin-top:40px;
+text-align:center;
+color:#777;
+}
+</style>
 </head>
-
 <body>
-
 <div class="container">
+<h1>RETRO STUDY HUB</h1>
+<div class="subtitle">Finance · Language · Culture · Resources</div>
 
-  <h1>📚 Finance HTML Notes</h1>
+<div class="list">
 
-  <div class="list">
-
-    <div class="item">
-      <a href="1.%20Capital%20Structure,%20Risk%20&%20Value%20The%20MM%20Theorem.html">
-        1. Capital Structure, Risk & Value The MM Theorem
-      </a>
-    </div>
-
-    <div class="item">
-      <a href="2.%20Cost%20of%20Capital%20Pricing%20Risk,%20CAPM,%20Leverage%20Effects%20&%20Estimating%20Required%20Rates.html">
-        2. Cost of Capital Pricing Risk, CAPM, Leverage Effects & Estimating Required Rates
-      </a>
-    </div>
-
-    <div class="item">
-      <a href="3.%20Working%20Capital%20Management%20&%20Short-Term%20Financing.html">
-        3. Working Capital Management & Short-Term Financing
-      </a>
-    </div>
-
-    <div class="item">
-      <a href="4.-DCF-methods.html">
-        4. DCF Methods
-      </a>
-    </div>
-
-    <div class="item">
-      <a href="13.%20credit-risk-exam-guide.html">
-        13. Credit Risk Exam Guide
-      </a>
-    </div>
-
-    <div class="item">
-      <a href="14.%20market-risk-exam-guide.html">
-        14. Market Risk Exam Guide
-      </a>
-    </div>
-
-    <div class="item">
-      <a href="15.%20operational_risk_exam_guide.html">
-        15. Operational Risk Exam Guide
-      </a>
-    </div>
-
-  </div>
-
-  <footer>
-    © Finance Notes Collection
-  </footer>
+<div class="item"><a href="language.html">Language Learning Corner</a></div>
+<div class="item"><a href="culture.html">World Culture Archive</a></div>
+<div class="item"><a href="resources.html">Study Resources Vault</a></div>
 
 </div>
 
+<footer>
+© 1999-2006 Retro Study Hub
+</footer>
+
+</div>
 </body>
 </html>
