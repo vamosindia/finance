@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Repository - File Browser</title>
+    <meta name="theme-color" content="#0066cc">
+    <title>Finance Repository</title>
+    <link rel="manifest" href="data:application/manifest+json;base64,eyJuYW1lIjoiRmluYW5jZSBSZXBvc2l0b3J5Iiwic2hvcnRfbmFtZSI6IkZpbmFuY2UiLCJpY29ucyI6W3sic3JjIjoiaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L2doL3R3aXN0ZXIvaWNvbnNAbWFzdGVyL3N2Zy9maWxlLXRleHQtc3ZnLnN2ZyIsInNpemVzIjoiMTkyeDE5MiIsInR5cGUiOiJpbWFnZS9zdmcreG1sIn1dLCJzdGFydF91cmwiOiIuIiwic2NvcGUiOiIuIiwidGhlbWVfY29sb3IiOiIjMDA2NmNjIiwiZGlzcGxheSI6InN0YW5kYWxvbmUifQ==">
+    
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    
     <style>
         :root {
             --bg: #f8f9fa;
@@ -11,207 +18,202 @@
             --accent: #0066cc;
             --card: #ffffff;
             --border: #e0e0e0;
+            --secondary: #6c757d;
         }
-
         .dark {
             --bg: #121212;
             --text: #e0e0e0;
             --accent: #4da3ff;
             --card: #1e1e1e;
             --border: #333;
+            --secondary: #aaa;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             background: var(--bg);
             color: var(--text);
             padding: 20px;
-            max-width: 1000px;
+            max-width: 1100px;
             margin: auto;
             line-height: 1.6;
-            transition: background 0.3s;
         }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        h1 {
-            margin: 0 0 8px 0;
-            color: var(--accent);
-        }
-        .subtitle {
-            color: #666;
-        }
-        .dark .subtitle { color: #aaa; }
-
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        button {
-            padding: 8px 16px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { color: var(--accent); font-size: 2.2rem; margin: 0 0 8px; }
+        .repo-stats { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 15px 0; }
+        .stat { background: var(--card); border: 1px solid var(--border); padding: 8px 16px; border-radius: 8px; display: flex; align-items: center; gap: 6px; }
+        .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 20px; }
+        .search-box { flex: 1; min-width: 220px; }
+        .search-box input { width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; background: var(--card); color: var(--text); }
+        button { padding: 10px 18px; background: var(--accent); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.95rem; }
         button:hover { opacity: 0.9; }
-
-        .file-list {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            padding: 20px;
-        }
-
-        ul {
-            list-style: none;
-            padding-left: 20px;
-        }
+        .quick-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 25px; }
+        .quick-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; transition: transform 0.2s; }
+        .quick-card:hover { transform: translateY(-3px); }
+        .file-list { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 20px; }
+        ul { list-style: none; padding-left: 20px; }
         ul.root { padding-left: 0; }
-        li { margin: 8px 0; }
-
-        .folder-toggle {
-            cursor: pointer;
-            user-select: none;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+        li { margin: 6px 0; display: flex; align-items: center; gap: 8px; }
+        .folder-toggle { cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap: 8px; }
         .folder-toggle:hover { color: var(--accent); }
-
-        a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        a:hover { text-decoration: underline; }
-
+        .file-link { color: var(--accent); text-decoration: none; flex: 1; }
+        .file-link:hover { text-decoration: underline; }
+        .file-size { color: var(--secondary); font-size: 0.85rem; }
+        .download-btn { background: #28a745; padding: 4px 10px; font-size: 0.8rem; border-radius: 6px; }
         .hidden { display: none; }
-
-        .loading, .error, .info {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.1rem;
-        }
-        .error { color: #e74c3c; }
-        .info { color: #f39c12; font-size: 0.95rem; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: var(--card); padding: 20px; border-radius: 12px; max-width: 95%; max-height: 85vh; overflow: auto; width: 900px; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: left; }
+        th { background: var(--accent); color: white; }
+        footer { text-align: center; margin-top: 30px; color: var(--secondary); font-size: 0.9rem; }
     </style>
 </head>
 <body>
     <header>
         <h1>📁 Finance Repository</h1>
-        <p class="subtitle">vamosindia / finance</p>
+        <p style="color: var(--secondary); margin: 0;">vamosindia / finance • Exam Prep Hub</p>
+        
+        <div class="repo-stats" id="repoStats">
+            <div class="stat">⭐ <span id="stars">0</span> Stars</div>
+            <div class="stat">🍴 <span id="forks">0</span> Forks</div>
+            <div class="stat">🕒 <span id="updated">Loading...</span></div>
+        </div>
     </header>
 
     <div class="controls">
-        <button id="themeToggle">🌙 Toggle Theme</button>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search files and folders...">
+        </div>
+        <button id="expandAll">Expand All</button>
+        <button id="collapseAll">Collapse All</button>
+        <button id="themeToggle">🌙 Dark Mode</button>
+    </div>
+
+    <div class="quick-links">
+        <div class="quick-card"><a href="#/FRM/PART1">📘 FRM Part 1</a></div>
+        <div class="quick-card"><a href="#/FRM/PART2">📘 FRM Part 2</a></div>
+        <div class="quick-card"><a href="#/Complex Exam">📊 Complex Exam</a></div>
+        <div class="quick-card"><a href="spanish_youtube_channels.html">🎥 Spanish YouTube Channels</a></div>
     </div>
 
     <div class="file-list">
-        <p class="loading" id="status">Loading file list...</p>
+        <p class="loading" id="status">Loading repository files...</p>
         <ul id="fileList" class="root"></ul>
-        <p class="info" id="emptyNote" style="display:none;">
-            ⚠️ Empty folders are not shown because Git doesn't track them.<br>
-            Add a file named <strong>.gitkeep</strong> inside empty folders to make them visible.
-        </p>
     </div>
+
+    <!-- Excel Preview Modal -->
+    <div id="excelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Excel Preview</h3>
+                <button onclick="closeModal()" style="background:#dc3545;">Close</button>
+            </div>
+            <div id="excelContent" style="overflow:auto; max-height:70vh;"></div>
+        </div>
+    </div>
+
+    <footer>
+        Powered by GitHub API • PWA Ready • Last synced in real time
+    </footer>
 
     <script>
         const username = "vamosindia";
-        const repo     = "finance";
-        const branch   = "main";
+        const repo = "finance";
+        const branch = "main";
 
-        const status = document.getElementById("status");
-        const list   = document.getElementById("fileList");
-        const emptyNote = document.getElementById("emptyNote");
+        const statusEl = document.getElementById("status");
+        const list = document.getElementById("fileList");
+        const searchInput = document.getElementById("searchInput");
         const themeToggle = document.getElementById("themeToggle");
+        const expandAllBtn = document.getElementById("expandAll");
+        const collapseAllBtn = document.getElementById("collapseAll");
+        const modal = document.getElementById("excelModal");
 
-        // Theme Toggle
+        let rootNode = null;
+
+        // Theme
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            
-            if (document.documentElement.classList.contains('dark')) {
-                themeToggle.textContent = '☀️ Light Mode';
-            } else {
-                themeToggle.textContent = '🌙 Dark Mode';
-            }
+            const isDark = document.documentElement.classList.contains('dark');
+            themeToggle.textContent = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
         }
         themeToggle.addEventListener('click', toggleTheme);
-
-        // 自动跟随系统主题（可选）
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             themeToggle.textContent = '☀️ Light Mode';
         }
 
+        // Load repo stats
+        async function loadRepoStats() {
+            try {
+                const res = await fetch(`https://api.github.com/repos/${username}/${repo}`);
+                const data = await res.json();
+                document.getElementById("stars").textContent = data.stargazers_count || 0;
+                document.getElementById("forks").textContent = data.forks_count || 0;
+                const updated = new Date(data.updated_at);
+                document.getElementById("updated").textContent = updated.toLocaleDateString();
+            } catch(e){}
+        }
+
+        // Main tree loader
         async function loadRepoTree() {
             try {
                 const url = `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
                 const response = await fetch(url);
-                
-                if (!response.ok) throw new Error("Failed to fetch");
-
+                if (!response.ok) throw new Error();
                 const data = await response.json();
-                status.remove();
+                statusEl.remove();
 
                 const items = data.tree.filter(item => 
-                    !item.path.startsWith(".") &&
-                    item.path !== "index.html" &&
-                    !item.path.toLowerCase().includes("readme")
+                    !item.path.startsWith(".") && item.path !== "index.html" && !item.path.toLowerCase().includes("readme")
                 );
 
-                const root = { name: "", type: "tree", children: {} };
-
+                rootNode = { name: "", type: "tree", children: {}, path: "" };
                 for (const item of items) {
                     const parts = item.path.split("/");
-                    let node = root;
+                    let node = rootNode;
                     for (let i = 0; i < parts.length; i++) {
                         const part = parts[i];
                         const isLast = i === parts.length - 1;
                         if (!node.children[part]) {
                             node.children[part] = {
-                                name: part,
-                                path: parts.slice(0, i + 1).join("/"),
+                                name: part, path: parts.slice(0, i+1).join("/"),
                                 type: isLast ? item.type : "tree",
-                                children: {}
+                                size: isLast ? item.size : 0, children: {}
                             };
                         }
                         node = node.children[part];
                     }
                 }
 
-                if (Object.keys(root.children).length === 0) {
-                    emptyNote.style.display = "block";
-                }
+                renderLevel(rootNode, list);
+                setupSearch();
+                setupButtons();
 
-                renderLevel(root, list);
-            } catch (err) {
-                status.className = "error";
-                status.textContent = "Failed to load. Please refresh the page.";
-                console.error(err);
+                // Hash routing
+                window.addEventListener('hashchange', handleHashChange);
+                handleHashChange();
+
+            } catch(err) {
+                statusEl.className = "error";
+                statusEl.textContent = "Failed to load. Please refresh.";
             }
         }
 
-        function sortChildren(node) {
-            return Object.values(node.children).sort((a, b) => {
+        function renderLevel(node, ulEl, filterTerm = "") {
+            ulEl.innerHTML = "";
+            const children = Object.values(node.children).sort((a,b) => {
                 if (a.type !== b.type) return a.type === "tree" ? -1 : 1;
-                return a.name.localeCompare(b.name, undefined, { numeric: true });
+                return a.name.localeCompare(b.name);
             });
-        }
 
-        function renderLevel(node, ulEl) {
-            const children = sortChildren(node);
             for (const child of children) {
+                if (filterTerm && !child.name.toLowerCase().includes(filterTerm)) continue;
+
                 const li = document.createElement("li");
+
                 if (child.type === "tree") {
                     const toggle = document.createElement("span");
                     toggle.className = "folder-toggle";
@@ -221,29 +223,152 @@
                     subUl.className = "hidden";
 
                     let loaded = false;
-                    toggle.addEventListener("click", () => {
-                        if (!loaded) {
-                            renderLevel(child, subUl);
-                            loaded = true;
-                        }
+                    toggle.onclick = () => {
+                        if (!loaded) { renderLevel(child, subUl, filterTerm); loaded = true; }
                         subUl.classList.toggle("hidden");
-                        toggle.innerHTML = subUl.classList.contains("hidden") 
-                            ? `📁 ${child.name}/` 
-                            : `📂 ${child.name}/`;
-                    });
+                        toggle.innerHTML = subUl.classList.contains("hidden") ? `📁 ${child.name}/` : `📂 ${child.name}/`;
+                    };
+
+                    // Download ZIP button
+                    const dlBtn = document.createElement("button");
+                    dlBtn.className = "download-btn";
+                    dlBtn.textContent = "⬇ ZIP";
+                    dlBtn.onclick = (e) => { e.stopImmediatePropagation(); downloadFolderAsZip(child); };
 
                     li.appendChild(toggle);
+                    li.appendChild(dlBtn);
                     li.appendChild(subUl);
                 } else {
                     const a = document.createElement("a");
-                    a.href = child.path;
-                    a.textContent = `📄 ${child.name}`;
+                    a.className = "file-link";
+                    a.href = "#";
+                    a.innerHTML = `📄 ${child.name} <span class="file-size">(${formatSize(child.size)})</span>`;
+
+                    if (child.name.endsWith(".xlsx")) {
+                        a.onclick = (e) => { e.preventDefault(); previewExcel(child); };
+                    } else {
+                        a.href = `https://github.com/${username}/${repo}/blob/${branch}/${child.path}`;
+                        a.target = "_blank";
+                    }
                     li.appendChild(a);
                 }
                 ulEl.appendChild(li);
             }
         }
 
+        function formatSize(bytes) {
+            if (!bytes) return "0 B";
+            const k = 1024, sizes = ["B","KB","MB","GB"];
+            const i = Math.floor(Math.log(bytes)/Math.log(k));
+            return parseFloat((bytes/Math.pow(k,i)).toFixed(1)) + " " + sizes[i];
+        }
+
+        function setupSearch() {
+            searchInput.oninput = () => {
+                const term = searchInput.value.toLowerCase();
+                const allLis = list.querySelectorAll("li");
+                allLis.forEach(li => li.style.display = li.textContent.toLowerCase().includes(term) ? "" : "none");
+            };
+        }
+
+        function setupButtons() {
+            expandAllBtn.onclick = () => expandAll(list);
+            collapseAllBtn.onclick = () => collapseAll(list);
+        }
+
+        function expandAll(ul) {
+            ul.querySelectorAll(".folder-toggle").forEach(t => {
+                const sub = t.nextElementSibling?.nextElementSibling || t.nextElementSibling;
+                if (sub && sub.classList.contains("hidden")) {
+                    sub.classList.remove("hidden");
+                    t.innerHTML = t.innerHTML.replace("📁", "📂");
+                }
+            });
+        }
+
+        function collapseAll(ul) {
+            ul.querySelectorAll(".folder-toggle").forEach(t => {
+                const sub = t.nextElementSibling?.nextElementSibling || t.nextElementSibling;
+                if (sub) sub.classList.add("hidden");
+                t.innerHTML = t.innerHTML.replace("📂", "📁");
+            });
+        }
+
+        // Excel Preview
+        async function previewExcel(fileNode) {
+            const modalTitle = document.getElementById("modalTitle");
+            const content = document.getElementById("excelContent");
+            modalTitle.textContent = fileNode.name;
+            content.innerHTML = "<p>Loading Excel file...</p>";
+            modal.style.display = "flex";
+
+            try {
+                const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${fileNode.path}`;
+                const res = await fetch(rawUrl);
+                const buffer = await res.arrayBuffer();
+                const workbook = XLSX.read(buffer, { type: "array" });
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                const htmlTable = XLSX.utils.sheet_to_html(sheet, { editable: false });
+                content.innerHTML = htmlTable;
+            } catch(e) {
+                content.innerHTML = "<p style='color:red'>Failed to load Excel preview.</p>";
+            }
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        // Download folder as ZIP
+        async function downloadFolderAsZip(folderNode) {
+            const zip = new JSZip();
+            const folder = zip.folder(folderNode.name);
+
+            async function addToZip(node, currentPath) {
+                if (node.type === "tree") {
+                    for (const child of Object.values(node.children)) {
+                        await addToZip(child, currentPath + "/" + child.name);
+                    }
+                } else {
+                    const rawUrl = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${node.path}`;
+                    const res = await fetch(rawUrl);
+                    const blob = await res.blob();
+                    folder.file(node.name, blob);
+                }
+            }
+
+            await addToZip(folderNode, "");
+            const content = await zip.generateAsync({ type: "blob" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(content);
+            link.download = `${folderNode.name}.zip`;
+            link.click();
+        }
+
+        // Hash routing (SPA)
+        function handleHashChange() {
+            const hash = location.hash.replace("#/", "");
+            if (!hash || !rootNode) return;
+
+            // Simple deep link support
+            const parts = hash.split("/");
+            let current = rootNode;
+            for (const part of parts) {
+                if (current.children && current.children[part]) {
+                    current = current.children[part];
+                }
+            }
+            // You can expand the matching folder here if needed
+            console.log("Navigated to:", hash);
+        }
+
+        // PWA Service Worker (basic)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('data:text/javascript;base64,').catch(()=>{});
+        }
+
+        // Initialize
+        loadRepoStats();
         loadRepoTree();
     </script>
 </body>
