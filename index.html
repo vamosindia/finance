@@ -12,8 +12,6 @@
         body { font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Arial,sans-serif; background:var(--bg); color:var(--text); padding:20px; max-width:1100px; margin:auto; line-height:1.6; }
         header { text-align:center; margin-bottom:20px; }
         h1 { color:var(--accent); font-size:2.2rem; margin:0 0 8px; }
-        .repo-stats { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin:15px 0; }
-        .stat { background:var(--card); border:1px solid var(--border); padding:8px 16px; border-radius:8px; display:flex; align-items:center; gap:6px; }
         .controls { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:20px; }
         .search-box { flex:1; min-width:220px; }
         .search-box input { width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; background:var(--card); color:var(--text); font-size:1rem; }
@@ -39,18 +37,11 @@
         table { width:100%; border-collapse:collapse; }
         th, td { border:1px solid var(--border); padding:8px; text-align:left; }
         th { background:var(--accent); color:white; }
-        footer { text-align:center; margin-top:30px; color:var(--secondary); font-size:0.9rem; }
     </style>
 </head>
 <body>
     <header>
         <h1>📁 Finance Repository</h1>
-        <p style="color:var(--secondary);margin:0;">vamosindia / finance • Exam Prep Hub</p>
-        <div class="repo-stats" id="repoStats">
-            <div class="stat">⭐ <span id="stars">0</span> Stars</div>
-            <div class="stat">🍴 <span id="forks">0</span> Forks</div>
-            <div class="stat">🕒 <span id="updated">Loading...</span></div>
-        </div>
     </header>
 
     <div class="controls">
@@ -83,8 +74,6 @@
         </div>
     </div>
 
-    <footer>Powered by GitHub API • PWA Ready</footer>
-
     <script>
         const username = "vamosindia";
         const repo = "finance";
@@ -112,17 +101,6 @@
         if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
             themeToggle.textContent = '☀️ Light Mode';
-        }
-
-        // Repo stats
-        async function loadRepoStats() {
-            try {
-                const res = await fetch(`https://api.github.com/repos/${username}/${repo}`);
-                const data = await res.json();
-                document.getElementById("stars").textContent = data.stargazers_count || 0;
-                document.getElementById("forks").textContent = data.forks_count || 0;
-                document.getElementById("updated").textContent = new Date(data.updated_at).toLocaleDateString();
-            } catch(e){}
         }
 
         // Load tree
@@ -169,7 +147,6 @@
                 const li = document.createElement("li");
 
                 if (child.type === "tree") {
-                    // Folder row
                     const row = document.createElement("div");
                     row.className = "folder-row";
 
@@ -198,7 +175,6 @@
                     li.appendChild(subUl);
 
                 } else {
-                    // File
                     const a = document.createElement("a");
                     a.className = "file-link";
                     a.innerHTML = `📄 ${child.name} <span class="file-size">(${formatSize(child.size)})</span>`;
@@ -296,13 +272,10 @@
 
         function handleHashChange() {
             if (!rootNode || !location.hash) return;
-            const path = location.hash.replace("#/", "");
-            // Simple auto-expand logic (can be improved further if needed)
-            console.log("Navigated to path:", path);
+            console.log("Navigated to:", location.hash);
         }
 
         // Init
-        loadRepoStats();
         loadRepoTree();
     </script>
 </body>
