@@ -3,157 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Repository</title>
-    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <title>Finance Repository - File Browser</title>
     <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #212529;
+            --accent: #0066cc;
+            --card: #ffffff;
+            --border: #e0e0e0;
+        }
+
+        .dark {
+            --bg: #121212;
+            --text: #e0e0e0;
+            --accent: #4da3ff;
+            --card: #1e1e1e;
+            --border: #333;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            background: #f8f9fa;
-            color: #212529;
+            background: var(--bg);
+            color: var(--text);
             padding: 20px;
             max-width: 1000px;
             margin: auto;
             line-height: 1.6;
+            transition: background 0.3s;
         }
-        .dark {
-            background: #121212;
-            color: #e0e0e0;
-        }
+
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         h1 {
-            color: #0066cc;
-            margin: 0 0 15px 0;
+            margin: 0 0 8px 0;
+            color: var(--accent);
         }
+        .subtitle {
+            color: #666;
+        }
+        .dark .subtitle { color: #aaa; }
+
         .controls {
-            margin-bottom: 20px;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
             gap: 10px;
         }
         button {
-            padding: 10px 20px;
-            background: #0066cc;
+            padding: 8px 16px;
+            background: var(--accent);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
         }
         button:hover { opacity: 0.9; }
+
         .file-list {
-            background: white;
-            border: 1px solid #e0e0e0;
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
-        .dark .file-list {
-            background: #1e1e1e;
-            border-color: #333;
-        }
+
         ul {
             list-style: none;
             padding-left: 20px;
         }
         ul.root { padding-left: 0; }
         li { margin: 8px 0; }
-        .folder-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+
         .folder-toggle {
             cursor: pointer;
+            user-select: none;
             font-weight: 500;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
-            flex: 1;
         }
-        .folder-toggle:hover { color: #0066cc; }
-        .download-btn {
-            background: #28a745;
-            color: white;
-            padding: 6px 14px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.85rem;
+        .folder-toggle:hover { color: var(--accent); }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
         }
+        a:hover { text-decoration: underline; }
+
         .hidden { display: none; }
+
+        .loading, .error, .info {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+        }
+        .error { color: #e74c3c; }
+        .info { color: #f39c12; font-size: 0.95rem; }
     </style>
 </head>
 <body>
     <header>
         <h1>📁 Finance Repository</h1>
+        <p class="subtitle">vamosindia / finance</p>
     </header>
 
     <div class="controls">
-        <button id="expandAll">Expand All</button>
-        <button id="collapseAll">Collapse All</button>
+        <button id="themeToggle">🌙 Toggle Theme</button>
     </div>
 
     <div class="file-list">
-        <p id="status" style="text-align:center; padding:20px;">Loading...</p>
+        <p class="loading" id="status">Loading file list...</p>
         <ul id="fileList" class="root"></ul>
+        <p class="info" id="emptyNote" style="display:none;">
+            ⚠️ Empty folders are not shown because Git doesn't track them.<br>
+            Add a file named <strong>.gitkeep</strong> inside empty folders to make them visible.
+        </p>
     </div>
 
     <script>
         const username = "vamosindia";
-        const repo = "finance";
-        const branch = "main";
+        const repo     = "finance";
+        const branch   = "main";
 
-        const statusEl = document.getElementById("status");
-        const list = document.getElementById("fileList");
-        const expandAllBtn = document.getElementById("expandAll");
-        const collapseAllBtn = document.getElementById("collapseAll");
+        const status = document.getElementById("status");
+        const list   = document.getElementById("fileList");
+        const emptyNote = document.getElementById("emptyNote");
+        const themeToggle = document.getElementById("themeToggle");
 
-        let rootNode = null;
+        // Theme Toggle
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            
+            if (document.documentElement.classList.contains('dark')) {
+                themeToggle.textContent = '☀️ Light Mode';
+            } else {
+                themeToggle.textContent = '🌙 Dark Mode';
+            }
+        }
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // 自动跟随系统主题（可选）
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+            themeToggle.textContent = '☀️ Light Mode';
+        }
 
         async function loadRepoTree() {
             try {
-                const res = await fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`);
-                if (!res.ok) throw new Error();
-                const data = await res.json();
-                statusEl.remove();
+                const url = `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
+                const response = await fetch(url);
+                
+                if (!response.ok) throw new Error("Failed to fetch");
 
-                const items = data.tree.filter(i => !i.path.startsWith(".") && i.path !== "index.html" && !i.path.toLowerCase().includes("readme"));
+                const data = await response.json();
+                status.remove();
 
-                rootNode = { name: "", type: "tree", children: {}, path: "" };
-                items.forEach(item => {
+                const items = data.tree.filter(item => 
+                    !item.path.startsWith(".") &&
+                    item.path !== "index.html" &&
+                    !item.path.toLowerCase().includes("readme")
+                );
+
+                const root = { name: "", type: "tree", children: {} };
+
+                for (const item of items) {
                     const parts = item.path.split("/");
-                    let node = rootNode;
-                    parts.forEach((part, i) => {
+                    let node = root;
+                    for (let i = 0; i < parts.length; i++) {
+                        const part = parts[i];
                         const isLast = i === parts.length - 1;
                         if (!node.children[part]) {
-                            node.children[part] = { name: part, path: parts.slice(0, i+1).join("/"), type: isLast ? item.type : "tree", children: {} };
+                            node.children[part] = {
+                                name: part,
+                                path: parts.slice(0, i + 1).join("/"),
+                                type: isLast ? item.type : "tree",
+                                children: {}
+                            };
                         }
                         node = node.children[part];
-                    });
-                });
+                    }
+                }
 
-                renderLevel(rootNode, list);
-                setupButtons();
+                if (Object.keys(root.children).length === 0) {
+                    emptyNote.style.display = "block";
+                }
 
-            } catch(e) {
-                statusEl.style.color = "#e74c3c";
-                statusEl.textContent = "Failed to load. Please refresh.";
+                renderLevel(root, list);
+            } catch (err) {
+                status.className = "error";
+                status.textContent = "Failed to load. Please refresh the page.";
+                console.error(err);
             }
         }
 
+        function sortChildren(node) {
+            return Object.values(node.children).sort((a, b) => {
+                if (a.type !== b.type) return a.type === "tree" ? -1 : 1;
+                return a.name.localeCompare(b.name, undefined, { numeric: true });
+            });
+        }
+
         function renderLevel(node, ulEl) {
-            ulEl.innerHTML = "";
-            const sorted = Object.values(node.children).sort((a,b) => a.type !== b.type ? (a.type === "tree" ? -1 : 1) : a.name.localeCompare(b.name));
-
-            sorted.forEach(child => {
+            const children = sortChildren(node);
+            for (const child of children) {
                 const li = document.createElement("li");
-
                 if (child.type === "tree") {
-                    const row = document.createElement("div");
-                    row.className = "folder-row";
-
                     const toggle = document.createElement("span");
                     toggle.className = "folder-toggle";
                     toggle.innerHTML = `📁 ${child.name}/`;
@@ -161,97 +220,28 @@
                     const subUl = document.createElement("ul");
                     subUl.className = "hidden";
 
-                    // 保存引用，方便后续快速操作
-                    toggle.subUl = subUl;
-                    toggle.childNode = child;
-                    toggle.loaded = false;
-
-                    toggle.onclick = () => {
-                        if (!toggle.loaded) {
+                    let loaded = false;
+                    toggle.addEventListener("click", () => {
+                        if (!loaded) {
                             renderLevel(child, subUl);
-                            toggle.loaded = true;
+                            loaded = true;
                         }
                         subUl.classList.toggle("hidden");
-                        toggle.innerHTML = subUl.classList.contains("hidden") ? `📁 ${child.name}/` : `📂 ${child.name}/`;
-                    };
+                        toggle.innerHTML = subUl.classList.contains("hidden") 
+                            ? `📁 ${child.name}/` 
+                            : `📂 ${child.name}/`;
+                    });
 
-                    const dlBtn = document.createElement("button");
-                    dlBtn.className = "download-btn";
-                    dlBtn.textContent = "⬇ ZIP";
-                    dlBtn.onclick = (e) => { e.stopImmediatePropagation(); downloadFolderAsZip(child); };
-
-                    row.appendChild(toggle);
-                    row.appendChild(dlBtn);
-                    li.appendChild(row);
+                    li.appendChild(toggle);
                     li.appendChild(subUl);
-
                 } else {
                     const a = document.createElement("a");
-                    a.style.color = "#0066cc";
-                    a.style.textDecoration = "none";
-
-                    if (child.name.endsWith(".html")) {
-                        a.innerHTML = `🌐 ${child.name}`;
-                        a.href = `https://htmlpreview.github.io/?https://raw.githubusercontent.com/${username}/${repo}/${branch}/${child.path}`;
-                        a.target = "_blank";
-                    } else {
-                        a.innerHTML = `📄 ${child.name}`;
-                        a.href = `https://github.com/${username}/${repo}/blob/${branch}/${child.path}`;
-                        a.target = "_blank";
-                    }
+                    a.href = child.path;
+                    a.textContent = `📄 ${child.name}`;
                     li.appendChild(a);
                 }
                 ulEl.appendChild(li);
-            });
-        }
-
-        function setupButtons() {
-            expandAllBtn.onclick = () => expandAll(list);
-            collapseAllBtn.onclick = () => collapseAll(list);
-        }
-
-        function expandAll(ul) {
-            ul.querySelectorAll(".folder-toggle").forEach(t => {
-                if (t.subUl) {
-                    // 如果还没加载，先加载
-                    if (!t.loaded && t.childNode) {
-                        renderLevel(t.childNode, t.subUl);
-                        t.loaded = true;
-                    }
-                    t.subUl.classList.remove("hidden");
-                    t.innerHTML = t.innerHTML.replace("📁", "📂");
-                }
-            });
-        }
-
-        function collapseAll(ul) {
-            ul.querySelectorAll(".folder-toggle").forEach(t => {
-                if (t.subUl) {
-                    t.subUl.classList.add("hidden");
-                    t.innerHTML = t.innerHTML.replace("📂", "📁");
-                }
-            });
-        }
-
-        async function downloadFolderAsZip(folderNode) {
-            const zip = new JSZip();
-            const folder = zip.folder(folderNode.name);
-
-            async function addFiles(node) {
-                if (node.type === "tree") {
-                    for (const child of Object.values(node.children)) await addFiles(child);
-                } else {
-                    const url = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${node.path}`;
-                    const blob = await (await fetch(url)).blob();
-                    folder.file(node.name, blob);
-                }
             }
-            await addFiles(folderNode);
-            const blob = await zip.generateAsync({ type: "blob" });
-            const a = document.createElement("a");
-            a.href = URL.createObjectURL(blob);
-            a.download = folderNode.name + ".zip";
-            a.click();
         }
 
         loadRepoTree();
