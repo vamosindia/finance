@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Repository</title>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
     <style>
         :root { --bg:#f8f9fa; --text:#212529; --accent:#0066cc; --card:#fff; --border:#e0e0e0; --secondary:#6c757d; }
@@ -17,9 +16,6 @@
         .search-box input { width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:8px; background:var(--card); color:var(--text); font-size:1rem; }
         button { padding:10px 18px; background:var(--accent); color:white; border:none; border-radius:8px; cursor:pointer; font-size:0.95rem; }
         button:hover { opacity:0.9; }
-        .quick-links { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; margin-bottom:25px; }
-        .quick-card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; text-align:center; }
-        .quick-card:hover { transform:translateY(-3px); }
         .file-list { background:var(--card); border:1px solid var(--border); border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.08); padding:20px; }
         ul { list-style:none; padding-left:20px; }
         ul.root { padding-left:0; }
@@ -32,11 +28,6 @@
         .file-size { color:var(--secondary); font-size:0.85rem; margin-left:6px; }
         .download-btn { background:#28a745; padding:5px 12px; font-size:0.8rem; border-radius:6px; white-space:nowrap; }
         .hidden { display:none !important; }
-        .modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.75); display:none; align-items:center; justify-content:center; z-index:9999; }
-        .modal-content { background:var(--card); padding:20px; border-radius:12px; width:95%; max-width:1000px; max-height:85vh; overflow:auto; }
-        table { width:100%; border-collapse:collapse; }
-        th, td { border:1px solid var(--border); padding:8px; text-align:left; }
-        th { background:var(--accent); color:white; }
     </style>
 </head>
 <body>
@@ -51,27 +42,9 @@
         <button id="themeToggle">🌙 Dark Mode</button>
     </div>
 
-    <div class="quick-links">
-        <div class="quick-card"><a href="#/FRM/PART1">📘 FRM Part 1</a></div>
-        <div class="quick-card"><a href="#/FRM/PART2">📘 FRM Part 2</a></div>
-        <div class="quick-card"><a href="#/Complex Exam">📊 Complex Exam</a></div>
-        <div class="quick-card"><a href="spanish_youtube_channels.html">🎥 Spanish YouTube Channels</a></div>
-    </div>
-
     <div class="file-list">
         <p id="status" style="text-align:center;padding:20px;">Loading repository files...</p>
         <ul id="fileList" class="root"></ul>
-    </div>
-
-    <!-- Excel Preview Modal -->
-    <div id="excelModal" class="modal" onclick="if (event.target.id === 'excelModal') closeModal()">
-        <div class="modal-content" onclick="event.stopImmediatePropagation()">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;">
-                <h3 id="modalTitle" style="margin:0;">Excel Preview</h3>
-                <button onclick="closeModal()" style="background:#dc3545;padding:8px 16px;">Close</button>
-            </div>
-            <div id="excelContent"></div>
-        </div>
     </div>
 
     <script>
@@ -85,7 +58,6 @@
         const themeToggle = document.getElementById("themeToggle");
         const expandAllBtn = document.getElementById("expandAll");
         const collapseAllBtn = document.getElementById("collapseAll");
-        const modal = document.getElementById("excelModal");
 
         let rootNode = null;
 
@@ -128,8 +100,6 @@
 
                 renderLevel(rootNode, list);
                 setupSearchAndButtons();
-                window.onhashchange = handleHashChange;
-                handleHashChange();
 
             } catch(e) {
                 statusEl.style.color = "#e74c3c";
@@ -178,13 +148,8 @@
                     const a = document.createElement("a");
                     a.className = "file-link";
                     a.innerHTML = `📄 ${child.name} <span class="file-size">(${formatSize(child.size)})</span>`;
-
-                    if (child.name.endsWith(".xlsx")) {
-                        a.onclick = (e) => { e.preventDefault(); previewExcel(child); };
-                    } else {
-                        a.href = `https://github.com/${username}/${repo}/blob/${branch}/${child.path}`;
-                        a.target = "_blank";
-                    }
+                    a.href = `https://github.com/${username}/${repo}/blob/${branch}/${child.path}`;
+                    a.target = "_blank";
                     li.appendChild(a);
                 }
                 ulEl.appendChild(li);
@@ -228,27 +193,6 @@
             });
         }
 
-        async function previewExcel(fileNode) {
-            const title = document.getElementById("modalTitle");
-            const content = document.getElementById("excelContent");
-            title.textContent = fileNode.name;
-            content.innerHTML = "<p style='padding:20px;text-align:center;'>Loading Excel preview...</p>";
-            modal.style.display = "flex";
-
-            try {
-                const url = `https://raw.githubusercontent.com/${username}/${repo}/${branch}/${fileNode.path}`;
-                const res = await fetch(url);
-                const buf = await res.arrayBuffer();
-                const wb = XLSX.read(buf, { type: "array" });
-                const ws = wb.Sheets[wb.SheetNames[0]];
-                content.innerHTML = XLSX.utils.sheet_to_html(ws);
-            } catch(e) {
-                content.innerHTML = "<p style='color:red;padding:20px;'>Failed to preview Excel file.</p>";
-            }
-        }
-
-        function closeModal() { modal.style.display = "none"; }
-
         async function downloadFolderAsZip(folderNode) {
             const zip = new JSZip();
             const folder = zip.folder(folderNode.name);
@@ -268,11 +212,6 @@
             a.href = URL.createObjectURL(blob);
             a.download = folderNode.name + ".zip";
             a.click();
-        }
-
-        function handleHashChange() {
-            if (!rootNode || !location.hash) return;
-            console.log("Navigated to:", location.hash);
         }
 
         // Init
