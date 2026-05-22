@@ -86,12 +86,13 @@
         }
         a:hover { text-decoration: underline; }
         .hidden { display: none; }
-        .loading, .error {
+        .loading, .error, .info {
             text-align: center;
-            padding: 40px;
+            padding: 20px;
             font-size: 1.1rem;
         }
         .error { color: #e74c3c; }
+        .info { color: #f39c12; font-size: 0.95rem; }
     </style>
 </head>
 <body>
@@ -107,6 +108,10 @@
     <div class="file-list">
         <p class="loading" id="status">Loading file list...</p>
         <ul id="fileList" class="root"></ul>
+        <p class="info" id="emptyNote" style="display:none;">
+            ⚠️ Empty folders are not shown because Git doesn't track them.<br>
+            Add a file named <strong>.gitkeep</strong> inside empty folders to make them visible.
+        </p>
     </div>
 
     <script>
@@ -116,9 +121,9 @@
 
         const status = document.getElementById("status");
         const list   = document.getElementById("fileList");
+        const emptyNote = document.getElementById("emptyNote");
         const themeToggle = document.getElementById("themeToggle");
 
-        // Theme toggle
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             themeToggle.textContent = document.documentElement.classList.contains('dark') 
@@ -138,16 +143,18 @@
                 status.remove();
 
                 const items = data.tree.filter(item => 
+                    !item.path.startsWith(".") &&
                     item.path !== "index.html" &&
-                    !item.path.split("/").some(seg => seg.startsWith(".")) &&
                     !item.path.toLowerCase().includes("readme")
                 );
 
                 const root = { name: "", type: "tree", children: {} };
+
                 for (const item of items) {
                     const parts = item.path.split("/");
                     let node = root;
-                    parts.forEach((part, i) => {
+                    for (let i = 0; i < parts.length; i++) {
+                        const part = parts[i];
                         const isLast = i === parts.length - 1;
                         if (!node.children[part]) {
                             node.children[part] = {
@@ -158,7 +165,11 @@
                             };
                         }
                         node = node.children[part];
-                    });
+                    }
+                }
+
+                if (Object.keys(root.children).length === 0) {
+                    emptyNote.style.display = "block";
                 }
 
                 renderLevel(root, list);
