@@ -161,9 +161,16 @@
                     const subUl = document.createElement("ul");
                     subUl.className = "hidden";
 
-                    let loaded = false;
+                    // 保存引用，方便后续快速操作
+                    toggle.subUl = subUl;
+                    toggle.childNode = child;
+                    toggle.loaded = false;
+
                     toggle.onclick = () => {
-                        if (!loaded) { renderLevel(child, subUl); loaded = true; }
+                        if (!toggle.loaded) {
+                            renderLevel(child, subUl);
+                            toggle.loaded = true;
+                        }
                         subUl.classList.toggle("hidden");
                         toggle.innerHTML = subUl.classList.contains("hidden") ? `📁 ${child.name}/` : `📂 ${child.name}/`;
                     };
@@ -183,7 +190,6 @@
                     a.style.color = "#0066cc";
                     a.style.textDecoration = "none";
 
-                    // 关键修改：HTML 文件使用直接渲染链接
                     if (child.name.endsWith(".html")) {
                         a.innerHTML = `🌐 ${child.name}`;
                         a.href = `https://htmlpreview.github.io/?https://raw.githubusercontent.com/${username}/${repo}/${branch}/${child.path}`;
@@ -206,9 +212,13 @@
 
         function expandAll(ul) {
             ul.querySelectorAll(".folder-toggle").forEach(t => {
-                const sub = t.parentElement.nextElementSibling;
-                if (sub && sub.classList.contains("hidden")) {
-                    sub.classList.remove("hidden");
+                if (t.subUl) {
+                    // 如果还没加载，先加载
+                    if (!t.loaded && t.childNode) {
+                        renderLevel(t.childNode, t.subUl);
+                        t.loaded = true;
+                    }
+                    t.subUl.classList.remove("hidden");
                     t.innerHTML = t.innerHTML.replace("📁", "📂");
                 }
             });
@@ -216,9 +226,10 @@
 
         function collapseAll(ul) {
             ul.querySelectorAll(".folder-toggle").forEach(t => {
-                const sub = t.parentElement.nextElementSibling;
-                if (sub) sub.classList.add("hidden");
-                t.innerHTML = t.innerHTML.replace("📂", "📁");
+                if (t.subUl) {
+                    t.subUl.classList.add("hidden");
+                    t.innerHTML = t.innerHTML.replace("📂", "📁");
+                }
             });
         }
 
