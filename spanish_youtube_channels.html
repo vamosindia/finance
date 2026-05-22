@@ -1,463 +1,294 @@
-<!doctype html>
-<html lang="zh-CN">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>西语 YouTube 学习频道推荐</title>
-  <style>
-    :root {
-      --bg: #fff7ed;
-      --panel: #ffffff;
-      --ink: #1f2937;
-      --muted: #6b7280;
-      --accent: #ea580c;
-      --accent-dark: #c2410c;
-      --line: #fed7aa;
-      --soft: #ffedd5;
-      --green: #166534;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at top left, #fde68a 0, transparent 34%),
-        radial-gradient(circle at 90% 10%, #fecaca 0, transparent 28%),
-        var(--bg);
-      line-height: 1.65;
-    }
-    .wrap {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 42px 22px 64px;
-    }
-    header {
-      padding: 42px;
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      background: rgba(255,255,255,.78);
-      box-shadow: 0 18px 50px rgba(124, 45, 18, .10);
-      backdrop-filter: blur(8px);
-    }
-    h1 {
-      margin: 0 0 12px;
-      font-size: clamp(32px, 6vw, 58px);
-      line-height: 1.08;
-      letter-spacing: -1px;
-    }
-    .subtitle {
-      max-width: 820px;
-      margin: 0;
-      color: var(--muted);
-      font-size: 18px;
-    }
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--line);
-      background: var(--soft);
-      color: #7c2d12;
-      border-radius: 999px;
-      padding: 7px 13px;
-      font-size: 14px;
-      font-weight: 650;
-    }
-    .section-title {
-      margin: 38px 0 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .section-title h2 {
-      margin: 0;
-      font-size: 26px;
-    }
-    .section-title:before {
-      content: "";
-      width: 12px;
-      height: 28px;
-      border-radius: 999px;
-      background: var(--accent);
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-    .card {
-      min-height: 355px;
-      display: flex;
-      flex-direction: column;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255,255,255,.88);
-      box-shadow: 0 10px 30px rgba(124, 45, 18, .08);
-    }
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-    .badge {
-      color: white;
-      background: var(--accent);
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-    .level {
-      color: var(--muted);
-      font-size: 13px;
-      text-align: right;
-    }
-    h3 {
-      margin: 0;
-      font-size: 21px;
-      line-height: 1.25;
-    }
-    .focus {
-      margin: 8px 0 12px;
-      color: var(--accent-dark);
-      font-weight: 700;
-    }
-    .how {
-      margin-top: auto;
-      padding: 12px 14px;
-      background: #f8fafc;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      font-size: 14px;
-    }
-    .button {
-      display: inline-flex;
-      justify-content: center;
-      margin-top: 14px;
-      padding: 11px 14px;
-      border-radius: 14px;
-      color: white;
-      background: var(--accent);
-      text-decoration: none;
-      font-weight: 750;
-      transition: transform .15s ease, background .15s ease;
-    }
-    .button:hover {
-      background: var(--accent-dark);
-      transform: translateY(-1px);
-    }
-    .route {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 14px;
-    }
-    .step {
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,.86);
-      border-radius: 22px;
-      padding: 20px;
-    }
-    .step-num {
-      width: 34px;
-      height: 34px;
-      display: inline-grid;
-      place-items: center;
-      border-radius: 50%;
-      background: var(--accent);
-      color: white;
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-    .step h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-    }
-    .tips {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-    }
-    .panel {
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255,255,255,.86);
-      padding: 24px;
-    }
-    .panel ul {
-      margin: 8px 0 0;
-      padding-left: 22px;
-    }
-    .panel li {
-      margin: 8px 0;
-    }
-    footer {
-      margin-top: 36px;
-      padding-top: 22px;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-      font-size: 14px;
-    }
-    footer a {
-      color: var(--accent-dark);
-    }
-    @media (max-width: 980px) {
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .route { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .tips { grid-template-columns: 1fr; }
-      header { padding: 30px; }
-    }
-    @media (max-width: 640px) {
-      .wrap { padding: 24px 14px 44px; }
-      .grid, .route { grid-template-columns: 1fr; }
-      .card { min-height: auto; }
-      header { padding: 24px; }
-    }
-    @media print {
-      body { background: white; }
-      .button { color: var(--accent-dark); background: white; border: 1px solid var(--accent); }
-      .card, .panel, header, .step { box-shadow: none; background: white; }
-    }
-  </style>
-<script type="text/javascript" nonce="45f99609382943b7b1ed532db56" src="//local.adguard.org?ts=1779435869051&amp;type=content-script&amp;dmn=gpt.chesspnt.com&amp;url=https%3A%2F%2Fgpt.chesspnt.com%2Fbackend-api%2Festuary%2Fcontent%3Fid%3Dfile_000000002b64720a98f88a8469b7b298%26ts%3D494288%26p%3Dfs%26cid%3D1%26sig%3Ddcdff827a5bcfecb79f80ad70512e3b35c1b817002e26b6e9fcea6f585c37bbd%26v%3D0&amp;app=com.google.Chrome&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-push&amp;st-loc&amp;st-java&amp;st-dnt&amp;st-1pcttl=4320"></script><script type="text/javascript" nonce="45f99609382943b7b1ed532db56" src="//local.adguard.org?ts=1779435869051&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;type=user-script"></script></head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spanish YouTube Channels</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #212529;
+            --accent: #e63946;
+            --card: #ffffff;
+            --border: #e0e0e0;
+        }
+        
+        .dark {
+            --bg: #121212;
+            --text: #e0e0e0;
+            --accent: #f77f8a;
+            --card: #1e1e1e;
+            --border: #333;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+            transition: background 0.3s;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--accent);
+            margin: 0 0 10px 0;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .dark .subtitle { color: #aaa; }
+
+        .controls {
+            max-width: 800px;
+            margin: 0 auto 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        input#search {
+            padding: 12px 16px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--card);
+            color: var(--text);
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .theme-toggle {
+            padding: 8px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .channels-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .channel-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .channel-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .channel-name {
+            font-size: 1.25rem;
+            margin: 0 0 8px 0;
+            color: var(--accent);
+        }
+
+        .channel-desc {
+            font-size: 0.95rem;
+            color: #666;
+            margin-bottom: 16px;
+        }
+        .dark .channel-desc { color: #bbb; }
+
+        .tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            background: #f1f1f1;
+            border-radius: 12px;
+        }
+        .dark .tag { background: #333; }
+
+        .visit-btn {
+            margin-top: 16px;
+            display: inline-block;
+            padding: 10px 20px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        .visit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1.2rem;
+            color: #888;
+            display: none;
+        }
+    </style>
+</head>
 <body>
-  <main class="wrap">
     <header>
-      <h1>西语 YouTube 学习频道推荐</h1>
-      <p class="subtitle">适合自学西班牙语的频道清单：从零基础语法、发音，到真实口语、听力输入和中文讲解补充。建议不要一次看太多频道，先选 2–3 个作为主线。</p>
-      <div class="meta">
-        <span class="pill">整理日期：2026-05-22</span>
-        <span class="pill">适合：A0–B2</span>
-        <span class="pill">学习目标：听力 + 口语 + 语法</span>
-        <span class="pill">使用方式：点击卡片按钮打开频道</span>
-      </div>
+        <h1>Spanish Learning YouTube Channels</h1>
+        <p class="subtitle">Best channels to learn Spanish effectively</p>
     </header>
 
-    <section>
-      <div class="section-title"><h2>推荐频道</h2></div>
-      <div class="grid">
+    <div class="controls">
+        <input type="text" id="search" placeholder="Search channels..." autocomplete="off">
         
-<article class="card">
-  <div class="card-top">
-    <span class="badge">首选听力</span>
-    <span class="level">零基础～中级</span>
-  </div>
-  <h3>Dreaming Spanish</h3>
-  <p class="focus">听力 / 可理解输入</p>
-  <p>用图画、手势、慢速西语帮助你直接理解内容，适合每天做沉浸式听力训练。</p>
-  <div class="how"><strong>怎么用：</strong>每天看 15–30 分钟，不强求逐字翻译，重点是听懂大意。</div>
-  <a class="button" href="https://www.youtube.com/DreamingSpanish" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="beginner">Beginner</button>
+        <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+        <button class="filter-btn" data-filter="advanced">Advanced</button>
+        
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+    </div>
 
+    <div class="channels-grid" id="channelsGrid">
+        <!-- Channels will be loaded here by JS -->
+    </div>
 
-<article class="card">
-  <div class="card-top">
-    <span class="badge">基础系统</span>
-    <span class="level">零基础～初级</span>
-  </div>
-  <h3>Butterfly Spanish</h3>
-  <p class="focus">语法 / 发音 / 词汇</p>
-  <p>课程覆盖语法、发音、词汇、学习技巧和文化，讲解清楚，适合打基础。</p>
-  <div class="how"><strong>怎么用：</strong>按主题学习：字母、发音、动词变位、常用问句，每次做笔记。</div>
-  <a class="button" href="https://www.youtube.com/user/ButterflySpanishola" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+    <p class="no-results" id="noResults">No channels found.</p>
 
+    <script>
+        const channels = [
+            {
+                name: "SpanishPod101",
+                desc: "Structured Spanish lessons for all levels with podcasts and video courses.",
+                level: "beginner",
+                url: "https://www.youtube.com/c/SpanishPod101"
+            },
+            {
+                name: "Butterfly Spanish",
+                desc: "Clear explanations and practical tips for Spanish learners.",
+                level: "intermediate",
+                url: "https://www.youtube.com/c/ButterflySpanish"
+            },
+            {
+                name: "The Spanish Blog",
+                desc: "Great for grammar, vocabulary and cultural insights.",
+                level: "intermediate",
+                url: "https://www.youtube.com/c/TheSpanishBlog"
+            },
+            {
+                name: "Why Not Spanish?",
+                desc: "Natural conversation practice and listening comprehension.",
+                level: "beginner",
+                url: "https://www.youtube.com/c/WhyNotSpanish"
+            },
+            {
+                name: "SuperHolly",
+                desc: "Fun and energetic Spanish learning content.",
+                level: "beginner",
+                url: "https://www.youtube.com/c/SuperHolly"
+            }
+        ];
 
-<article class="card">
-  <div class="card-top">
-    <span class="badge">内容丰富</span>
-    <span class="level">初级～中级</span>
-  </div>
-  <h3>Learn Spanish with SpanishPod101.com</h3>
-  <p class="focus">日常会话 / 碎片化学习</p>
-  <p>有大量短视频、会话、发音和文化内容，适合通勤或零散时间学习。</p>
-  <div class="how"><strong>怎么用：</strong>选择 Absolute Beginner、Daily Conversation、Pronunciation 等播放列表。</div>
-  <a class="button" href="https://www.youtube.com/user/spanishpod101/videos" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+        const grid = document.getElementById('channelsGrid');
+        const searchInput = document.getElementById('search');
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const noResults = document.getElementById('noResults');
+        const themeToggle = document.getElementById('themeToggle');
 
+        function renderChannels(filteredChannels) {
+            grid.innerHTML = '';
+            
+            if (filteredChannels.length === 0) {
+                noResults.style.display = 'block';
+                return;
+            }
+            
+            noResults.style.display = 'none';
 
-<article class="card">
-  <div class="card-top">
-    <span class="badge">真实表达</span>
-    <span class="level">初级～中高级</span>
-  </div>
-  <h3>Easy Spanish</h3>
-  <p class="focus">真实口语 / 街头采访</p>
-  <p>以真实街头采访和自然语速为特色，也有 Super Easy Spanish 适合初学者。</p>
-  <div class="how"><strong>怎么用：</strong>先看 Super Easy 系列，再挑战街头采访；建议打开西语字幕。</div>
-  <a class="button" href="https://www.youtube.com/@EasySpanish" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+            filteredChannels.forEach(channel => {
+                const card = document.createElement('div');
+                card.className = 'channel-card';
+                card.innerHTML = `
+                    <h3 class="channel-name">${channel.name}</h3>
+                    <p class="channel-desc">${channel.desc}</p>
+                    <div class="tags">
+                        <span class="tag">${channel.level}</span>
+                    </div>
+                    <a href="${channel.url}" target="_blank" class="visit-btn">Visit Channel →</a>
+                `;
+                grid.appendChild(card);
+            });
+        }
 
+        // Search & Filter
+        function filterChannels() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
 
-<article class="card">
-  <div class="card-top">
-    <span class="badge">课堂式</span>
-    <span class="level">零基础～初级</span>
-  </div>
-  <h3>The Language Tutor - Spanish</h3>
-  <p class="focus">结构化课程 / 基础语法</p>
-  <p>Dr. Danny Evans 的课程条理清楚，适合把发音、基础语法和常用表达打牢。</p>
-  <div class="how"><strong>怎么用：</strong>从 Lesson 1 开始顺序看，适合作为主线课程。</div>
-  <a class="button" href="https://www.youtube.com/c/TheLanguageTutor/videos" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+            const filtered = channels.filter(channel => {
+                const matchesSearch = channel.name.toLowerCase().includes(searchTerm) || 
+                                    channel.desc.toLowerCase().includes(searchTerm);
+                
+                const matchesFilter = activeFilter === 'all' || channel.level === activeFilter;
+                
+                return matchesSearch && matchesFilter;
+            });
 
+            renderChannels(filtered);
+        }
 
-<article class="card">
-  <div class="card-top">
-    <span class="badge">理解语法</span>
-    <span class="level">零基础～初级</span>
-  </div>
-  <h3>Language Transfer - Complete Spanish</h3>
-  <p class="focus">语言逻辑 / 思维训练</p>
-  <p>更像音频思维课，强调理解西语结构，不是死背单词。</p>
-  <div class="how"><strong>怎么用：</strong>听 Complete Spanish，每集听完后暂停复述，不需要边听边看屏幕。</div>
-  <a class="button" href="https://www.youtube.com/languagetransfer" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+        // Event Listeners
+        searchInput.addEventListener('input', filterChannels);
 
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                filterChannels();
+            });
+        });
 
-<article class="card">
-  <div class="card-top">
-    <span class="badge">轻松输入</span>
-    <span class="level">初级～中级</span>
-  </div>
-  <h3>Spanish After Hours</h3>
-  <p class="focus">轻松沉浸 / 故事 / 日常场景</p>
-  <p>视频氛围轻松，适合不想一直啃语法、想通过故事和生活场景提高理解力的人。</p>
-  <div class="how"><strong>怎么用：</strong>选择 Beginner Spanish 或 Short Natural Spanish Audios 播放列表。</div>
-  <a class="button" href="https://www.youtube.com/@spanishafterhours" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
+        // Theme Toggle
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            themeToggle.textContent = document.documentElement.classList.contains('dark') ? '☀️' : '🌙';
+        });
 
-
-<article class="card">
-  <div class="card-top">
-    <span class="badge">口语提升</span>
-    <span class="level">初级～中高级</span>
-  </div>
-  <h3>Hola Spanish</h3>
-  <p class="focus">口语表达 / 会话训练</p>
-  <p>有日常对话、小聊天问题、表达替换和学习技巧，适合提高口语自然度。</p>
-  <div class="how"><strong>怎么用：</strong>跟读常用句型，整理“同一个意思的多种说法”。</div>
-  <a class="button" href="https://www.youtube.com/holaspanish" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
-
-
-<article class="card">
-  <div class="card-top">
-    <span class="badge">中文友好</span>
-    <span class="level">中文学习者 / A1～A2</span>
-  </div>
-  <h3>学习西班牙语 / Xuexi Xibanyayu</h3>
-  <p class="focus">中文讲解 / 入门课程</p>
-  <p>有 A1、A2 课程和日常用语内容，适合中文母语者入门。</p>
-  <div class="how"><strong>怎么用：</strong>从 A1 播放列表开始，边看边整理阴阳性、复数、常用动词。</div>
-  <a class="button" href="https://www.youtube.com/channel/UCx1DrRLt6UABpjI-mfEDAOw" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
-
-
-<article class="card">
-  <div class="card-top">
-    <span class="badge">中文补充</span>
-    <span class="level">中文学习者 / 初级～中级</span>
-  </div>
-  <h3>你的西班牙语课程</h3>
-  <p class="focus">中文讲解 / 词汇 / 语法</p>
-  <p>有西语口语、词汇、阅读和语法类视频，适合中文学习者补充学习。</p>
-  <div class="how"><strong>怎么用：</strong>搭配英文频道使用：中文频道负责理解，英文/西语频道负责输入。</div>
-  <a class="button" href="https://www.youtube.com/@tuclasedeespanol" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
-
-
-<article class="card">
-  <div class="card-top">
-    <span class="badge">专题补强</span>
-    <span class="level">中文学习者 / 初级～中级</span>
-  </div>
-  <h3>西国娘子</h3>
-  <p class="focus">高频词 / 语法辨析 / 口语</p>
-  <p>内容偏实用，适合补充高频表达、动词短语和语法难点。</p>
-  <div class="how"><strong>怎么用：</strong>遇到难点时查对应专题，例如 se、代词、tener 短语等。</div>
-  <a class="button" href="https://www.youtube.com/channel/UCrAtFq1Ydjt7BAjVzk331_w" target="_blank" rel="noopener noreferrer">打开频道</a>
-</article>
-
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title"><h2>建议学习路线</h2></div>
-      <div class="route">
-        <div class="step">
-          <div class="step-num">1</div>
-          <h3>先建立基础</h3>
-          <p>用 Butterfly Spanish 或 The Language Tutor 学字母、发音、常用动词和基础句型。</p>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <h3>每天练听力</h3>
-          <p>用 Dreaming Spanish 做可理解输入。每天 15–30 分钟，比偶尔一次看很久更有效。</p>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <h3>接触真实口语</h3>
-          <p>用 Easy Spanish、Hola Spanish 或 Spanish After Hours 练自然语速和常用表达。</p>
-        </div>
-        <div class="step">
-          <div class="step-num">4</div>
-          <h3>用中文补难点</h3>
-          <p>遇到语法卡点时，用中文频道查专题；但听力输入仍建议多听西语本身。</p>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title"><h2>怎么搭配最省力</h2></div>
-      <div class="tips">
-        <div class="panel">
-          <h3>每周学习安排</h3>
-          <ul>
-            <li><strong>周一～周五：</strong>每天 20 分钟 Dreaming Spanish 或 Spanish After Hours。</li>
-            <li><strong>每周 2 次：</strong>看 1 集 Butterfly Spanish / The Language Tutor，整理语法笔记。</li>
-            <li><strong>每周 1 次：</strong>看 Easy Spanish 街头采访，摘 5 个真实表达。</li>
-            <li><strong>碎片时间：</strong>听 Language Transfer，不需要盯屏幕。</li>
-          </ul>
-        </div>
-        <div class="panel">
-          <h3>选频道建议</h3>
-          <ul>
-            <li><strong>完全零基础：</strong>Butterfly Spanish + Dreaming Spanish + 中文频道。</li>
-            <li><strong>想练听力：</strong>Dreaming Spanish + Spanish After Hours + Easy Spanish。</li>
-            <li><strong>想练口语：</strong>Hola Spanish + Easy Spanish + SpanishPod101。</li>
-            <li><strong>语法总是混乱：</strong>The Language Tutor + Language Transfer + 西国娘子。</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <p><strong>频道链接来源：</strong></p>
-      <ul>
-        <li><a href="https://www.youtube.com/DreamingSpanish" target="_blank" rel="noopener noreferrer">Dreaming Spanish</a></li>
-<li><a href="https://www.youtube.com/user/ButterflySpanishola" target="_blank" rel="noopener noreferrer">Butterfly Spanish</a></li>
-<li><a href="https://www.youtube.com/user/spanishpod101/videos" target="_blank" rel="noopener noreferrer">SpanishPod101</a></li>
-<li><a href="https://www.youtube.com/@EasySpanish" target="_blank" rel="noopener noreferrer">Easy Spanish</a></li>
-<li><a href="https://www.youtube.com/c/TheLanguageTutor/videos" target="_blank" rel="noopener noreferrer">The Language Tutor</a></li>
-<li><a href="https://www.youtube.com/languagetransfer" target="_blank" rel="noopener noreferrer">Language Transfer</a></li>
-<li><a href="https://www.youtube.com/@spanishafterhours" target="_blank" rel="noopener noreferrer">Spanish After Hours</a></li>
-<li><a href="https://www.youtube.com/holaspanish" target="_blank" rel="noopener noreferrer">Hola Spanish</a></li>
-<li><a href="https://www.youtube.com/channel/UCx1DrRLt6UABpjI-mfEDAOw" target="_blank" rel="noopener noreferrer">学习西班牙语 / Xuexi Xibanyayu</a></li>
-<li><a href="https://www.youtube.com/@tuclasedeespanol" target="_blank" rel="noopener noreferrer">你的西班牙语课程</a></li>
-<li><a href="https://www.youtube.com/channel/UCrAtFq1Ydjt7BAjVzk331_w" target="_blank" rel="noopener noreferrer">西国娘子</a></li>
-      </ul>
-      <p>备注：YouTube 频道内容和链接可能会变动；如打不开，可直接在 YouTube 搜索频道名称。</p>
-    </footer>
-  </main>
+        // Initial render
+        renderChannels(channels);
+    </script>
 </body>
 </html>
