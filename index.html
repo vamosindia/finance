@@ -112,7 +112,6 @@
 
         let rootNode = null;
 
-        // Load tree
         async function loadRepoTree() {
             try {
                 const res = await fetch(`https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`);
@@ -183,9 +182,17 @@
                     const a = document.createElement("a");
                     a.style.color = "#0066cc";
                     a.style.textDecoration = "none";
-                    a.innerHTML = `📄 ${child.name}`;
-                    a.href = `https://github.com/${username}/${repo}/blob/${branch}/${child.path}`;
-                    a.target = "_blank";
+
+                    // 关键修改：HTML 文件使用直接渲染链接
+                    if (child.name.endsWith(".html")) {
+                        a.innerHTML = `🌐 ${child.name}`;
+                        a.href = `https://htmlpreview.github.io/?https://raw.githubusercontent.com/${username}/${repo}/${branch}/${child.path}`;
+                        a.target = "_blank";
+                    } else {
+                        a.innerHTML = `📄 ${child.name}`;
+                        a.href = `https://github.com/${username}/${repo}/blob/${branch}/${child.path}`;
+                        a.target = "_blank";
+                    }
                     li.appendChild(a);
                 }
                 ulEl.appendChild(li);
@@ -236,7 +243,6 @@
             a.click();
         }
 
-        // Init
         loadRepoTree();
     </script>
 </body>
