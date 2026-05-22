@@ -1,167 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Welcome</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Repository - File Browser</title>
+    <style>
+        :root {
+            --bg: #f8f9fa;
+            --text: #212529;
+            --accent: #0066cc;
+            --card: #ffffff;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #121212;
+                --text: #e0e0e0;
+                --accent: #4da3ff;
+                --card: #1e1e1e;
+            }
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            padding: 20px;
+            max-width: 1000px;
+            margin: auto;
+            line-height: 1.6;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            margin: 0 0 8px 0;
+            color: var(--accent);
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        button {
+            padding: 8px 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover { opacity: 0.9; }
 
-<style>
-body{
-    font-family: Arial, sans-serif;
-    padding:40px;
-    max-width:1000px;
-    margin:auto;
-}
-h1{ margin-bottom:30px; }
-ul{ list-style:none; padding-left:20px; }
-ul.root{ padding-left:0; }
-li{ margin:6px 0; line-height:1.5; }
-a{ text-decoration:none; color:#0066cc; word-break:break-all; }
-a:hover{ text-decoration:underline; }
-.icon{ margin-right:6px; }
-.folder-toggle{
-    cursor:pointer;
-    user-select:none;
-    color:#333;
-}
-.folder-toggle:hover{ color:#0066cc; }
-.hidden{ display:none; }
-.loading{ color:#888; }
-.error{ color:red; }
-</style>
+        .file-list {
+            background: var(--card);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+        ul.root { padding-left: 0; }
+        li { margin: 8px 0; }
+        .folder-toggle {
+            cursor: pointer;
+            user-select: none;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .folder-toggle:hover { color: var(--accent); }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover { text-decoration: underline; }
+        .hidden { display: none; }
+        .loading, .error {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1rem;
+        }
+        .error { color: #e74c3c; }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>📁 Finance Repository</h1>
+        <p class="subtitle">vamosindia / finance</p>
+    </header>
 
-<h1>Welcome!</h1>
+    <div class="controls">
+        <button id="themeToggle">🌙 Toggle Theme</button>
+    </div>
 
-<p class="loading" id="status">Loading files...</p>
+    <div class="file-list">
+        <p class="loading" id="status">Loading file list...</p>
+        <ul id="fileList" class="root"></ul>
+    </div>
 
-<ul id="fileList" class="root"></ul>
+    <script>
+        const username = "vamosindia";
+        const repo     = "finance";
+        const branch   = "main";
 
-<script>
-// ==========================
-// CHANGE THESE
-// ==========================
-const username = "vamosindia";
-const repo     = "finance";
-const branch   = "main";
-// ==========================
+        const status = document.getElementById("status");
+        const list   = document.getElementById("fileList");
+        const themeToggle = document.getElementById("themeToggle");
 
-async function loadRepoTree(){
-    const status = document.getElementById("status");
-    const list   = document.getElementById("fileList");
+        // Theme toggle
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            themeToggle.textContent = document.documentElement.classList.contains('dark') 
+                ? '☀️ Light Mode' 
+                : '🌙 Dark Mode';
+        }
+        themeToggle.addEventListener('click', toggleTheme);
 
-    try{
-        const url =
-            `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
+        async function loadRepoTree() {
+            try {
+                const url = `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
+                const response = await fetch(url);
+                
+                if (!response.ok) throw new Error("Failed to fetch");
 
-        const response = await fetch(url);
-        if(!response.ok) throw new Error("GitHub API request failed");
+                const data = await response.json();
+                status.remove();
 
-        const data = await response.json();
-        status.remove();
+                const items = data.tree.filter(item => 
+                    item.path !== "index.html" &&
+                    !item.path.split("/").some(seg => seg.startsWith(".")) &&
+                    !item.path.toLowerCase().includes("readme")
+                );
 
-        // 1) 过滤
-        const items = data.tree.filter(item =>
-            item.path !== "index.html" &&
-            !item.path.split("/").some(seg => seg.startsWith(".")) &&
-            !item.path.toLowerCase().split("/").pop().includes("readme")
-        );
-
-        // 2) 构建树
-        const root = { name: "", type: "tree", children: {} };
-        for(const item of items){
-            const parts = item.path.split("/");
-            let node = root;
-            parts.forEach((part, i) => {
-                const isLast = i === parts.length - 1;
-                if(!node.children[part]){
-                    node.children[part] = {
-                        name: part,
-                        path: parts.slice(0, i + 1).join("/"),
-                        type: isLast ? item.type : "tree",
-                        children: {}
-                    };
+                const root = { name: "", type: "tree", children: {} };
+                for (const item of items) {
+                    const parts = item.path.split("/");
+                    let node = root;
+                    parts.forEach((part, i) => {
+                        const isLast = i === parts.length - 1;
+                        if (!node.children[part]) {
+                            node.children[part] = {
+                                name: part,
+                                path: parts.slice(0, i + 1).join("/"),
+                                type: isLast ? item.type : "tree",
+                                children: {}
+                            };
+                        }
+                        node = node.children[part];
+                    });
                 }
-                node = node.children[part];
+
+                renderLevel(root, list);
+            } catch (err) {
+                status.className = "error";
+                status.textContent = "Failed to load. Please refresh the page.";
+                console.error(err);
+            }
+        }
+
+        function sortChildren(node) {
+            return Object.values(node.children).sort((a, b) => {
+                if (a.type !== b.type) return a.type === "tree" ? -1 : 1;
+                return a.name.localeCompare(b.name, undefined, { numeric: true });
             });
         }
 
-        // 3) 渲染（只渲染第一层，文件夹点击展开）
-        renderLevel(root, list);
-    }
-    catch(err){
-        status.className = "error";
-        status.textContent = "Failed to load repository files.";
-        console.error(err);
-    }
-}
+        function renderLevel(node, ulEl) {
+            const children = sortChildren(node);
+            for (const child of children) {
+                const li = document.createElement("li");
+                if (child.type === "tree") {
+                    const toggle = document.createElement("span");
+                    toggle.className = "folder-toggle";
+                    toggle.innerHTML = `📁 ${child.name}/`;
 
-function sortChildren(node){
-    return Object.values(node.children).sort((a, b) => {
-        // 文件夹优先
-        if(a.type !== b.type){
-            return a.type === "tree" ? -1 : 1;
-        }
-        // 自然排序
-        return a.name.localeCompare(b.name, undefined, {
-            numeric: true,
-            sensitivity: "base"
-        });
-    });
-}
+                    const subUl = document.createElement("ul");
+                    subUl.className = "hidden";
 
-function renderLevel(node, ulEl){
-    const children = sortChildren(node);
+                    let loaded = false;
+                    toggle.addEventListener("click", () => {
+                        if (!loaded) {
+                            renderLevel(child, subUl);
+                            loaded = true;
+                        }
+                        subUl.classList.toggle("hidden");
+                        toggle.innerHTML = subUl.classList.contains("hidden") 
+                            ? `📁 ${child.name}/` 
+                            : `📂 ${child.name}/`;
+                    });
 
-    for(const child of children){
-        const li = document.createElement("li");
-
-        if(child.type === "tree"){
-            // 文件夹：可点击展开
-            const toggle = document.createElement("span");
-            toggle.className = "folder-toggle";
-            toggle.innerHTML =
-                `<span class="icon">📁</span>${child.name}/`;
-
-            const subUl = document.createElement("ul");
-            subUl.className = "hidden";
-
-            let loaded = false;
-            toggle.addEventListener("click", () => {
-                if(!loaded){
-                    renderLevel(child, subUl);
-                    loaded = true;
+                    li.appendChild(toggle);
+                    li.appendChild(subUl);
+                } else {
+                    const a = document.createElement("a");
+                    a.href = child.path;
+                    a.textContent = `📄 ${child.name}`;
+                    li.appendChild(a);
                 }
-                subUl.classList.toggle("hidden");
-                // 简单切换图标
-                const icon = toggle.querySelector(".icon");
-                icon.textContent = subUl.classList.contains("hidden")
-                    ? "📁" : "📂";
-            });
-
-            li.appendChild(toggle);
-            li.appendChild(subUl);
-        }
-        else{
-            // 文件
-            const icon = document.createElement("span");
-            icon.className = "icon";
-            icon.textContent = "📄";
-
-            const a = document.createElement("a");
-            a.href = child.path;
-            a.textContent = child.name;
-
-            li.appendChild(icon);
-            li.appendChild(a);
+                ulEl.appendChild(li);
+            }
         }
 
-        ulEl.appendChild(li);
-    }
-}
-
-loadRepoTree();
-</script>
-
+        loadRepoTree();
+    </script>
 </body>
 </html>
