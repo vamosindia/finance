@@ -131,11 +131,8 @@
         // Theme Toggle
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                themeToggle.textContent = '☀️ Light Mode';
-            } else {
-                themeToggle.textContent = '🌙 Dark Mode';
-            }
+            themeToggle.textContent = document.documentElement.classList.contains('dark') 
+                ? '☀️ Light Mode' : '🌙 Dark Mode';
         }
         themeToggle.addEventListener('click', toggleTheme);
 
@@ -144,27 +141,35 @@
             themeToggle.textContent = '☀️ Light Mode';
         }
 
-        // Expand All
-        function expandAll() {
-            const toggles = document.querySelectorAll('.folder-toggle');
-            toggles.forEach(toggle => {
+        // ==================== 改进后的 Expand All ====================
+        async function expandAll() {
+            expandAllBtn.disabled = true;
+            expandAllBtn.textContent = "Expanding...";
+
+            const toggles = Array.from(document.querySelectorAll('.folder-toggle'));
+            
+            for (const toggle of toggles) {
                 const subUl = toggle.nextElementSibling;
-                if (subUl && subUl.classList.contains('hidden')) {
-                    // 如果还没加载过子节点，则加载
-                    if (!subUl.hasChildNodes()) {
-                        const folderName = toggle.textContent.replace(/[📁📂]/g, '').trim().replace('/', '');
-                        // 找到对应的节点并渲染（简化处理：直接点击触发加载）
-                        toggle.click();
-                        // 再次点击展开
-                        setTimeout(() => {
-                            if (subUl.classList.contains('hidden')) toggle.click();
-                        }, 10);
-                    } else {
-                        subUl.classList.remove('hidden');
-                        toggle.innerHTML = `📂 ${toggle.textContent.replace('📁', '').trim()}`;
-                    }
+                if (!subUl) continue;
+
+                // 如果子节点还没加载，就先加载
+                if (!subUl.hasChildNodes()) {
+                    // 触发点击来加载子内容
+                    toggle.click();
+                    // 等待一小段时间让渲染完成
+                    await new Promise(resolve => setTimeout(resolve, 30));
                 }
-            });
+
+                // 确保展开
+                if (subUl.classList.contains('hidden')) {
+                    subUl.classList.remove('hidden');
+                    const name = toggle.textContent.replace(/[📁📂]/g, '').trim();
+                    toggle.innerHTML = `📂 ${name}/`;
+                }
+            }
+
+            expandAllBtn.disabled = false;
+            expandAllBtn.textContent = "Expand All";
         }
 
         // Collapse All
@@ -174,7 +179,8 @@
                 const subUl = toggle.nextElementSibling;
                 if (subUl && !subUl.classList.contains('hidden')) {
                     subUl.classList.add('hidden');
-                    toggle.innerHTML = `📁 ${toggle.textContent.replace('📂', '').trim()}`;
+                    const name = toggle.textContent.replace(/[📁📂]/g, '').trim();
+                    toggle.innerHTML = `📁 ${name}/`;
                 }
             });
         }
@@ -182,6 +188,7 @@
         expandAllBtn.addEventListener('click', expandAll);
         collapseAllBtn.addEventListener('click', collapseAll);
 
+        // ==================== 原有渲染逻辑保持不变 ====================
         async function loadRepoTree() {
             try {
                 const url = `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
@@ -190,11 +197,13 @@
                 if (!response.ok) throw new Error("Failed to fetch");
                 const data = await response.json();
                 status.remove();
+
                 const items = data.tree.filter(item =>
                     !item.path.startsWith(".") &&
                     item.path !== "index.html" &&
                     !item.path.toLowerCase().includes("readme")
                 );
+
                 const root = { name: "", type: "tree", children: {} };
                 for (const item of items) {
                     const parts = item.path.split("/");
@@ -213,6 +222,7 @@
                         node = node.children[part];
                     }
                 }
+
                 if (Object.keys(root.children).length === 0) {
                     emptyNote.style.display = "block";
                 }
@@ -241,6 +251,7 @@
                     toggle.innerHTML = `📁 ${child.name}/`;
                     const subUl = document.createElement("ul");
                     subUl.className = "hidden";
+
                     let loaded = false;
                     toggle.addEventListener("click", () => {
                         if (!loaded) {
@@ -252,6 +263,7 @@
                             ? `📁 ${child.name}/`
                             : `📂 ${child.name}/`;
                     });
+
                     li.appendChild(toggle);
                     li.appendChild(subUl);
                 } else {
