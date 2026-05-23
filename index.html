@@ -12,7 +12,6 @@
             --card: #ffffff;
             --border: #e0e0e0;
         }
-
         .dark {
             --bg: #121212;
             --text: #e0e0e0;
@@ -20,7 +19,6 @@
             --card: #1e1e1e;
             --border: #333;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             background: var(--bg);
@@ -31,7 +29,6 @@
             line-height: 1.6;
             transition: background 0.3s;
         }
-
         header {
             text-align: center;
             margin-bottom: 30px;
@@ -44,7 +41,6 @@
             color: #666;
         }
         .dark .subtitle { color: #aaa; }
-
         .controls {
             display: flex;
             justify-content: space-between;
@@ -63,7 +59,6 @@
             font-size: 1rem;
         }
         button:hover { opacity: 0.9; }
-
         .file-list {
             background: var(--card);
             border: 1px solid var(--border);
@@ -71,14 +66,12 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             padding: 20px;
         }
-
         ul {
             list-style: none;
             padding-left: 20px;
         }
         ul.root { padding-left: 0; }
         li { margin: 8px 0; }
-
         .folder-toggle {
             cursor: pointer;
             user-select: none;
@@ -88,15 +81,12 @@
             gap: 8px;
         }
         .folder-toggle:hover { color: var(--accent); }
-
         a {
             color: var(--accent);
             text-decoration: none;
         }
         a:hover { text-decoration: underline; }
-
         .hidden { display: none; }
-
         .loading, .error, .info {
             text-align: center;
             padding: 20px;
@@ -111,11 +101,13 @@
         <h1>📁 Finance Repository</h1>
         <p class="subtitle">vamosindia / finance</p>
     </header>
-
     <div class="controls">
         <button id="themeToggle">🌙 Toggle Theme</button>
+        <div>
+            <button id="expandAll">Expand All</button>
+            <button id="collapseAll">Collapse All</button>
+        </div>
     </div>
-
     <div class="file-list">
         <p class="loading" id="status">Loading file list...</p>
         <ul id="fileList" class="root"></ul>
@@ -127,18 +119,18 @@
 
     <script>
         const username = "vamosindia";
-        const repo     = "finance";
-        const branch   = "main";
-
+        const repo = "finance";
+        const branch = "main";
         const status = document.getElementById("status");
-        const list   = document.getElementById("fileList");
+        const list = document.getElementById("fileList");
         const emptyNote = document.getElementById("emptyNote");
         const themeToggle = document.getElementById("themeToggle");
+        const expandAllBtn = document.getElementById("expandAll");
+        const collapseAllBtn = document.getElementById("collapseAll");
 
         // Theme Toggle
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            
             if (document.documentElement.classList.contains('dark')) {
                 themeToggle.textContent = '☀️ Light Mode';
             } else {
@@ -147,30 +139,63 @@
         }
         themeToggle.addEventListener('click', toggleTheme);
 
-        // 自动跟随系统主题（可选）
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
             document.documentElement.classList.add('dark');
             themeToggle.textContent = '☀️ Light Mode';
         }
 
+        // Expand All
+        function expandAll() {
+            const toggles = document.querySelectorAll('.folder-toggle');
+            toggles.forEach(toggle => {
+                const subUl = toggle.nextElementSibling;
+                if (subUl && subUl.classList.contains('hidden')) {
+                    // 如果还没加载过子节点，则加载
+                    if (!subUl.hasChildNodes()) {
+                        const folderName = toggle.textContent.replace(/[📁📂]/g, '').trim().replace('/', '');
+                        // 找到对应的节点并渲染（简化处理：直接点击触发加载）
+                        toggle.click();
+                        // 再次点击展开
+                        setTimeout(() => {
+                            if (subUl.classList.contains('hidden')) toggle.click();
+                        }, 10);
+                    } else {
+                        subUl.classList.remove('hidden');
+                        toggle.innerHTML = `📂 ${toggle.textContent.replace('📁', '').trim()}`;
+                    }
+                }
+            });
+        }
+
+        // Collapse All
+        function collapseAll() {
+            const toggles = document.querySelectorAll('.folder-toggle');
+            toggles.forEach(toggle => {
+                const subUl = toggle.nextElementSibling;
+                if (subUl && !subUl.classList.contains('hidden')) {
+                    subUl.classList.add('hidden');
+                    toggle.innerHTML = `📁 ${toggle.textContent.replace('📂', '').trim()}`;
+                }
+            });
+        }
+
+        expandAllBtn.addEventListener('click', expandAll);
+        collapseAllBtn.addEventListener('click', collapseAll);
+
         async function loadRepoTree() {
             try {
                 const url = `https://api.github.com/repos/${username}/${repo}/git/trees/${branch}?recursive=1`;
                 const response = await fetch(url);
-                
+               
                 if (!response.ok) throw new Error("Failed to fetch");
-
                 const data = await response.json();
                 status.remove();
-
-                const items = data.tree.filter(item => 
+                const items = data.tree.filter(item =>
                     !item.path.startsWith(".") &&
                     item.path !== "index.html" &&
                     !item.path.toLowerCase().includes("readme")
                 );
-
                 const root = { name: "", type: "tree", children: {} };
-
                 for (const item of items) {
                     const parts = item.path.split("/");
                     let node = root;
@@ -188,11 +213,9 @@
                         node = node.children[part];
                     }
                 }
-
                 if (Object.keys(root.children).length === 0) {
                     emptyNote.style.display = "block";
                 }
-
                 renderLevel(root, list);
             } catch (err) {
                 status.className = "error";
@@ -216,10 +239,8 @@
                     const toggle = document.createElement("span");
                     toggle.className = "folder-toggle";
                     toggle.innerHTML = `📁 ${child.name}/`;
-
                     const subUl = document.createElement("ul");
                     subUl.className = "hidden";
-
                     let loaded = false;
                     toggle.addEventListener("click", () => {
                         if (!loaded) {
@@ -227,11 +248,10 @@
                             loaded = true;
                         }
                         subUl.classList.toggle("hidden");
-                        toggle.innerHTML = subUl.classList.contains("hidden") 
-                            ? `📁 ${child.name}/` 
+                        toggle.innerHTML = subUl.classList.contains("hidden")
+                            ? `📁 ${child.name}/`
                             : `📂 ${child.name}/`;
                     });
-
                     li.appendChild(toggle);
                     li.appendChild(subUl);
                 } else {
