@@ -1,123 +1,57 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>在线考试系统</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FMRM Exam</title>
 
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>在线考试系统</h1>
+<div class="container">
 
-<p>随机抽取25题</p>
+    <header class="header">
+        <div>
+            <h1>FMRM Exam</h1>
+            <p class="subtitle">Random 25 Questions</p>
+        </div>
 
-<div id="quiz"></div>
+        <div class="timer-box">
+            <span id="timer">30:00</span>
+        </div>
+    </header>
 
-<button onclick="submitExam()">提交试卷</button>
+    <div id="progressBarContainer">
+        <div id="progressBar"></div>
+    </div>
 
-<div id="result"></div>
+    <div id="stats">
+        <span id="answeredCount">0</span>
+        /
+        <span id="totalCount">25</span>
+        Answered
+    </div>
+
+    <form id="examForm">
+        <div id="questionContainer"></div>
+
+        <div class="submit-section">
+            <button
+                type="button"
+                id="submitButton"
+            >
+                Submit Exam
+            </button>
+        </div>
+    </form>
+
+    <div id="result"></div>
+
+</div>
 
 <script src="questions.js"></script>
-
-<script>
-
-let examQuestions = [];
-
-function loadExam(){
-
-    const saved =
-        localStorage.getItem("examQuestions");
-
-    if(saved){
-
-        examQuestions =
-            JSON.parse(saved);
-
-    }else{
-
-        examQuestions =
-            [...questionBank]
-            .sort(() => Math.random() - 0.5)
-            .slice(0,25);
-
-        localStorage.setItem(
-            "examQuestions",
-            JSON.stringify(examQuestions)
-        );
-    }
-
-    renderQuestions();
-}
-
-function renderQuestions(){
-
-    let html = "";
-
-    examQuestions.forEach((q,index)=>{
-
-        html += `
-        <div class="question" id="q${index}">
-            <h3>${index+1}. ${q.title}</h3>
-        `;
-
-        q.options.forEach((op,i)=>{
-
-            html += `
-            <label>
-                <input
-                    type="radio"
-                    name="q${index}"
-                    value="${i}">
-                ${op}
-            </label>
-            <br>
-            `;
-        });
-
-        html += `</div>`;
-    });
-
-    document.getElementById("quiz").innerHTML =
-        html;
-}
-
-function submitExam(){
-
-    let score = 0;
-
-    examQuestions.forEach((q,index)=>{
-
-        const checked =
-            document.querySelector(
-                `input[name="q${index}"]:checked`
-            );
-
-        const box =
-            document.getElementById(`q${index}`);
-
-        if(
-            checked &&
-            Number(checked.value) === q.answer
-        ){
-            score++;
-            box.classList.add("correct");
-        }else{
-            box.classList.add("wrong");
-        }
-    });
-
-    document.getElementById("result")
-        .innerHTML =
-        `成绩：${score}/${examQuestions.length}`;
-
-    localStorage.removeItem("examQuestions");
-}
-
-loadExam();
-
-</script>
+<script src="app.js"></script>
 
 </body>
 </html>
