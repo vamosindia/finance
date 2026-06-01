@@ -38,6 +38,7 @@ body {
     border-radius: 10px;
     font-size: 20px;
     font-weight: bold;
+    transition: background 0.5s ease;
 }
 
 #progressBarContainer {
@@ -75,6 +76,19 @@ body {
     line-height: 1.5;
 }
 
+/* FIX: Style for multi-select hint */
+.multi-hint {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: #2563eb;
+    font-size: 13px;
+    font-weight: bold;
+    border: 1px solid #bfdbfe;
+}
+
 .option {
     display: block;
     margin: 10px 0;
@@ -99,12 +113,33 @@ body {
     border-color: #dc2626;
 }
 
+/* FIX: Improved answer review box with two clearly separated sections */
 .answer-box {
-    margin-top: 12px;
-    padding: 12px;
+    margin-top: 14px;
+    padding: 14px;
     border-radius: 8px;
-    background: #f8fafc;
+    background: #fef9f9;
     font-size: 14px;
+    line-height: 1.7;
+    border: 1px solid #fecaca;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.answer-box > div {
+    padding: 8px 10px;
+    border-radius: 6px;
+}
+
+.answer-box > div:first-child {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+}
+
+.answer-box > div:last-child {
+    background: #fff5f5;
+    border: 1px solid #fecaca;
 }
 
 .submit-section {
@@ -120,10 +155,15 @@ body {
     border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-#submitButton:hover {
+#submitButton:hover:not(:disabled) {
     background: #1d4ed8;
+}
+
+#submitButton:disabled {
+    cursor: default;
 }
 
 #result {
@@ -132,7 +172,7 @@ body {
 
 .score-card {
     background: white;
-    padding: 20px;
+    padding: 30px 20px;
     border-radius: 12px;
     font-size: 24px;
     font-weight: bold;
@@ -142,14 +182,15 @@ body {
 
 .pass {
     color: #16a34a;
+    font-size: 36px;
 }
 
 .fail {
     color: #dc2626;
+    font-size: 36px;
 }
 
 @media (max-width: 768px) {
-
     body {
         padding: 12px;
     }
@@ -171,5 +212,10 @@ body {
 
     #submitButton {
         width: 100%;
+    }
+
+    /* Stack answer box on mobile */
+    .answer-box {
+        grid-template-columns: 1fr;
     }
 }
